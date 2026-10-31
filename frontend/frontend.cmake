@@ -4,6 +4,7 @@ add_executable(eden-ps4 "${_fe}/main.cpp" "${_fe}/ps4_platform.cpp" "${_fe}/ps4_
     "${_fe}/heap_census.cpp" "${_fe}/menu/rom_menu.cpp" "${_fe}/menu/rom_menu.h"
     "${_fe}/../tests/flat_map_check.cpp"
     "${_fe}/libc_wide_fixes.cpp"
+    "${_fe}/libc_heap_fixes.cpp"
     # compiler-rt 18.1.8 emulated-TLS runtime (the whole build uses -femulated-tls)
     "${_fe}/emutls/emutls.c")
 target_include_directories(eden-ps4 PRIVATE "${PROJECT_SOURCE_DIR}/src" "${_fe}")
@@ -18,7 +19,7 @@ string(TIMESTAMP _ps4_build_stamp "%Y%m%dT%H%M%SZ" UTC)
 execute_process(COMMAND git -C "${PROJECT_SOURCE_DIR}" rev-parse --short=12 HEAD
     OUTPUT_VARIABLE _ps4_eden_revision OUTPUT_STRIP_TRAILING_WHITESPACE
     COMMAND_ERROR_IS_FATAL ANY)
-set(_ps4_build_id "jitcache3-${_ps4_build_stamp}-${_ps4_eden_revision}")
+set(_ps4_build_id "jitcache4-${_ps4_build_stamp}-${_ps4_eden_revision}")
 target_compile_definitions(eden-ps4 PRIVATE EDEN_PS4_BUILD_ID="${_ps4_build_id}")
 file(WRITE "${CMAKE_BINARY_DIR}/eden-ps4-build-id.txt" "${_ps4_build_id}\n")
 
