@@ -22,6 +22,7 @@ void* __real_realloc(void*, size_t);
 void __real_free(void*);
 int __real_posix_memalign(void**, size_t, size_t);
 void* __real_aligned_alloc(size_t, size_t);
+void* __real_mmap(void*, size_t, int, int, int, long);
 }
 
 namespace Ps4 {
@@ -153,6 +154,37 @@ __attribute__((noinline)) void SampleSmall(void* ptr, size_t size) {
     g_small_dropped += size;
 }
 
+// Big direct mmap() calls (not malloc's own, which call __mmap): orbis-compat serves an anonymous
+// read-write mapping from direct-memory carve-outs committed up front, so a reservation that is
+// lazy on other systems costs its whole size here. Recorded without logging (mmap can run under
+// malloc's lock) and listed by Ps4HeapSmallReport().
+constexpr size_t BigMap = 32ull << 20;
+constexpr int MapRing = 32;
+
+struct MapRecord {
+    size_t len;
+    int prot;
+    int flags;
+    bool failed;
+    std::uint64_t site[SmallDepth];
+};
+MapRecord g_maps[MapRing];
+std::atomic<std::uint32_t> g_maps_written{0};
+std::uint32_t g_maps_reported = 0;
+
+__attribute__((noinline)) void RecordMap(size_t len, int prot, int flags, bool failed) {
+    std::uint64_t site[SmallDepth];
+    SmallSitesWalk(site);
+    const std::uint32_t n = g_maps_written.load(std::memory_order_relaxed);
+    MapRecord& r = g_maps[n % MapRing];
+    r.len = len;
+    r.prot = prot;
+    r.flags = flags;
+    r.failed = failed;
+    std::memcpy(r.site, site, sizeof(site));
+    g_maps_written.store(n + 1, std::memory_order_release);
+}
+
 void Untrack(void* ptr) {
     if (ptr == nullptr) {
         return;
@@ -195,6 +227,14 @@ void* __wrap_realloc(void* old, size_t size) {
 void __wrap_free(void* p) {
     Untrack(p);
     __real_free(p);
+}
+
+void* __wrap_mmap(void* addr, size_t len, int prot, int flags, int fd, long off) {
+    void* p = __real_mmap(addr, len, prot, flags, fd, off);
+    if (len >= BigMap) {
+        RecordMap(len, prot, flags, p == reinterpret_cast<void*>(-1));
+    }
+    return p;
 }
 
 int __wrap_posix_memalign(void** out, size_t align, size_t size) {
@@ -281,6 +321,18 @@ void Ps4HeapSmallReport() {
     std::uint64_t total = dropped;
     for (const SmallSite& s : snap) {
         total += s.bytes;
+    }
+    const std::uint32_t written = g_maps_written.load(std::memory_order_acquire);
+    if (written - g_maps_reported > MapRing) {
+        g_maps_reported = written - MapRing;
+    }
+    for (; g_maps_reported != written; ++g_maps_reported) {
+        const MapRecord& r = g_maps[g_maps_reported % MapRing];
+        Ps4::Log("mmap %lu MiB (prot %d, flags 0x%x)%s from eboot+0x%lx <- 0x%lx <- 0x%lx <- 0x%lx <- 0x%lx",
+                 static_cast<unsigned long>(r.len >> 20), r.prot, r.flags, r.failed ? " FAILED" : "",
+                 static_cast<unsigned long>(r.site[0] - ImageBase), static_cast<unsigned long>(r.site[1] - ImageBase),
+                 static_cast<unsigned long>(r.site[2] - ImageBase), static_cast<unsigned long>(r.site[3] - ImageBase),
+                 static_cast<unsigned long>(r.site[4] - ImageBase));
     }
     const std::uint64_t estimated = total * SampleEvery;
     Ps4::Log("small allocations: ~%lu MiB since the last report (sampled 1 in %u, %lu MiB of samples unplaced)",

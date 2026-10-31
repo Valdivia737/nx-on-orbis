@@ -18,7 +18,7 @@ string(TIMESTAMP _ps4_build_stamp "%Y%m%dT%H%M%SZ" UTC)
 execute_process(COMMAND git -C "${PROJECT_SOURCE_DIR}" rev-parse --short=12 HEAD
     OUTPUT_VARIABLE _ps4_eden_revision OUTPUT_STRIP_TRAILING_WHITESPACE
     COMMAND_ERROR_IS_FATAL ANY)
-set(_ps4_build_id "jitcache2-${_ps4_build_stamp}-${_ps4_eden_revision}")
+set(_ps4_build_id "jitcache3-${_ps4_build_stamp}-${_ps4_eden_revision}")
 target_compile_definitions(eden-ps4 PRIVATE EDEN_PS4_BUILD_ID="${_ps4_build_id}")
 file(WRITE "${CMAKE_BINARY_DIR}/eden-ps4-build-id.txt" "${_ps4_build_id}\n")
 
@@ -40,7 +40,7 @@ target_link_libraries(eden-ps4 PRIVATE -lSceAudioOut -lScePad -lSceUserService -
 
 # Heap census (heap_census.cpp): every allocation goes through the wrappers.
 target_link_options(eden-ps4 PRIVATE -Wl,--wrap=malloc -Wl,--wrap=calloc -Wl,--wrap=realloc
-    -Wl,--wrap=free -Wl,--wrap=posix_memalign -Wl,--wrap=aligned_alloc)
+    -Wl,--wrap=free -Wl,--wrap=posix_memalign -Wl,--wrap=aligned_alloc -Wl,--wrap=mmap)
 
 if(COMMAND ps4_create_eboot)
     ps4_create_eboot(eden-ps4)

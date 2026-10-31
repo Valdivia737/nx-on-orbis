@@ -1,0 +1,59 @@
+From 3d8873f8d3eb5d98304303296169cd54fc38fd79 Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sat, 31 Oct 2026 18:55:08 -0300
+Subject: [PATCH] ORBIS: reserve MultiLevelPageTable lazily (the GPU page
+ table)
+
+On the PS4 an anonymous read-write mmap is committed up front from orbis-compat's direct-memory
+carve-outs. MultiLevelPageTable maps a table for the whole GPU address space, which elsewhere is
+a lazy reservation; here it took hundreds of MiB at once when Super Mario Bros. Wonder created
+an address space, the carve-outs reached their 1.5 GiB cap, a 512 MiB request was refused and
+operator new returned null (hang). SparseLargeVector, in the same MemoryManager, already uses
+ReserveLazy; this table now does too.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ src/common/multi_level_page_table.inc | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/src/common/multi_level_page_table.inc b/src/common/multi_level_page_table.inc
+index 79125e8..65b947f 100644
+--- a/src/common/multi_level_page_table.inc
++++ b/src/common/multi_level_page_table.inc
+@@ -9,6 +9,10 @@
+ 
+ #include "common/assert.h"
+ #include "common/multi_level_page_table.h"
++#ifdef __ORBIS__
++#include "common/logging.h"
++#include "common/orbis_lazy_memory.h"
++#endif
+ 
+ namespace Common {
+ 
+@@ -28,6 +32,13 @@ MultiLevelPageTable<BaseAddr>::MultiLevelPageTable(std::size_t address_space_bit
+     first_level_map.resize(first_level_size, nullptr);
+ #ifdef _WIN32
+     void* base{VirtualAlloc(nullptr, alloc_size, MEM_RESERVE, PAGE_READWRITE)};
++#elif defined(__ORBIS__)
++    // PS4: an anonymous read-write mapping is committed up front from direct memory (orbis-compat's
++    // mmap carve-outs), so a table sized for the whole GPU address space - hundreds of MiB, mostly
++    // never touched - ran the heap's carve-outs out when a game created an address space. Reserved
++    // lazily instead, as SparseLargeVector already is: a 64 KiB chunk gets memory on first touch.
++    void* base{Common::Orbis::ReserveLazy(alloc_size, "GPU page table")};
++    LOG_INFO(HW_GPU, "PS4: GPU page table {} MiB reserved lazily", alloc_size >> 20);
+ #else
+     void* base{mmap(nullptr, alloc_size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)};
+     if (base == MAP_FAILED)
+@@ -44,6 +55,8 @@ MultiLevelPageTable<BaseAddr>::~MultiLevelPageTable() noexcept {
+     }
+ #ifdef _WIN32
+     ASSERT(VirtualFree(base_ptr, 0, MEM_RELEASE));
++#elif defined(__ORBIS__)
++    Common::Orbis::ReleaseLazy(base_ptr);
+ #else
+     ASSERT(munmap(base_ptr, alloc_size) == 0);
+ #endif
+-- 
+2.55.0.windows.3
+
