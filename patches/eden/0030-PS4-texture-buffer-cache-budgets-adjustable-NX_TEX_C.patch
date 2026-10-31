@@ -1,0 +1,79 @@
+From 6db054af9fa945228cd51bdfa1cf806a0a784f9b Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sat, 31 Oct 2026 20:02:02 -0300
+Subject: [PATCH] PS4: texture/buffer cache budgets adjustable
+ (NX_TEX_CACHE_PCT, NX_BUF_CACHE_PCT)
+
+Both caches' aggressive thresholds were 75% of the driver's arena, together past it, and every
+image is mapped into the arena's device-VA window. Super Mario Bros. Wonder's first cutscene ran the
+window out (mesa.log: out of device VA for 22396928 bytes) and TextureCache::JoinImages failed on
+the GPU thread (std::terminate); the game then waited on that thread forever. The percentages now
+come from the environment (settings.txt env=...), clamped to 20..90, default 75 as before; the
+buffer cache logs its budget like the texture cache.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ src/video_core/buffer_cache/buffer_cache.h   | 10 ++++++++--
+ src/video_core/texture_cache/texture_cache.h | 18 +++++++++++++++---
+ 2 files changed, 23 insertions(+), 5 deletions(-)
+
+diff --git a/src/video_core/buffer_cache/buffer_cache.h b/src/video_core/buffer_cache/buffer_cache.h
+index 9f84064..ed092ec 100644
+--- a/src/video_core/buffer_cache/buffer_cache.h
++++ b/src/video_core/buffer_cache/buffer_cache.h
+@@ -63,8 +63,14 @@ BufferCache<P>::BufferCache(Tegra::MaxwellDeviceMemoryManager& device_memory_, R
+         const char* value = std::getenv("ORBIS_ARENA_MIB");
+         const long mib = value != nullptr ? std::strtol(value, nullptr, 10) : 0;
+         const s64 arena = static_cast<s64>(mib > 0 ? mib : 1024) * 1024 * 1024;
+-        minimum_memory = static_cast<u64>(arena * 60 / 100);
+-        critical_memory = static_cast<u64>(arena * 75 / 100);
++        // NX_BUF_CACHE_PCT (settings.txt), clamped to 20..90: see Ps4CachePercent. 60/75 by default.
++        const char* pct_value = std::getenv("NX_BUF_CACHE_PCT");
++        const long pct_env = pct_value != nullptr ? std::strtol(pct_value, nullptr, 10) : 0;
++        const s64 pct = pct_env > 0 ? std::clamp<s64>(pct_env, 20, 90) : 75;
++        minimum_memory = static_cast<u64>(arena * (pct - 15) / 100);
++        critical_memory = static_cast<u64>(arena * pct / 100);
++        LOG_INFO(Render_Vulkan, "PS4 buffer cache budget: arena {} MiB, collect from {} MiB, aggressive {} MiB",
++                 arena >> 20, minimum_memory >> 20, critical_memory >> 20);
+     }
+ #endif
+ }
+diff --git a/src/video_core/texture_cache/texture_cache.h b/src/video_core/texture_cache/texture_cache.h
+index 87d14d6..78044c2 100644
+--- a/src/video_core/texture_cache/texture_cache.h
++++ b/src/video_core/texture_cache/texture_cache.h
+@@ -104,6 +104,17 @@ inline s64 Ps4GpuArenaBytes() {
+     const long mib = value != nullptr ? std::strtol(value, nullptr, 10) : 0;
+     return static_cast<s64>(mib > 0 ? mib : 1024) * 1024 * 1024;
+ }
++
++/// A cache's aggressive threshold as a percentage of the arena, from the environment (settings.txt
++/// env=NX_TEX_CACHE_PCT=50 / NX_BUF_CACHE_PCT=25), clamped to 20..90. The texture and buffer
++/// caches default to 75% each, together past the arena, and images are mapped into the arena's
++/// device-VA window either way: Super Mario Bros. Wonder's first cutscene ran the window out
++/// ("out of device VA for 22396928 bytes") and an image join failed on the GPU thread.
++inline s64 Ps4CachePercent(const char* name) {
++    const char* value = std::getenv(name);
++    const long pct = value != nullptr ? std::strtol(value, nullptr, 10) : 0;
++    return pct > 0 ? std::clamp<s64>(pct, 20, 90) : 75;
++}
+ } // namespace VideoCommon
+ #endif
+ 
+@@ -160,9 +171,10 @@ TextureCache<P>::TextureCache(Runtime& runtime_, Tegra::MaxwellDeviceMemoryManag
+ #ifdef __ORBIS__
+     {
+         const s64 arena = Ps4GpuArenaBytes();
+-        minimum_memory = static_cast<u64>(arena * 55 / 100);
+-        expected_memory = static_cast<u64>(arena * 65 / 100);
+-        critical_memory = static_cast<u64>(arena * 75 / 100);
++        const s64 pct = Ps4CachePercent("NX_TEX_CACHE_PCT"); // 55/65/75 by default
++        minimum_memory = static_cast<u64>(arena * (pct - 20) / 100);
++        expected_memory = static_cast<u64>(arena * (pct - 10) / 100);
++        critical_memory = static_cast<u64>(arena * pct / 100);
+         LOG_INFO(Render_Vulkan, "PS4 texture cache budget: arena {} MiB, collect from {} MiB, "
+                  "high priority {} MiB, aggressive {} MiB", arena >> 20, minimum_memory >> 20,
+                  expected_memory >> 20, critical_memory >> 20);
+-- 
+2.55.0.windows.3
+
