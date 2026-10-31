@@ -11,6 +11,8 @@ SDK="$ROOT/sdk-dl/orbis-sdk-v1/sdk"
 BIN="$SDK/bin/windows"
 OO="C:/ps4dev/tools/OpenOrbis/OpenOrbis/PS4Toolchain"
 export DOTNET_ROLL_FORWARD=LatestMajor
+# Portable .NET (not installed system-wide) for PkgTool.Core.exe
+[ -d C:/ps4dev/tools/dotnet ] && export DOTNET_ROOT=C:/ps4dev/tools/dotnet
 export OO_PS4_TOOLCHAIN="$(cygpath -m "$SDK")"
 
 TITLE="NX on Orbis"

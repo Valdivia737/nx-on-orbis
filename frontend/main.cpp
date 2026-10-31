@@ -36,6 +36,7 @@
 
 #include "common/fs/path_util.h"
 #include "common/logging.h"
+#include "common/orbis_jit.h"
 #include "common/orbis_lazy_memory.h"
 #include "common/scm_rev.h"
 #include "common/settings.h"
@@ -551,11 +552,13 @@ int main() {
             last_status = Ps4::NowUs();
             const auto perf = system.GetAndResetPerfStats();
             const auto mem = Common::Orbis::GetStats();
-            Ps4::Log("status: game %.1f fps, speed %.0f%%, frame %.1f ms, guest+tables %lu MiB committed (%lu MiB given back), %lu MiB direct free",
+            const auto& flushes = Common::Orbis::jit_cache_flushes;
+            Ps4::Log("status: game %.1f fps, speed %.0f%%, frame %.1f ms, guest+tables %lu MiB committed (%lu MiB given back), %lu MiB direct free, jit cache flushes %u/%u/%u/%u",
                      perf.average_game_fps, perf.emulation_speed * 100.0, perf.frametime * 1000.0,
                      static_cast<unsigned long>(mem.committed_bytes >> 20),
                      static_cast<unsigned long>(mem.decommitted_bytes >> 20),
-                     static_cast<unsigned long>(Ps4::FreeDirectMemory() >> 20));
+                     static_cast<unsigned long>(Ps4::FreeDirectMemory() >> 20),
+                     flushes[0].load(), flushes[1].load(), flushes[2].load(), flushes[3].load());
             if (++status_count % 3 == 1) {
                 Ps4HeapCensus();
             }

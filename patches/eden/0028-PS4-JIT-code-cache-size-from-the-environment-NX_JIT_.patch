@@ -1,0 +1,171 @@
+From 9eff99b06c85b74461d722066a093ce0aa4390d8 Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sat, 31 Oct 2026 17:34:08 -0300
+Subject: [PATCH] PS4: JIT code cache size from the environment
+ (NX_JIT_CACHE_MIB), count full cache flushes
+
+Each core's dynarmic code cache is 32 MiB on the PS4 (patch 0008). When less than 1 MiB is left
+the cache is emptied whole and every block is translated again. With Super Mario Bros. Wonder this
+lines up with 1-minute stretches at ~1 fps where the profiler shows only the JIT's own code hot
+(HostLocInfo::ReleaseAll, RegAlloc, A64EmitX64::Emit, Xbyak) and the game's code at 3-8%.
+
+- common/orbis_jit.h: per-core flush counters; JitCacheMiB() reads NX_JIT_CACHE_MIB (cores 0-2)
+  and NX_JIT_CACHE_MIB_CORE3, default 32 (unchanged), clamped to 8..256.
+- x64 A32/A64 interfaces count each full flush.
+- arm_dynarmic_32/64 take the size from JitCacheMiB() and log it.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ src/common/orbis_jit.h                        | 36 +++++++++++++++++++
+ src/core/arm/dynarmic/arm_dynarmic_32.cpp     |  8 ++++-
+ src/core/arm/dynarmic/arm_dynarmic_64.cpp     |  8 ++++-
+ .../dynarmic/backend/x64/a32_interface.cpp    |  6 ++++
+ .../dynarmic/backend/x64/a64_interface.cpp    |  6 ++++
+ 5 files changed, 62 insertions(+), 2 deletions(-)
+ create mode 100644 src/common/orbis_jit.h
+
+diff --git a/src/common/orbis_jit.h b/src/common/orbis_jit.h
+new file mode 100644
+index 0000000..a875266
+--- /dev/null
++++ b/src/common/orbis_jit.h
+@@ -0,0 +1,36 @@
++// SPDX-License-Identifier: GPL-3.0-or-later
++// PS4 (OpenOrbis): the size of dynarmic's code caches and how often they fill up.
++//
++// Each emulated core's JIT has its own code cache, taken from direct memory up front. When one has
++// less than 1 MiB left, dynarmic empties it whole and every block is translated again, which shows
++// as a stretch of very low fps with the JIT's own code (register allocation, emission) hot in the
++// profiler. The size comes from the environment, which settings.txt can set:
++//   env=NX_JIT_CACHE_MIB=64          cores 0-2
++//   env=NX_JIT_CACHE_MIB_CORE3=16    core 3
++// Without them every core keeps the v0.1.0 size, 32 MiB.
++
++#pragma once
++
++#include <algorithm>
++#include <atomic>
++#include <cstddef>
++#include <cstdint>
++#include <cstdlib>
++
++namespace Common::Orbis {
++
++/// Times each core's code cache filled up and was emptied whole.
++inline std::atomic<std::uint32_t> jit_cache_flushes[4]{};
++
++inline void CountJitCacheFlush(std::size_t core) {
++    jit_cache_flushes[std::min<std::size_t>(core, 3)].fetch_add(1, std::memory_order_relaxed);
++}
++
++/// Code cache size in MiB for `core`: 32 unless the environment says otherwise, clamped to 8..256.
++inline std::uint32_t JitCacheMiB(std::size_t core) {
++    const char* value = std::getenv(core == 3 ? "NX_JIT_CACHE_MIB_CORE3" : "NX_JIT_CACHE_MIB");
++    const unsigned long mib = value != nullptr ? std::strtoul(value, nullptr, 10) : 0;
++    return mib == 0 ? 32 : static_cast<std::uint32_t>(std::clamp<unsigned long>(mib, 8, 256));
++}
++
++} // namespace Common::Orbis
+diff --git a/src/core/arm/dynarmic/arm_dynarmic_32.cpp b/src/core/arm/dynarmic/arm_dynarmic_32.cpp
+index 02acf57..02c92cc 100644
+--- a/src/core/arm/dynarmic/arm_dynarmic_32.cpp
++++ b/src/core/arm/dynarmic/arm_dynarmic_32.cpp
+@@ -11,6 +11,10 @@
+ #include "core/arm/dynarmic/dynarmic_exclusive_monitor.h"
+ #include "core/core_timing.h"
+ #include "core/hle/kernel/k_process.h"
++#if defined(__ORBIS__)
++#include "common/logging.h"
++#include "common/orbis_jit.h"
++#endif
+ 
+ namespace Core {
+ 
+@@ -213,7 +217,9 @@ void ArmDynarmic32::MakeJit(Common::PageTable* page_table) {
+ #if defined(__ORBIS__)
+     // PS4: the code cache is direct memory taken up front (32 MiB since test 5: memory ran out), from ~3.4 GiB shared with the guest
+     // RAM; four cores at 512 MiB would take most of it. A smaller cache flushes more often.
+-    config.code_cache_size = std::uint32_t(32_MiB);
++    // 32 MiB unless settings.txt sets NX_JIT_CACHE_MIB / NX_JIT_CACHE_MIB_CORE3 (common/orbis_jit.h).
++    config.code_cache_size = std::uint32_t(Common::Orbis::JitCacheMiB(m_core_index) * 1_MiB);
++    LOG_INFO(Core_ARM, "PS4: core {} A32 JIT code cache {} MiB", m_core_index, config.code_cache_size >> 20);
+ #elif defined(ARCHITECTURE_arm64) || defined(__sun__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
+     config.code_cache_size = std::uint32_t(128_MiB);
+ #else
+diff --git a/src/core/arm/dynarmic/arm_dynarmic_64.cpp b/src/core/arm/dynarmic/arm_dynarmic_64.cpp
+index 6aaf699..7df60dc 100644
+--- a/src/core/arm/dynarmic/arm_dynarmic_64.cpp
++++ b/src/core/arm/dynarmic/arm_dynarmic_64.cpp
+@@ -10,6 +10,10 @@
+ #include "core/arm/dynarmic/dynarmic_exclusive_monitor.h"
+ #include "core/core_timing.h"
+ #include "core/hle/kernel/k_process.h"
++#if defined(__ORBIS__)
++#include "common/logging.h"
++#include "common/orbis_jit.h"
++#endif
+ 
+ namespace Core {
+ 
+@@ -265,7 +269,9 @@ void ArmDynarmic64::MakeJit(Common::PageTable* page_table, std::size_t address_s
+ #if defined(__ORBIS__)
+     // PS4: the code cache is direct memory taken up front (32 MiB since test 5: memory ran out), from ~3.4 GiB shared with the guest
+     // RAM; four cores at 512 MiB would take most of it. A smaller cache flushes more often.
+-    config.code_cache_size = std::uint32_t(32_MiB);
++    // 32 MiB unless settings.txt sets NX_JIT_CACHE_MIB / NX_JIT_CACHE_MIB_CORE3 (common/orbis_jit.h).
++    config.code_cache_size = std::uint32_t(Common::Orbis::JitCacheMiB(m_core_index) * 1_MiB);
++    LOG_INFO(Core_ARM, "PS4: core {} A64 JIT code cache {} MiB", m_core_index, config.code_cache_size >> 20);
+ #elif defined(ARCHITECTURE_arm64) || defined(__sun__) || defined(__NetBSD__) || defined(__DragonFly__) || defined(__OpenBSD__)
+     config.code_cache_size = std::uint32_t(128_MiB);
+ #else
+diff --git a/src/dynarmic/src/dynarmic/backend/x64/a32_interface.cpp b/src/dynarmic/src/dynarmic/backend/x64/a32_interface.cpp
+index 72627b9..5e7dba0 100644
+--- a/src/dynarmic/src/dynarmic/backend/x64/a32_interface.cpp
++++ b/src/dynarmic/src/dynarmic/backend/x64/a32_interface.cpp
+@@ -30,6 +30,9 @@
+ #include "dynarmic/ir/basic_block.h"
+ #include "dynarmic/ir/location_descriptor.h"
+ #include "dynarmic/ir/opt_passes.h"
++#if defined(__ORBIS__)
++#include "common/orbis_jit.h"
++#endif
+ 
+ namespace Dynarmic::A32 {
+ 
+@@ -194,6 +197,9 @@ private:
+ 
+         constexpr size_t MINIMUM_REMAINING_CODESIZE = 1 * 1024 * 1024;
+         if (block_of_code.SpaceRemaining() < MINIMUM_REMAINING_CODESIZE) {
++#if defined(__ORBIS__)
++            ::Common::Orbis::CountJitCacheFlush(conf.processor_id);
++#endif
+             invalidate_entire_cache = true;
+             PerformRequestedCacheInvalidation(HaltReason::CacheInvalidation);
+         }
+diff --git a/src/dynarmic/src/dynarmic/backend/x64/a64_interface.cpp b/src/dynarmic/src/dynarmic/backend/x64/a64_interface.cpp
+index bb07212..c3b88a8 100644
+--- a/src/dynarmic/src/dynarmic/backend/x64/a64_interface.cpp
++++ b/src/dynarmic/src/dynarmic/backend/x64/a64_interface.cpp
+@@ -26,6 +26,9 @@
+ #include "dynarmic/interface/A64/a64.h"
+ #include "dynarmic/ir/basic_block.h"
+ #include "dynarmic/ir/opt_passes.h"
++#if defined(__ORBIS__)
++#include "common/orbis_jit.h"
++#endif
+ 
+ namespace Dynarmic::A64 {
+ 
+@@ -248,6 +251,9 @@ private:
+         constexpr size_t MINIMUM_REMAINING_CODESIZE = 1 * 1024 * 1024;
+         if (block_of_code.SpaceRemaining() < MINIMUM_REMAINING_CODESIZE) {
+             // Immediately evacuate cache
++#if defined(__ORBIS__)
++            ::Common::Orbis::CountJitCacheFlush(conf.processor_id);
++#endif
+             invalidate_entire_cache = true;
+             PerformRequestedCacheInvalidation(HaltReason::CacheInvalidation);
+         }
+-- 
+2.55.0.windows.3
+
