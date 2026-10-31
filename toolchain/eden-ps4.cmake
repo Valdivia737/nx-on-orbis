@@ -1,9 +1,9 @@
 # PS4 toolchain for Eden: the orbis-sdk toolchain, with LLVM 18's libc++ (built by eden-ps4 in
 # libcxx18/) in place of the SDK's libc++ 11, and the include overlay that makes musl's headers
 # agree with it (toolchain/include-overlay: math.h, stdlib.h).
-include("C:/Users/alejo/eden-ps4/sdk-dl/orbis-sdk-v1/toolchain/orbis-sdk.cmake")
-set(EDEN_PS4_LIBCXX "C:/Users/alejo/eden-ps4/libcxx18")
-set(EDEN_PS4_OVERLAY "C:/Users/alejo/eden-ps4/toolchain/include-overlay")
+include("C:/ps4dev/nx-on-orbis/sdk-dl/orbis-sdk-v1/toolchain/orbis-sdk.cmake")
+set(EDEN_PS4_LIBCXX "C:/ps4dev/nx-on-orbis/libcxx18")
+set(EDEN_PS4_OVERLAY "C:/ps4dev/nx-on-orbis/toolchain/include-overlay")
 string(REPLACE "-isystem ${OO_PS4_TOOLCHAIN}/include/c++/v1"
        "-nostdinc++ -fexperimental-library -isystem ${EDEN_PS4_LIBCXX}/include/c++/v1 -isystem ${EDEN_PS4_OVERLAY}"
        CMAKE_CXX_FLAGS_INIT "${CMAKE_CXX_FLAGS_INIT}")

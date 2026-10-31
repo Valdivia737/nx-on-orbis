@@ -9,7 +9,7 @@ set -e
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 SDK="$ROOT/sdk-dl/orbis-sdk-v1/sdk"
 BIN="$SDK/bin/windows"
-OO="C:/Users/alejo/soh-ps4/tools/OpenOrbis/OpenOrbis/PS4Toolchain"
+OO="C:/ps4dev/tools/OpenOrbis/OpenOrbis/PS4Toolchain"
 export DOTNET_ROLL_FORWARD=LatestMajor
 export OO_PS4_TOOLCHAIN="$(cygpath -m "$SDK")"
 
