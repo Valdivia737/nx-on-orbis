@@ -59,7 +59,7 @@ Cada paso se encontró midiendo con el registro de la consola (`boot.log`), no a
 | 5 | El mapa del mundo de Wonder no cargaba por el reparto de memoria | Búfer de vídeo y cola de descriptores ajustables (parche 0032) | jitcache8 |
 | 6 | Robustez ante falta de memoria de la GPU | Liberar memoria y reintentar cuando falla una reserva, **adaptado de [Eden4](https://github.com/xatyy/Eden4) de xatyy** (parches 0033 y 0034) | jitcache9–10 |
 | 7 | Los juegos salían en inglés | `language=` y `region=` en `settings.txt` | jitcache11 |
-| 8 | **Rojo y azul cambiados en toda la imagen** (problema que el autor original dejó abierto) | La imagen final se dibujaba en orden BGRA sobre una pantalla RGBA; ahora se usa el orden de la pantalla, como ya se hacía en Android (parche 0035) | jitcache12 (**colores pendientes de confirmar en la consola**) |
+| 8 | **Rojo y azul cambiados en toda la imagen** (problema que el autor original dejó abierto) | La imagen final se dibujaba en orden BGRA sobre una pantalla RGBA; ahora se usa el orden de la pantalla, como ya se hacía en Android (parche 0035) | jitcache12 (**confirmado en la consola el 2026-11-01: Mario sale rojo**) |
 
 Los cambios de Eden están en [`patches/eden/`](patches/eden/) (0028 a 0035) y los del frontend en
 [`frontend/`](frontend/). Todo va dentro de `#ifdef __ORBIS__`: no afecta a otras plataformas.
@@ -86,13 +86,13 @@ region=usa
 
 - `language=es-419` es español latino; para español de España: `language=es` y `region=europe`.
 - Combinaciones que **fallaron**: caché del JIT a 64/128 sin el arreglo del heap (se congela); `ORBIS_ARENA_MIB=1792` (deja sin memoria al resto); `NX_RECLAIM_LOW_MIB` (el presupuesto que da el driver siempre es 0).
-- Solo jitcache12: `env=NX_PRESENT_ORDER=auto|swap|off` para probar el arreglo de colores (`auto` por defecto, `off` = como antes).
+- Desde jitcache12: `env=NX_PRESENT_ORDER=auto|swap|off` (`auto` por defecto = colores correctos; `off` = como antes, rojo y azul cambiados).
 
 ---
 
 ## Instalar
 
-1. Descarga el `.pkg` de la versión que quieras en [Releases](../../releases). El más nuevo es jitcache12; el último probado a fondo es jitcache11.
+1. Descarga el `.pkg` de la versión que quieras en [Releases](../../releases). Recomendado: **jitcache12** (todo lo de jitcache11 más los colores arreglados).
 2. Instálalo con tu instalador de PKG habitual. Se instala como `EDPS00001` y reemplaza al Eden anterior.
 3. Pon en la PS4 tus claves (`/data/edenps4/keys`), tu firmware (`/data/edenps4/firmware`, archivos `.nca`) y tus juegos (`/data/edenps4/roms`), igual que con el original.
 4. Copia el `settings.txt` de arriba.
@@ -115,15 +115,14 @@ En la PS4 (por FTP): `/data/edenps4/boot.log`, `mesa.log` y `log/eden_log.txt`.
 
 ## Pendientes
 
-1. Confirmar en la consola el arreglo de colores (jitcache12).
-2. **Más FPS en la CPU**, de lo más barato a lo más caro:
+1. **Más FPS en la CPU**, de lo más barato a lo más caro:
    - modo de CPU "Unsafe" (NaN y coma flotante menos exactos);
    - portar las optimizaciones del JIT de Eden4 (recorrido de la tabla de páginas en línea, reutilizar la búsqueda de página, R13 asignable);
    - fastmem.
    HIPÓTESIS: +10–30 % entre todas.
-3. Paper Mario: cinemática a 0,2–0,5 FPS con un núcleo en espera activa.
-4. Metroid Dread: averiguar quién pide 1,8 GiB al cargar.
-5. Fallo intermitente al arrancar (`radv_create_shader_arena`); reabrir la app lo soluciona.
+2. Paper Mario: cinemática a 0,2–0,5 FPS con un núcleo en espera activa.
+3. Metroid Dread: averiguar quién pide 1,8 GiB al cargar.
+4. Fallo intermitente al arrancar (`radv_create_shader_arena`); reabrir la app lo soluciona.
 
 ## Créditos
 
