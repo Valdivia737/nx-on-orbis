@@ -271,6 +271,7 @@ void ApplyPs4Settings() {
 ///   profile=on|off              sampling profiler in boot.log (default on)
 ///   cpu_accuracy=unsafe|auto|accurate (default unsafe)
 ///   fastmem=on|off              (default on; needs cpu_accuracy=unsafe)
+///   fastmem_partial=on|off      map 16 KiB pages only partly mapped by the guest (default on)
 ///   async_shaders=on|off        (default on)
 ///   fps=auto|30|60              presentation pacing; 30 = an even 30 for games that can't hold 60
 ///   env=NAME=VALUE              environment for the PS4 driver (e.g. env=RADV_DEBUG=info,nohiz)
@@ -402,6 +403,8 @@ void ApplySettingsFile() {
                                                       : Settings::CpuAccuracy::Accurate);
         } else if (key == "fastmem" && (value == "on" || value == "off")) {
             v.cpuopt_unsafe_host_mmu.SetValue(value == "on");
+        } else if (key == "fastmem_partial" && (value == "on" || value == "off")) {
+            Common::Orbis::SetViewPartialPages(value == "on");
         } else if (key == "profile" && (value == "on" || value == "off")) {
             Ps4::SetProfiling(value == "on");
         } else if (key == "reactive_flushing" && (value == "on" || value == "off")) {
@@ -538,7 +541,7 @@ void CheckMutexes() {
 int main() {
     Ps4::OpenBootLog();
     Ps4::Log("eden-ps4 starting (Eden %s %s)", Common::g_scm_branch, Common::g_scm_desc);
-    Ps4::Log("PS4 build: %s; test 33: fastmem maps 16 KiB pages whose 4 KiB pieces are only partly mapped (stack edges), settings fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
+    Ps4::Log("PS4 build: %s; test 34: fastmem maps partly mapped 16 KiB pages unless a piece maps backing it cannot alias (jitcache17 hung Wonder), fastmem_partial=off turns it off, fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
              EDEN_PS4_BUILD_ID);
     Ps4::InstallCrashReporting();
     Ps4::StartWatchdog();

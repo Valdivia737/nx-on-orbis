@@ -1,0 +1,138 @@
+From f6e0458ceab00122ce6814cb2002f5a62bbfa9c6 Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sun, 1 Nov 2026 12:30:22 -0300
+Subject: [PATCH] ORBIS fastmem: partly mapped pages must not show memory
+ mapped elsewhere
+
+jitcache17 hung Super Mario Bros. Wonder at boot with a core spinning on
+an exclusive store: a 16 KiB page was mapped although one of its 4 KiB
+pieces was mapped by the guest to backing the page cannot alias (another
+backing page, or not congruent). Through the view that piece read and
+wrote the wrong memory, so a lock released there never released.
+
+Track such pieces as blocked until the guest unmaps them, and keep the
+page out of the view while any is blocked. SetViewPartialPages(false)
+restores the jitcache16 rule (only fully mapped pages).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ src/common/orbis_lazy_memory.cpp | 30 ++++++++++++++++++++++--------
+ src/common/orbis_lazy_memory.h   |  3 +++
+ 2 files changed, 25 insertions(+), 8 deletions(-)
+
+diff --git a/src/common/orbis_lazy_memory.cpp b/src/common/orbis_lazy_memory.cpp
+index d817372..0d10f9b 100644
+--- a/src/common/orbis_lazy_memory.cpp
++++ b/src/common/orbis_lazy_memory.cpp
+@@ -132,13 +132,15 @@ bool CommitAddress(std::uintptr_t addr) {
+ //   bits 40..43  ... writable
+ //   bits 44..47  guest pages that were mapped when the host page was mapped
+ //   bits 48..49  what the host has: 0 nothing (reserved), 1 mapped read-only, 2 read-write
++//   bits 52..55  guest page mapped, but to backing this page cannot alias (other backing page
++//                or not congruent); keeps the whole page out of the view until it is unmapped
+ // All of it under g_lock, like the chunk tables.
+ constexpr std::size_t ViewPage = 16 * 1024;
+ constexpr std::size_t SubPage = 4 * 1024;
+ constexpr std::size_t ViewSpanBits = 30;
+ constexpr std::size_t PagesPerSpan = (std::size_t{1} << ViewSpanBits) / ViewPage;
+ constexpr std::uint64_t ValidShift = 32, ReadShift = 36, WriteShift = 40, MappedShift = 44,
+-                        HostShift = 48;
++                        HostShift = 48, BlockedShift = 52;
+ constexpr int ProtRead = 0x01, ProtReadWrite = 0x03;
+ 
+ std::atomic<bool> g_fastmem_ok{false};
+@@ -150,6 +152,7 @@ std::atomic<std::size_t> g_view_mapped{0};
+ std::atomic<std::size_t> g_view_touches{0};
+ std::atomic<std::size_t> g_jit_redirects{0};
+ std::atomic<std::size_t> g_view_conflicts{0};
++std::atomic<bool> g_view_partial{true};
+ // Why faults went to dynarmic: 0 outside the view, 1 a 4 KiB guest page of the 16 KiB page is not
+ // mapped (or maps other backing), 2 not readable, 3 write to a page mapped read-only, 4 other.
+ std::atomic<std::size_t> g_redirect_reason[5]{};
+@@ -180,8 +183,11 @@ int WantedHost(std::uint64_t e) {
+     // 4 KiB pieces the guest has not mapped (the guard pages around a thread stack, the ends of a
+     // mapping that is not 16 KiB-aligned) do not keep the page out of the view; only the mapped
+     // ones decide its access. A guest access to an unmapped piece then reaches the backing instead
+-    // of faulting, which only a stack overflow or a use-after-unmap would do.
+-    if (valid == 0 || (read & valid) != valid) {
++    // of faulting, which only a stack overflow or a use-after-unmap would do. A piece the guest
++    // maps somewhere this page cannot show does keep it out: through the view it would read and
++    // write the wrong memory (jitcache17 hung Wonder on a lock that way).
++    if (((e >> BlockedShift) & 0xF) != 0 || valid == 0 || (read & valid) != valid ||
++        (valid != 0xF && !g_view_partial.load(std::memory_order_relaxed))) {
+         return 0;
+     }
+     return (write & valid) == valid ? 2 : 1;
+@@ -328,7 +334,8 @@ void FaultHandler(int signal, void* ucontext) {
+             SpinGuard guard;
+             const std::uint64_t* e = ViewEntryLocked((addr - g_view_base) / ViewPage, false);
+             const unsigned valid = e != nullptr ? (*e >> ValidShift) & 0xF : 0;
+-            if (((valid >> (((addr - g_view_base) % ViewPage) / SubPage)) & 1) == 0) {
++            if (((valid >> (((addr - g_view_base) % ViewPage) / SubPage)) & 1) == 0 ||
++                ((*e >> BlockedShift) & 0xF) != 0) {
+                 reason = 1;
+             } else if ((((*e >> ReadShift) & 0xF) & valid) != valid) {
+                 reason = 2;
+@@ -713,19 +720,22 @@ void ViewMap(std::size_t view_offset, std::size_t backing_offset, std::size_t si
+         const std::uint64_t bit = std::uint64_t{1} << sub;
+         if (!congruent) {
+             e &= ~(bit << ValidShift);
++            e |= bit << BlockedShift;
+             g_view_conflicts.fetch_add(1, std::memory_order_relaxed);
+             return;
+         }
+         const std::uint64_t backing_page = (backing_offset + (a - view_offset)) / ViewPage;
+-        const unsigned valid = (e >> ValidShift) & 0xF;
++        const std::uint64_t valid = (e >> ValidShift) & 0xF;
+         if (valid != 0 && (e & 0xFFFFFFFFu) != backing_page) {
+             // Another backing page was here: the other pieces of it can no longer be reached
+-            // through this page (they stay correct through the page table).
++            // through this page (they stay correct through the page table) and, still mapped by
++            // the guest, they block the page until they are unmapped.
+             e &= ~(std::uint64_t{0xF} << ValidShift);
++            e |= valid << BlockedShift;
+             DropHostLocked(a / ViewPage, e);
+             g_view_conflicts.fetch_add(1, std::memory_order_relaxed);
+         }
+-        e = (e & ~std::uint64_t{0xFFFFFFFFu}) | backing_page;
++        e = (e & ~(std::uint64_t{0xFFFFFFFFu} | (bit << BlockedShift))) | backing_page;
+         e |= bit << ValidShift;
+         e = read ? e | (bit << ReadShift) : e & ~(bit << ReadShift);
+         e = write ? e | (bit << WriteShift) : e & ~(bit << WriteShift);
+@@ -734,7 +744,7 @@ void ViewMap(std::size_t view_offset, std::size_t backing_offset, std::size_t si
+ 
+ void ViewUnmap(std::size_t view_offset, std::size_t size) {
+     ForEachSubPage(view_offset, size, false, [&](std::uint64_t& e, unsigned sub, std::size_t) {
+-        e &= ~((std::uint64_t{1} << sub) << ValidShift);
++        e &= ~(((std::uint64_t{1} << sub) << ValidShift) | ((std::uint64_t{1} << sub) << BlockedShift));
+     });
+ }
+ 
+@@ -750,6 +760,10 @@ void SetJitFaultHandler(JitFaultHandler handler) {
+     g_jit.store(handler, std::memory_order_release);
+ }
+ 
++void SetViewPartialPages(bool on) {
++    g_view_partial.store(on, std::memory_order_relaxed);
++}
++
+ unsigned ViewAddressBits() {
+     unsigned bits = 0;
+     while (bits < 63 && (std::size_t{1} << (bits + 1)) <= g_view_size) {
+diff --git a/src/common/orbis_lazy_memory.h b/src/common/orbis_lazy_memory.h
+index d4a7ed8..ebc1c97 100644
+--- a/src/common/orbis_lazy_memory.h
++++ b/src/common/orbis_lazy_memory.h
+@@ -87,6 +87,9 @@ void ViewProtect(std::size_t view_offset, std::size_t size, bool read, bool writ
+ /// the thread (ucontext modified). Called after lazy commits and view first-touches.
+ using JitFaultHandler = bool (*)(void* ucontext);
+ void SetJitFaultHandler(JitFaultHandler handler);
++/// Whether a 16 KiB page whose 4 KiB guest pages are only partly mapped (stack guard pages) is
++/// still mapped in the view (default on). Off: only fully mapped pages, as before jitcache17.
++void SetViewPartialPages(bool on);
+ 
+ struct ViewStats {
+     std::size_t mapped_pages;   // 16 KiB view pages currently mapped
+-- 
+2.55.0.windows.3
+
