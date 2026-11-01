@@ -1,0 +1,95 @@
+[    1.368] eden-ps4 starting (Eden fastmem f6e0458cea-fastmem)
+[    1.375] PS4 build: jitcache18-20261101T153031Z-f6e0458ceab0; test 34: fastmem maps partly mapped 16 KiB pages unless a piece maps backing it cannot alias (jitcache17 hung Wonder), fastmem_partial=off turns it off, fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off
+[    1.418]   | boot: crash handlers installed (terminate + SIGSEGV/SIGBUS/SIGFPE/SIGILL/SIGABRT, sigaction rc=0, sigaltstack rc=0 errno=0 no error - a stack overflow on THIS thread can now report itself)
+[    1.438]   | boot: sigaltstack readback rc=0 errno=0 - raw 000000020040eae0 0000000000010000 0000000000000000 - as FreeBSD stack_t: ss_sp=000000020040eae0 ss_size=65536 ss_flags=0 - FreeBSD field order confirmed (sp, size, flags)
+[    1.461]   | thread census [live]: 1 created, 1 raised to 2048 KiB - 1984 KiB of address space the platform's default would not have reserved; 0 on an alternate signal stack, 0 refused, 0 too small to spare one - 0 KiB, taken from those threads' own stacks rather than allocated
+[    1.461]   | thread alt stack: first worker thread - it INHERITED rc=0 errno=0 ss_sp=0 ss_size=0 ss_flags=4 (0=nothing set, 4=SS_DISABLE, a non-null sp is the MAIN thread's buffer and means td_sigstk is copied on create); installed 64 KiB of this thread's own stack at 0x7eede7f60 rc=0 errno=0 - a stack overflow on a WORKER thread can now report itself
+[    1.516]   | thread census [live]: 2 created, 2 raised to 2048 KiB - 3968 KiB of address space the platform's default would not have reserved; 1 on an alternate signal stack, 0 refused, 0 too small to spare one - 64 KiB, taken from those threads' own stacks rather than allocated
+[    1.550] TLS check: main ok, new thread ok, per-thread values ok
+[    1.559]   | thread census [live]: 4 created, 4 raised to 2048 KiB - 7936 KiB of address space the platform's default would not have reserved; 3 on an alternate signal stack, 0 refused, 0 too small to spare one - 192 KiB, taken from those threads' own stacks rather than allocated
+[    1.650]   | thread census [live]: 8 created, 8 raised to 2048 KiB - 15872 KiB of address space the platform's default would not have reserved; 7 on an alternate signal stack, 0 refused, 0 too small to spare one - 448 KiB, taken from those threads' own stacks rather than allocated
+[    2.046] mutex check: std::mutex 1200000/1200000 ok, std::recursive_mutex (nested) 1200000/1200000 ok
+[    2.056] find check: 1->0 3->1 7->2 0x10000->3 42->4 5->5 ok
+[    2.082] flat_map check: 89826 pairs in 4103 pages, 0 missing (first: page 0x0 id 0) ok
+[    2.093] == logging
+[    2.097] controller open
+[    2.105] menu: 4 games listed
+[    8.315] menu: game 3 of 4 chosen, display closed (0x0); framebuffers kept
+[    8.324] game 3 of 4 in roms/
+[    8.327] game: /data/edenps4/roms/Super Mario 3D World Bowsers Fury [010028600EBDA000][v0].xci
+[    8.337] == firmware
+[    8.359] firmware: 0 NCAs installed now, 229 already there, 0 failed
+[    8.366] == core init
+[    8.369] settings.txt: env=ORBIS_VRAM_GARLIC=0
+[    8.374] settings.txt: env=ORBIS_ARENA_MIB=1408
+[    8.379] settings.txt: env=NX_JIT_CACHE_MIB=96
+[    8.385] settings.txt: env=NX_JIT_CACHE_MIB_CORE3=8
+[    8.390] settings.txt: env=NX_TEX_CACHE_PCT=40
+[    8.395] settings.txt: env=NX_BUF_CACHE_PCT=20
+[    8.401] settings.txt: astc_recompress=bc3
+[    8.406] settings.txt: env=NX_STREAM_BUFFER_MIB=128
+[    8.411] settings.txt: env=NX_DESC_PAYLOAD=0x20000
+[    8.417] settings.txt: language=es-419
+[    8.421] settings.txt: region=usa
+[    8.425] settings.txt: cpu=unsafe
+[    8.429] settings.txt: fastmem=on
+[    8.433] settings.txt: fastmem_partial=on
+[    8.438] settings.txt: fps=30
+[    8.442] environment: 11 variables moved out of the heap (248 bytes)
+[    8.449] fastmem self-test: starting (if this is the last line, put fastmem=off in settings.txt)
+[    8.459] fastmem self-test ok: direct memory aliases, mprotect, fault redirect (rip/rsp)
+[    8.503]   | paths: title id is 'EDPS00001'
+[    8.508]   | paths: anchor '/data/EDPS00001/' (this title's id)
+[    8.515]   | paths: relative paths are anchored - 'C:/Program Files/Git/app0/ssl/openssl.cnf' -> '/data/EDPS00001/C:/Program Files/Git/app0/ssl/openssl.cnf'. This process has NO working directory (getcwd = ENOSYS) and a relative open returns EINVAL, so without this nothing relative can be opened at all
+[    8.704] == loading game
+[    9.097]   | mem mmap-direct: carve-out 1 taken - 131072 KiB at 0x55b400000 (phys 0x1b200000), direct held 262144 KiB of a 1572864 KiB cap
+[    9.793]   | thread census [live]: 16 created, 16 raised to 2048 KiB - 31744 KiB of address space the platform's default would not have reserved; 15 on an alternate signal stack, 0 refused, 0 too small to spare one - 960 KiB, taken from those threads' own stacks rather than allocated
+[    9.892]   | thread census [live]: 32 created, 32 raised to 2048 KiB - 63488 KiB of address space the platform's default would not have reserved; 31 on an alternate signal stack, 0 refused, 0 too small to spare one - 1984 KiB, taken from those threads' own stacks rather than allocated
+[    9.936] guest layout: code 0x8000000 (entry 0x80028000), stack 0x82a00000, heap 0x102a00000, alias 0x1302c00000, kernel map 0x302c00000; fastmem covers below 0x200000000
+[    9.953] == starting GPU
+[    9.957] == shader cache
+[    9.981]   | mem mmap-direct: carve-out 2 taken - 131072 KiB at 0x5c0400000 (phys 0x7bc00000), direct held 393216 KiB of a 1572864 KiB cap
+[   10.757] !! CRASH signal 10 during shader cache: rip=0xac1d77 (eboot+0x6c1d77) fault address=0x0 rsp=0x7ee5d7c30
+[   10.774] !! registers: rax=0x6172476574616572 rbx=0x200442f00 rcx=0x88000a5a0 rdx=0x80008e590
+[   10.760] !! CRASH signal 10 during shader cache: rip=0x496587 (eboot+0x96587) fault address=0x0 rsp=0x560fcb6d0
+[   10.786] !! registers: rdi=0x1 rsi=0x1 rbp=0x7ee5d7cc0 rsp=0x7ee5d7c30
+[   10.801] !! registers: rax=0x2005072e0 rbx=0x562d61df8 rcx=0x0 rdx=0x12
+[   10.816] !! registers: rdi=0x377e088 rsi=0x5 rbp=0x560fcb6d0 rsp=0x560fcb6d0
+[   10.809] !! registers: r8=0x0 r9=0x0 r10=0x0 r11=0x246
+[   10.825] !! registers: r8=0x2005092c0 r9=0x3933383d42737620 r10=0x0 r11=0x2005072e0
+[   10.843] !! registers: r12=0x10 r13=0x0 r14=0x10 r15=0x562d61cf8
+[   10.835] !! registers: r12=0x7ee5d7e18 r13=0x7ee5d7d60 r14=0x20050cb20 r15=0x0
+[   10.857] !! context: trapno=9 err=0x0 rflags=0x10202 cs=0x43 ss=0x3b mc_offset=64
+[   10.867] !! context: trapno=9 err=0x0 rflags=0x10206 cs=0x43 ss=0x3b mc_offset=64
+[   10.870] !! last Vulkan BeginRenderPass: rp=0x0 fb=0x0 first_image=0x0 images=0 tick=0
+[   10.897] !! last Vulkan attachment: first_view=0x0 guest_format=0x0 size=0x0 samples=0
+[   10.890] !! last Vulkan BeginRenderPass: rp=0x0 fb=0x0 first_image=0x0 images=0 tick=0
+[   10.910]    #00 eboot+0xe7688
+[   10.916]    #01 eboot+0xe2ecf
+[   10.915] !! last Vulkan attachment: first_view=0x0 guest_format=0x0 size=0x0 samples=0
+[   10.928]    #02 eboot+0xe11f8
+[   10.935]    #00 eboot+0xb06f0
+[   10.936]    #03 eboot+0x10bea6
+[   10.943]    #01 eboot+0xb01c2
+[   10.931] !! CRASH signal 10 during shader cache: rip=0xa82190 (eboot+0x682190) fault address=0x0 rsp=0x7ed391010
+[   10.956]    #02 eboot+0x6c3d77
+[   10.949]    #04 eboot+0x22769e
+[   10.930] !! CRASH signal 10 during shader cache: rip=0xa8212e (eboot+0x68212e) fault address=0x0 rsp=0x7ed18d6f0
+[   10.969]    #05 eboot+0x3c684c
+[   10.965]    #03 eboot+0x6bd863
+[   10.964] !! registers: rax=0x0 rbx=0x560368528 rcx=0x200000020 rdx=0x20
+[   10.980]    #06 eboot+0x3c4b6b
+[   10.979] !! registers: rax=0x2005167c0 rbx=0x1b rcx=0x100000008 rdx=0x4
+[   10.996]    #07 eboot+0x18b371
+[   10.988]    #04 eboot+0x6c55cf
+[   11.008]    #08 eboot+0x94bc6
+[   11.017]    #05 eboot+0x9844
+[   10.973] !! CRASH signal 10 during shader cache: rip=0xa77c50 (eboot+0x677c50) fault address=0x0 rsp=0x7ed9a3e70
+[   11.006] !! registers: rdi=0x3d656372756f735f rsi=0x4 rbp=0x7ed18d700 rsp=0x7ed18d6f0
+[   10.995] !! registers: rdi=0x3965363864336561 rsi=0x0 rbp=0x7ed391020 rsp=0x7ed391010
+[   11.024]    #06 eboot+0x7ffc074d3
+[   11.019]    #09 eboot+0xb1918f
+[   11.038] !! registers: r8=0x1 r9=0x1 r10=0x0 r11=0x0
+[   11.031] !! registers: rax=0xffffffffffffffff rbx=0x5c07fb220 rcx=0x16 rdx=0xffffffffffffffff
+[   11.044] !! lazy memory: 71 MiB committed of 5192 MiB reserved, 0 failed commits
+[   11.034] !! registers: r8=0x5 r9=0x2 r10=0x562b23728 r11=0x21

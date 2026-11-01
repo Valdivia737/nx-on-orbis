@@ -1,0 +1,23 @@
+# Texturas dentro de la arena del driver (no fuera), para no agotar la memoria directa
+env=ORBIS_VRAM_GARLIC=0
+# Arena del driver 1408 MiB (con el bufer de video a 128 MiB cabe de sobra)
+env=ORBIS_ARENA_MIB=1408
+# Cache del JIT 96 MiB en nucleos 0-2 (jitcache13; con 64 Wonder vaciaba 6/5/3 veces), 8 MiB en el 3
+env=NX_JIT_CACHE_MIB=96
+env=NX_JIT_CACHE_MIB_CORE3=8
+# Presupuestos de texturas y buferes (% de la arena)
+env=NX_TEX_CACHE_PCT=40
+env=NX_BUF_CACHE_PCT=20
+# Texturas ASTC guardadas como BC3 (1 byte/texel) en vez de RGBA8 (4)
+astc_recompress=bc3
+# jitcache8: bufer de video 128 MiB (era 256) y cola de descriptores 1/4 (ahorra ~90 MiB de heap)
+env=NX_STREAM_BUFFER_MIB=128
+env=NX_DESC_PAYLOAD=0x20000
+# Idioma de la consola emulada: espanol latino (los juegos que lo traen salen en espanol)
+language=es-419
+region=usa
+# jitcache16-17: fastmem con pila y heap dentro de la vista de 8 GiB (jitcache16: ~31 fps en el 1-1); fastmem=off para volver a ~25
+cpu=unsafe
+fastmem=on
+# jitcache17: imagen a 30 fps parejos (cada fotograma 33,3 ms); fps=auto para quitarlo
+fps=30

@@ -1,0 +1,1072 @@
+[    1.515] eden-ps4 starting (Eden fastmem 8d82f76ed5-fastmem)
+[    1.523] PS4 build: jitcache15-20261101T081018Z-8d82f76ed588; test 31: fastmem + addresses past the view walk the page table in far code (not the callbacks), unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off
+[    1.547]   | boot: crash handlers installed (terminate + SIGSEGV/SIGBUS/SIGFPE/SIGILL/SIGABRT, sigaction rc=0, sigaltstack rc=0 errno=0 no error - a stack overflow on THIS thread can now report itself)
+[    1.566]   | boot: sigaltstack readback rc=0 errno=0 - raw 000000020040eae0 0000000000010000 0000000000000000 - as FreeBSD stack_t: ss_sp=000000020040eae0 ss_size=65536 ss_flags=0 - FreeBSD field order confirmed (sp, size, flags)
+[    1.589]   | thread census [live]: 1 created, 1 raised to 2048 KiB - 1984 KiB of address space the platform's default would not have reserved; 0 on an alternate signal stack, 0 refused, 0 too small to spare one - 0 KiB, taken from those threads' own stacks rather than allocated
+[    1.589]   | thread alt stack: first worker thread - it INHERITED rc=0 errno=0 ss_sp=0 ss_size=0 ss_flags=4 (0=nothing set, 4=SS_DISABLE, a non-null sp is the MAIN thread's buffer and means td_sigstk is copied on create); installed 64 KiB of this thread's own stack at 0x7eede7f60 rc=0 errno=0 - a stack overflow on a WORKER thread can now report itself
+[    1.644]   | thread census [live]: 2 created, 2 raised to 2048 KiB - 3968 KiB of address space the platform's default would not have reserved; 1 on an alternate signal stack, 0 refused, 0 too small to spare one - 64 KiB, taken from those threads' own stacks rather than allocated
+[    1.677] TLS check: main ok, new thread ok, per-thread values ok
+[    1.685]   | thread census [live]: 4 created, 4 raised to 2048 KiB - 7936 KiB of address space the platform's default would not have reserved; 3 on an alternate signal stack, 0 refused, 0 too small to spare one - 192 KiB, taken from those threads' own stacks rather than allocated
+[    1.764]   | thread census [live]: 8 created, 8 raised to 2048 KiB - 15872 KiB of address space the platform's default would not have reserved; 7 on an alternate signal stack, 0 refused, 0 too small to spare one - 448 KiB, taken from those threads' own stacks rather than allocated
+[    2.151] mutex check: std::mutex 1200000/1200000 ok, std::recursive_mutex (nested) 1200000/1200000 ok
+[    2.162] find check: 1->0 3->1 7->2 0x10000->3 42->4 5->5 ok
+[    2.188] flat_map check: 89826 pairs in 4103 pages, 0 missing (first: page 0x0 id 0) ok
+[    2.198] == logging
+[    2.202] controller open
+[    2.221] menu: 4 games listed
+[    4.799] menu: game 3 of 4 chosen, display closed (0x0); framebuffers kept
+[    4.809] game 3 of 4 in roms/
+[    4.812] game: /data/edenps4/roms/Super Mario 3D World Bowsers Fury [010028600EBDA000][v0].xci
+[    4.823] == firmware
+[    4.850] firmware: 0 NCAs installed now, 229 already there, 0 failed
+[    4.857] == core init
+[    4.860] settings.txt: env=ORBIS_VRAM_GARLIC=0
+[    4.865] settings.txt: env=ORBIS_ARENA_MIB=1408
+[    4.871] settings.txt: env=NX_JIT_CACHE_MIB=96
+[    4.876] settings.txt: env=NX_JIT_CACHE_MIB_CORE3=8
+[    4.881] settings.txt: env=NX_TEX_CACHE_PCT=40
+[    4.887] settings.txt: env=NX_BUF_CACHE_PCT=20
+[    4.892] settings.txt: astc_recompress=bc3
+[    4.897] settings.txt: env=NX_STREAM_BUFFER_MIB=128
+[    4.902] settings.txt: env=NX_DESC_PAYLOAD=0x20000
+[    4.908] settings.txt: language=es-419
+[    4.912] settings.txt: region=usa
+[    4.916] settings.txt: cpu=unsafe
+[    4.920] settings.txt: fastmem=on
+[    4.924] environment: 11 variables moved out of the heap (248 bytes)
+[    4.932] fastmem self-test: starting (if this is the last line, put fastmem=off in settings.txt)
+[    4.942] fastmem self-test ok: direct memory aliases, mprotect, fault redirect (rip/rsp)
+[    4.989]   | paths: title id is 'EDPS00001'
+[    4.994]   | paths: anchor '/data/EDPS00001/' (this title's id)
+[    5.000]   | paths: relative paths are anchored - 'C:/Program Files/Git/app0/ssl/openssl.cnf' -> '/data/EDPS00001/C:/Program Files/Git/app0/ssl/openssl.cnf'. This process has NO working directory (getcwd = ENOSYS) and a relative open returns EINVAL, so without this nothing relative can be opened at all
+[    5.291] == loading game
+[    5.681]   | mem mmap-direct: carve-out 1 taken - 131072 KiB at 0x55b400000 (phys 0x1b200000), direct held 262144 KiB of a 1572864 KiB cap
+[    6.370]   | thread census [live]: 16 created, 16 raised to 2048 KiB - 31744 KiB of address space the platform's default would not have reserved; 15 on an alternate signal stack, 0 refused, 0 too small to spare one - 960 KiB, taken from those threads' own stacks rather than allocated
+[    6.469]   | thread census [live]: 32 created, 32 raised to 2048 KiB - 63488 KiB of address space the platform's default would not have reserved; 31 on an alternate signal stack, 0 refused, 0 too small to spare one - 1984 KiB, taken from those threads' own stacks rather than allocated
+[    6.513] == starting GPU
+[    6.517] == shader cache
+[    6.544]   | mem mmap-direct: carve-out 2 taken - 131072 KiB at 0x5c0400000 (phys 0x7bc00000), direct held 393216 KiB of a 1572864 KiB cap
+[    6.978]   | mem mmap-direct: carve-out 3 taken - 131072 KiB at 0x5c8400000 (phys 0x83c00000), direct held 524288 KiB of a 1572864 KiB cap
+[    8.697] == running
+[   16.665] !! no new frame for 15 s during running (lazy memory 293 MiB, 0 failed commits)
+[   16.676] !! thread stacks (first); offsets are eboot+0x..., newest frame first:
+[   16.705]    [main] eboot+0x7ffc02bac <- 0x7ffc056f5 <- 0x198c8eb <- 0x10342 <- 0xf23b <- 0x1a28eb9
+[   16.766]    [KWorkerTaskManager] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18d25d <- 0x18cf99 <- 0x18cd55 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.827]    [HostTiming] eboot+0x1982ce8 <- 0x910e2 <- 0x915cf <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.888]    [cemuhookWorker] eboot+0x7ffc00cbc <- 0x5288 <- 0x197f553 <- 0x6c4bc3 <- 0xae78c <- 0xb023b <- 0xafe52 <- 0x6c39f7 <- 0x6bd4e3 <- 0x6c524f <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.949]    [VulkanWorker] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x59c235 <- 0x59c750 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.010]    [TextureDecoder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18d25d <- 0x18cf99 <- 0x18cd55 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.071]    [VkPipelineBuilder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18d25d <- 0x18cf99 <- 0x18cd55 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.132]    [VkPipelineBuilder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18d25d <- 0x18cf99 <- 0x18cd55 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.193]    [VkPipelineBuilder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18d25d <- 0x18cf99 <- 0x18cd55 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.253]    [VkPipelineBuilder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18d25d <- 0x18cf99 <- 0x18cd55 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.314]    [VkPipelineBuilder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18d25d <- 0x18cf99 <- 0x18cd55 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.375]    [VkPipelineSerialization] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18d25d <- 0x18cf99 <- 0x18cd55 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.436]    [GPUFencingThread] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x699363 <- 0x69914e <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.497]    [AudioManager] eboot+0x7ffc02bac <- 0x7ffc056f5 <- 0x198c8eb <- 0x4d781c <- 0x4d76b3 <- 0x4d714e <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.558]    [DSP_OpusDecoder_Init] (gone: 0x80020003)
+[   17.625]    [DSP_OpusDecoder_Main] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x4d39d0 <- 0x4d37de <- 0x4d2389 <- 0x4d2ec0 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.686]    [audio] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18a8db <- 0x17de37 <- 0x17a613 <- 0x18351b <- 0x260bbf <- 0x271b60 <- 0x27196a <- 0x27669e <- 0x190821 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.747]    [FS] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18a8db <- 0x17de37 <- 0x17a613 <- 0x18351b <- 0x260bbf <- 0x271b60 <- 0x27196a <- 0x206f02 <- 0x190821 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.808]    [ldn] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18a8db <- 0x17de37 <- 0x17a613 <- 0x18351b <- 0x260bbf <- 0x271b60 <- 0x27196a <- 0x28dd8c <- 0x190821 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.869]    [nvservices] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18a8db <- 0x17de37 <- 0x17a613 <- 0x18351b <- 0x260bbf <- 0x271b60 <- 0x27196a <- 0x29b5ba <- 0x190821 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.929]    [bsdsocket] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18a8db <- 0x17de37 <- 0x17a613 <- 0x18351b <- 0x273083 <- 0x273020 <- 0x271b01 <- 0x27196a <- 0x46231a <- 0x190821 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.990]    [bsdsocket:1] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18a8db <- 0x17de37 <- 0x17a613 <- 0x18351b <- 0x260bbf <- 0x271b60 <- 0x27290a <- 0x190821 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   18.051]    [bsdsocket:2] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18a8db <- 0x17de37 <- 0x17a613 <- 0x18351b <- 0x273083 <- 0x273020 <- 0x271b01 <- 0x27290a <- 0x190821 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   18.112]    [vi] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18a8db <- 0x17de37 <- 0x17a613 <- 0x18351b <- 0x260bbf <- 0x271b60 <- 0x27196a <- 0x48cfc9 <- 0x275a24 <- 0x190821 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   18.172]    [CPUCore_0] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x1a0feb <- 0x93281 <- 0x94776 <- 0xb18e0f
+[   18.233]    [CPUCore_1] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x1a0feb <- 0x93281 <- 0x94776 <- 0xb18e0f
+[   18.294]    [CPUCore_2] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x1a0feb <- 0x93281 <- 0x94776 <- 0xb18e0f
+[   18.355]    [CPUCore_3] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x1a0feb <- 0x93281 <- 0x94776 <- 0xb18e0f
+[   18.416]    [GPU] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x56d6c0 <- 0x56d43d <- 0x56ca5b <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   18.477]    [TimeWorker] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18a8db <- 0x17de37 <- 0x17a613 <- 0x18351b <- 0x260bbf <- 0x3ca552 <- 0x3ca428 <- 0x3ca2ed <- 0x3ca1b3 <- 0x3ca091 <- 0x3c949b <- 0x3c9ec6 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   18.538]    [VSyncThread] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x484bdb <- 0x484fb0 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   18.599]    [am:EventObserver] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x198c862 <- 0x18a8db <- 0x17de37 <- 0x17a613 <- 0x18351b <- 0x260bbf <- 0x20104c <- 0x201349 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   18.706] status: game 0.0 fps, speed 100%, frame -nan ms, guest+tables 360 MiB committed (0 MiB given back), 1687 MiB direct free, jit cache flushes 0/0/0/0
+[   18.721] gpu fences pending 0 (peak 1 since the last line)
+[   18.728] small allocations: ~1620 MiB since the last report (sampled 1 in 64, 4 MiB of samples unplaced)
+[   18.738]    ~  780 MiB in ~     832 (avg 983048 B) from eboot+0x699c <- 0x670d23 <- 0x67007e <- 0x66fbb5 <- 0x18d069
+[   18.750]    ~   81 MiB in ~     640 (avg 134152 B) from eboot+0x699c <- 0x67105f <- 0x6700aa <- 0x66fbb5 <- 0x18d069
+[   18.762]    ~   60 MiB in ~      64 (avg 983048 B) from eboot+0x699c <- 0x670d23 <- 0xabb2e3 <- 0xaae24a <- 0xabfa06
+[   18.774]    ~   52 MiB in ~     576 (avg 95760 B) from eboot+0x1929441 <- 0x192a862 <- 0x5febac <- 0x68b261 <- 0x689049
+[   18.786]    ~   52 MiB in ~     832 (avg 65536 B) from eboot+0x16083ac <- 0x1940f64 <- 0x18e9d5c <- 0x18e897a <- 0x5fd184
+[   18.798]    ~   49 MiB in ~     384 (avg 134152 B) from eboot+0x699c <- 0x67105f <- 0xaace38 <- 0xaab465 <- 0xaac0e4
+[   18.810]    ~   41 MiB in ~  388800 (avg 112 B) from eboot+0x67dc <- 0xaf2308 <- 0xaf17f7 <- 0xaa22af <- 0x66c1d8
+[   18.822]    ~   40 MiB in ~     448 (avg 95760 B) from eboot+0x1a06c5d <- 0x1929441 <- 0x192a862 <- 0x5febac <- 0x68b261
+[   18.834] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 17888 slow-path redirects, 10340 unaliasable
+[   18.850]    redirects by cause: outside 1 (0x200380000), unmapped 17888 (0x814ff8b0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[   19.014] direct map: 2594 MiB used in 18 allocations, 2013 MiB free in 3 runs (largest 1687 MiB), 11 allocations >= 2 MiB
+[   19.026]    allocations: 0x200000+128M(t0) 0x8200000+7M(t3) 0x89ec000+7M(t3) 0x9200000+458M(t0) 0x25c00000+7M(t0) 0x26400000+7M(t0) 0x26c00000+7M(t0) 0x27400000+7M(t0) 0x27c00000+7M(t0) 0x283ec000+1592M(t0) 0xa0000000+360M(t0)
+[   19.048] heap census: 339 MiB live in allocations >= 1 MiB, 17 sites (untracked overflow 0 MiB)
+[   19.058]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[   19.066]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[   19.073]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[   19.081]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[   19.088]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[   19.096]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[   19.104]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[   19.111]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[   19.119]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[   19.126]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[   19.134]        8 MiB in    1 from eboot+0x699c <- 0x641cbf <- 0x62f926
+[   19.141]        8 MiB in    1 from eboot+0x67dc <- 0x5723bd <- 0x56e667
+[   28.707] status: game 0.0 fps, speed 100%, frame -nan ms, guest+tables 431 MiB committed (0 MiB given back), 1616 MiB direct free, jit cache flushes 0/0/0/0
+[   28.724] gpu fences pending 0 (peak 0 since the last line)
+[   28.730] small allocations: ~47 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   28.741]    ~   10 MiB in ~    1600 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   28.752]    ~    2 MiB in ~    1088 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[   28.764]    ~    1 MiB in ~    7872 (avg 188 B) from eboot+0x67dc <- 0x9ba982 <- 0x9a79ce <- 0x99147a <- 0x98ee4a
+[   28.776]    ~    1 MiB in ~    7296 (avg 152 B) from eboot+0x67dc <- 0x9b7962 <- 0x9a4075 <- 0x99147a <- 0x98ee4a
+[   28.788]    ~    1 MiB in ~    8192 (avg 136 B) from eboot+0x67dc <- 0x9b79a0 <- 0x9a4075 <- 0x99147a <- 0x98ee4a
+[   28.799]    ~    1 MiB in ~   16896 (avg 64 B) from eboot+0x67dc <- 0x9b5ced <- 0x9badda <- 0x9915d3 <- 0x98ee4a
+[   28.811]    ~    1 MiB in ~    7808 (avg 136 B) from eboot+0x67dc <- 0x9ba9c0 <- 0x9a79ce <- 0x99147a <- 0x98ee4a
+[   28.822]    ~    0 MiB in ~    4224 (avg 248 B) from eboot+0x67dc <- 0x76dee1 <- 0x76f065 <- 0x76f9d7 <- 0x99140c
+[   28.834] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 22114 slow-path redirects, 10342 unaliasable
+[   28.850]    redirects by cause: outside 1 (0x200380000), unmapped 22114 (0x81cbe4e0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[   31.652] profile [VulkanWorker]: 774 samples, busy 0% (jit 0% of busy), waiting 100%
+[   31.663]    hot:
+[   31.665] profile [CPUCore_0]: 745 samples, busy 70% (jit 66% of busy), waiting 29%
+[   31.674]    hot: 0x7716c0=1% 0x39dc0=1% 0x547ec0=0% 0x771680=0% 0x771700=0% 0x547e40=0% 0x991400=0% 0x9b5c80=0% 0x774b00=0% 0x98b740=0% 0x1a07780=0% 0x788e00=0%
+[   31.691] profile [CPUCore_1]: 745 samples, busy 0% (jit 0% of busy), waiting 100%
+[   31.700]    hot:
+[   31.702] profile [CPUCore_2]: 744 samples, busy 25% (jit 91% of busy), waiting 74%
+[   31.711]    hot: 0x17eb40=1% 0x18ab80=0% 0x4c4380=0% 0x4a92c0=0% 0xb18d80=0% 0x1a23a40=0% 0x17e2c0=0% 0x7add80=0% 0x4ae240=0% 0x79fbc0=0% 0x1a23a80=0% 0x182080=0%
+[   31.727] profile [CPUCore_3]: 738 samples, busy 0% (jit 0% of busy), waiting 99%
+[   31.738]    hot: 0x25f200=33% 0x1a23a40=33% 0x6dbf80=33%
+[   31.744] profile [GPU]: 744 samples, busy 0% (jit 0% of busy), waiting 99%
+[   31.752]    hot: 0x1a23a40=33% 0x61a300=33% 0x1927100=33%
+[   36.975]   | mem mmap-direct: carve-out 4 taken - 131072 KiB at 0x5d8c00000 (phys 0x8bc00000), direct held 655360 KiB of a 1572864 KiB cap
+[   38.711] status: game 21.0 fps, speed 100%, frame 76.5 ms, guest+tables 657 MiB committed (0 MiB given back), 1390 MiB direct free, jit cache flushes 0/0/0/0
+[   38.727] vram (VMA): image: heap 0 (917 MiB): 2 blocks 28 MiB, 0 allocations 0 MiB, largest free range 14 MiB, budget usage 28 of 774 MiB; heap 1 (1834 MiB): 2 blocks 136 MiB, 6 allocations 131 MiB, largest free range 4 MiB, budget usage 136 of 1548 MiB; type 0 (heap 1, flags 0x1): 1 blocks 8 MiB, 5 allocations 3 MiB; type 2 (heap 0, flags 0x6): 1 blocks 14 MiB, 0 allocations 0 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[   38.778] gpu fences pending 0 (peak 5 since the last line)
+[   38.785] small allocations: ~142 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   38.797]    ~   15 MiB in ~    2368 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   38.809]    ~    4 MiB in ~    2304 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[   38.821]    ~    4 MiB in ~    1088 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[   38.832]    ~    4 MiB in ~   19456 (avg 226 B) from eboot+0x67dc <- 0x9ba982 <- 0x9a79ce <- 0x99147a <- 0x98ee4a
+[   38.844]    ~    3 MiB in ~    1024 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[   38.856]    ~    3 MiB in ~    1856 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[   38.870]    ~    3 MiB in ~   21952 (avg 176 B) from eboot+0x67dc <- 0x9b7962 <- 0x9a4075 <- 0x99147a <- 0x98ee4a
+[   38.881]    ~    3 MiB in ~      64 (avg 59912 B) from eboot+0x699c <- 0x657f2f <- 0x64d7fb <- 0x64cba2 <- 0x643ac6
+[   38.893] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 30636 slow-path redirects, 10343 unaliasable
+[   38.909]    redirects by cause: outside 1 (0x200380000), unmapped 30636 (0x81cbb888), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[   48.716] status: game 45.5 fps, speed 100%, frame 20.4 ms, guest+tables 815 MiB committed (0 MiB given back), 1232 MiB direct free, jit cache flushes 0/0/0/0
+[   48.731] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 578 MiB; heap 1 (1834 MiB): 6 blocks 312 MiB, 54 allocations 272 MiB, largest free range 34 MiB, budget usage 312 of 1157 MiB; type 0 (heap 1, flags 0x1): 5 blocks 184 MiB, 53 allocations 144 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[   48.783] gpu fences pending 0 (peak 6 since the last line)
+[   48.791] small allocations: ~100 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   48.804]    ~   44 MiB in ~     192 (avg 241006 B) from eboot+0x699c <- 0x21df99 <- 0x273ee9 <- 0x27411a <- 0x243a52
+[   48.816]    ~   10 MiB in ~    1664 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   48.827]    ~    9 MiB in ~    4800 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[   48.839]    ~    6 MiB in ~    1728 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[   48.851]    ~    4 MiB in ~    1984 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[   48.863]    ~    2 MiB in ~     704 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[   48.875]    ~    2 MiB in ~     640 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   48.888]    ~    2 MiB in ~    1152 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[   48.899] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 31453 slow-path redirects, 10343 unaliasable
+[   48.916]    redirects by cause: outside 1 (0x200380000), unmapped 31453 (0x81625300), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[   49.041] direct map: 3177 MiB used in 18 allocations, 1430 MiB free in 3 runs (largest 1232 MiB), 11 allocations >= 2 MiB
+[   49.054]    new: 0x283ec000+1720M(t0) 0xa0000000+815M(t0)
+[   49.061] heap census: 381 MiB live in allocations >= 1 MiB, 23 sites (untracked overflow 0 MiB)
+[   49.071]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[   49.079]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[   49.087]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[   49.095]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[   49.104]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[   49.111]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[   49.120]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[   49.128]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[   49.136]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[   49.149]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[   49.160]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[   49.168]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[   58.725] status: game 54.5 fps, speed 100%, frame 16.7 ms, guest+tables 844 MiB committed (0 MiB given back), 1203 MiB direct free, jit cache flushes 0/0/0/0
+[   58.742] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 578 MiB; heap 1 (1834 MiB): 6 blocks 312 MiB, 54 allocations 272 MiB, largest free range 34 MiB, budget usage 312 of 1157 MiB; type 0 (heap 1, flags 0x1): 5 blocks 184 MiB, 53 allocations 144 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[   58.794] gpu fences pending 0 (peak 5 since the last line)
+[   58.801] small allocations: ~129 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   58.812]    ~   40 MiB in ~      64 (avg 655568 B) from eboot+0x67dc <- 0x93fea <- 0x185aa1 <- 0x185ecf <- 0x1bec6a
+[   58.824]    ~    9 MiB in ~    1408 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   58.837]    ~    7 MiB in ~    1984 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[   58.849]    ~    5 MiB in ~    1408 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   58.861]    ~    5 MiB in ~    2688 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[   58.873]    ~    4 MiB in ~    2048 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[   58.885]    ~    3 MiB in ~     960 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[   58.897]    ~    2 MiB in ~    1216 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[   58.909] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 33895 slow-path redirects, 10343 unaliasable
+[   58.925]    redirects by cause: outside 1 (0x200380000), unmapped 33895 (0x816aaeb8), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[   61.765] profile [VulkanWorker]: 1023 samples, busy 1% (jit 0% of busy), waiting 98%
+[   61.776]    hot: 0x18af380=11% 0x18e0000=5% 0x13b5a80=5% 0x196d9c0=5% 0x1a23a40=5% 0x1932cc0=5% 0x18b2480=5% 0x1754340=5% 0x18dd000=5% 0x17379c0=5% 0x18b1ec0=5% 0x1813a40=5%
+[   61.794] profile [CPUCore_0]: 1023 samples, busy 72% (jit 77% of busy), waiting 27%
+[   61.804]    hot: 0x39dc0=0% 0x1a06bc0=0% 0x771680=0% 0x7716c0=0% 0x547e40=0% 0x1a07780=0% 0x991400=0% 0x788e00=0% 0x774b00=0% 0x771700=0% 0x9b55c0=0% 0x39e00=0%
+[   61.821] profile [CPUCore_1]: 1023 samples, busy 0% (jit 0% of busy), waiting 99%
+[   61.829]    hot: 0x986fc0=100%
+[   61.833] profile [CPUCore_2]: 1023 samples, busy 50% (jit 92% of busy), waiting 49%
+[   61.842]    hot: 0x4ae280=0% 0x4a9500=0% 0x9b55c0=0% 0x17eb40=0% 0x4c3e40=0% 0x4c3f80=0% 0x4c4380=0% 0x4a92c0=0% 0x1a06bc0=0% 0x1a23300=0% 0xb18d80=0% 0x76de80=0%
+[   61.859] profile [CPUCore_3]: 1023 samples, busy 0% (jit 0% of busy), waiting 99%
+[   61.868]    hot: 0x3cc80=20% 0x17eb40=20% 0x3cc40=10% 0x1aea80=10% 0x181f40=10% 0x3ce00=10% 0x261180=10% 0x17e240=10%
+[   61.880] profile [GPU]: 1023 samples, busy 3% (jit 0% of busy), waiting 96%
+[   61.889]    hot: 0x1a230c0=5% 0x39dc0=5% 0x539b80=2% 0x5adf80=2% 0x1a07780=2% 0x637700=2% 0x5bf200=2% 0x645b40=2% 0x517380=2% 0x569080=2% 0x535600=2% 0x1a23a40=2%
+[   68.733] status: game 50.4 fps, speed 100%, frame 24.3 ms, guest+tables 923 MiB committed (0 MiB given back), 1124 MiB direct free, jit cache flushes 0/0/0/0
+[   68.749] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 578 MiB; heap 1 (1834 MiB): 6 blocks 312 MiB, 47 allocations 250 MiB, largest free range 56 MiB, budget usage 312 of 1157 MiB; type 0 (heap 1, flags 0x1): 5 blocks 184 MiB, 46 allocations 122 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[   68.802] gpu fences pending 0 (peak 5 since the last line)
+[   68.809] small allocations: ~122 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   68.821]    ~   13 MiB in ~    2112 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   68.833]    ~    6 MiB in ~    1664 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[   68.845]    ~    5 MiB in ~      64 (avg 95760 B) from eboot+0x1a06c5d <- 0x1929441 <- 0x192a862 <- 0x179e851 <- 0x181f4b1
+[   68.857]    ~    3 MiB in ~    1728 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[   68.869]    ~    3 MiB in ~   17536 (avg 203 B) from eboot+0x67dc <- 0x9b7962 <- 0x9a4075 <- 0x99147a <- 0x98ee4a
+[   68.883]    ~    2 MiB in ~     768 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[   68.895]    ~    2 MiB in ~    1472 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[   68.907]    ~    2 MiB in ~    1472 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[   68.919] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 38921 slow-path redirects, 10343 unaliasable
+[   68.935]    redirects by cause: outside 1 (0x200380000), unmapped 38921 (0x8103ce3c), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[   78.742] status: game 29.9 fps, speed 100%, frame 52.8 ms, guest+tables 943 MiB committed (0 MiB given back), 1104 MiB direct free, jit cache flushes 0/0/0/0
+[   78.759] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 533 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 384 allocations 315 MiB, largest free range 44 MiB, budget usage 376 of 1066 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 383 allocations 187 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[   78.811] gpu fences pending 0 (peak 5 since the last line)
+[   78.817] small allocations: ~58 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   78.829]    ~   11 MiB in ~      64 (avg 182542 B) from eboot+0x699c <- 0x21df99 <- 0x273ee9 <- 0x27411a <- 0x243a52
+[   78.843]    ~   10 MiB in ~    1664 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   78.856]    ~    5 MiB in ~      64 (avg 98144 B) from eboot+0x14e4b0e <- 0x1926dee <- 0x192d04c <- 0x192ac8c <- 0x5febac
+[   78.869]    ~    3 MiB in ~    1920 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[   78.881]    ~    3 MiB in ~   61824 (avg 62 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[   78.893]    ~    3 MiB in ~    1664 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[   78.905]    ~    3 MiB in ~     832 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[   78.917]    ~    1 MiB in ~     960 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[   78.929] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 39243 slow-path redirects, 10343 unaliasable
+[   78.945]    redirects by cause: outside 1 (0x200380000), unmapped 39243 (0x81584028), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[   79.060] direct map: 3309 MiB used in 18 allocations, 1298 MiB free in 3 runs (largest 1100 MiB), 11 allocations >= 2 MiB
+[   79.073]    new: 0xa0000000+947M(t0)
+[   79.078] heap census: 385 MiB live in allocations >= 1 MiB, 25 sites (untracked overflow 0 MiB)
+[   79.089]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[   79.097]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[   79.105]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[   79.113]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[   79.121]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[   79.129]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[   79.138]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[   79.145]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[   79.154]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[   79.161]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[   79.169]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[   79.177]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[   88.744] status: game 38.7 fps, speed 100%, frame 17.1 ms, guest+tables 1068 MiB committed (0 MiB given back), 979 MiB direct free, jit cache flushes 0/0/0/0
+[   88.761] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 533 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 384 allocations 315 MiB, largest free range 44 MiB, budget usage 376 of 1066 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 383 allocations 187 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[   88.813] gpu fences pending 0 (peak 5 since the last line)
+[   88.820] small allocations: ~123 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   88.831]    ~   40 MiB in ~      64 (avg 655568 B) from eboot+0x67dc <- 0x93fea <- 0x185aa1 <- 0x185ecf <- 0x1bec6a
+[   88.843]    ~   18 MiB in ~     256 (avg 77355 B) from eboot+0x699c <- 0x21df99 <- 0x273ee9 <- 0x27411a <- 0x243a52
+[   88.856]    ~   13 MiB in ~    2048 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   88.868]    ~   10 MiB in ~    5248 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[   88.880]    ~    8 MiB in ~    2112 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[   88.892]    ~    5 MiB in ~    2496 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[   88.904]    ~    4 MiB in ~    2368 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[   88.916]    ~    4 MiB in ~    1152 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   88.928] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 39619 slow-path redirects, 10343 unaliasable
+[   88.943]    redirects by cause: outside 1 (0x200380000), unmapped 39619 (0x816ab190), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[   91.913] profile [VulkanWorker]: 1017 samples, busy 5% (jit 0% of busy), waiting 94%
+[   91.924]    hot: 0x1221cc0=3% 0x18b25c0=3% 0x59c480=3% 0x18b0880=3% 0x18ae440=1% 0x196dc00=1% 0x18b3000=1% 0x18f0440=1% 0x18d7a80=1% 0x12b0dc0=1% 0x18a8240=1% 0x1a22f80=1%
+[   91.941] profile [CPUCore_0]: 1017 samples, busy 89% (jit 87% of busy), waiting 10%
+[   91.950]    hot: 0x547e40=0% 0x774b00=0% 0x7716c0=0% 0x4a9fc0=0% 0x54b640=0% 0x547ec0=0% 0x181100=0% 0x771680=0% 0x789100=0% 0x39dc0=0% 0x1a06b80=0% 0x4c3fc0=0%
+[   91.966] profile [CPUCore_1]: 1017 samples, busy 0% (jit 0% of busy), waiting 100%
+[   91.975]    hot:
+[   91.977] profile [CPUCore_2]: 1018 samples, busy 43% (jit 90% of busy), waiting 56%
+[   91.987]    hot: 0x4a9500=0% 0x4a92c0=0% 0x4ac600=0% 0x4ac580=0% 0x17eb40=0% 0x1875c0=0% 0x4ac640=0% 0x4ae1c0=0% 0x1c0000=0% 0x17e500=0% 0x76de80=0% 0x1a071c0=0%
+[   92.004] profile [CPUCore_3]: 1018 samples, busy 1% (jit 0% of busy), waiting 98%
+[   92.013]    hot: 0x235100=5% 0x94400=5% 0x1b5240=5% 0x3cc40=5% 0x17e2c0=5% 0x1b5280=5% 0x1a06ac0=5% 0x2443c0=5% 0x182fc0=5% 0x17eb40=5% 0x67c0=5% 0x271b80=5%
+[   92.028] profile [GPU]: 1017 samples, busy 13% (jit 0% of busy), waiting 86%
+[   92.037]    hot: 0x5694c0=2% 0x53e600=2% 0x643a00=2% 0x5692c0=2% 0x1a22f80=2% 0x569280=2% 0x538e80=1% 0x1a23a00=1% 0x5691c0=1% 0x569300=1% 0x643b80=1% 0x6946c0=1%
+[   98.751] status: game 59.2 fps, speed 100%, frame 16.7 ms, guest+tables 1120 MiB committed (0 MiB given back), 928 MiB direct free, jit cache flushes 0/0/0/0
+[   98.768] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 533 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 384 allocations 315 MiB, largest free range 44 MiB, budget usage 376 of 1066 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 383 allocations 187 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[   98.820] gpu fences pending 0 (peak 7 since the last line)
+[   98.827] small allocations: ~56 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   98.838]    ~   11 MiB in ~    1728 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   98.850]    ~    6 MiB in ~    1664 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[   98.862]    ~    5 MiB in ~    2944 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[   98.874]    ~    5 MiB in ~    1344 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[   98.887]    ~    5 MiB in ~    1280 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[   98.899]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[   98.910]    ~    4 MiB in ~    2176 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[   98.922]    ~    2 MiB in ~    1152 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x48cfc9
+[   98.934] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 40202 slow-path redirects, 10343 unaliasable
+[   98.949]    redirects by cause: outside 1 (0x200380000), unmapped 40202 (0x815260e8), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  108.756] status: game 60.0 fps, speed 100%, frame 16.7 ms, guest+tables 1146 MiB committed (0 MiB given back), 901 MiB direct free, jit cache flushes 0/0/0/0
+[  108.774] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 533 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 384 allocations 315 MiB, largest free range 44 MiB, budget usage 376 of 1066 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 383 allocations 187 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  108.826] gpu fences pending 0 (peak 5 since the last line)
+[  108.832] small allocations: ~55 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  108.843]    ~   12 MiB in ~    1920 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  108.855]    ~    7 MiB in ~    1984 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  108.867]    ~    6 MiB in ~    1664 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  108.878]    ~    5 MiB in ~    2880 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  108.891]    ~    5 MiB in ~    2688 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  108.904]    ~    4 MiB in ~    1216 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  108.915]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  108.927]    ~    2 MiB in ~    1216 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x48cfc9
+[  108.939] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 40355 slow-path redirects, 10343 unaliasable
+[  108.955]    redirects by cause: outside 1 (0x200380000), unmapped 40355 (0x8151fdc0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  109.056] direct map: 3508 MiB used in 18 allocations, 1099 MiB free in 3 runs (largest 901 MiB), 11 allocations >= 2 MiB
+[  109.068]    new: 0xa0000000+1146M(t0)
+[  109.073] heap census: 385 MiB live in allocations >= 1 MiB, 25 sites (untracked overflow 0 MiB)
+[  109.083]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  109.091]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  109.099]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  109.108]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  109.115]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  109.124]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  109.131]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  109.139]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  109.147]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  109.155]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  109.162]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  109.170]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  118.763] status: game 54.1 fps, speed 100%, frame 20.8 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  118.778] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  118.830] gpu fences pending 0 (peak 6 since the last line)
+[  118.837] small allocations: ~81 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  118.849]    ~   11 MiB in ~    1728 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  118.862]    ~    5 MiB in ~    2880 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  118.873]    ~    4 MiB in ~    1216 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  118.885]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  118.901]    ~    4 MiB in ~      64 (avg 65536 B) from eboot+0x16083ac <- 0x1940f64 <- 0x193ed1c <- 0x18d9633 <- 0x18b88da
+[  118.914]    ~    3 MiB in ~    1024 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  118.926]    ~    3 MiB in ~    1856 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  118.937]    ~    3 MiB in ~     960 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  118.950] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42526 slow-path redirects, 10343 unaliasable
+[  118.966]    redirects by cause: outside 1 (0x200380000), unmapped 42526 (0x81666450), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  122.060] profile [VulkanWorker]: 1019 samples, busy 3% (jit 0% of busy), waiting 96%
+[  122.069]    hot: 0x18aff00=9% 0x12b3bc0=3% 0x196dc00=3% 0x18b2680=3% 0x1924bc0=3% 0x17375c0=3% 0x1a06bc0=3% 0x18e5680=3% 0x12accc0=3% 0x1a230c0=3% 0x1737ac0=3% 0x639600=3%
+[  122.087] profile [CPUCore_0]: 1019 samples, busy 98% (jit 92% of busy), waiting 1%
+[  122.096]    hot: 0x7716c0=0% 0x39dc0=0% 0x774b00=0% 0x771700=0% 0x1a06bc0=0% 0x771680=0% 0x7722c0=0% 0x4ac580=0% 0x79eac0=0% 0x771000=0% 0x54b880=0% 0x788e00=0%
+[  122.112] profile [CPUCore_1]: 1019 samples, busy 0% (jit 0% of busy), waiting 100%
+[  122.121]    hot:
+[  122.127] profile [CPUCore_2]: 1019 samples, busy 34% (jit 81% of busy), waiting 65%
+[  122.136]    hot: 0x4ae180=1% 0x4ae240=0% 0x4ac600=0% 0x17eb40=0% 0x9b55c0=0% 0x1a06bc0=0% 0x9b5640=0% 0x4ae280=0% 0x4c3e40=0% 0x4ac640=0% 0x771700=0% 0x4aa200=0%
+[  122.152] profile [CPUCore_3]: 1018 samples, busy 1% (jit 0% of busy), waiting 98%
+[  122.161]    hot: 0x3cc80=10% 0x17e240=10% 0x3cc40=5% 0x17eb00=5% 0x17de00=5% 0x1b12c0=5% 0x17eb40=5% 0x17de40=5% 0x182080=5% 0x243f40=5% 0x7048c0=5% 0x182300=5%
+[  122.177] profile [GPU]: 1019 samples, busy 9% (jit 0% of busy), waiting 90%
+[  122.186]    hot: 0x5cf180=7% 0x1a23a40=7% 0x1a072c0=2% 0x1a23a00=2% 0x1a230c0=2% 0x643b80=2% 0x53d700=2% 0x1a23a80=2% 0x569280=2% 0x569500=1% 0x538e80=1% 0x5cf140=1%
+[  128.763] status: game 34.4 fps, speed 100%, frame 48.3 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  128.779] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  128.831] gpu fences pending 0 (peak 5 since the last line)
+[  128.837] small allocations: ~46 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  128.848]    ~   14 MiB in ~    2240 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  128.861]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  128.874]    ~    4 MiB in ~   81408 (avg 54 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  128.887]    ~    3 MiB in ~    1600 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  128.899]    ~    2 MiB in ~     576 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  128.912]    ~    2 MiB in ~     576 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  128.925]    ~    2 MiB in ~     512 (avg 4443 B) from eboot+0x67dc <- 0x2b3943 <- 0x2b21c5 <- 0x2abc40 <- 0x273ee9
+[  128.936]    ~    1 MiB in ~    3648 (avg 554 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  128.948] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42544 slow-path redirects, 10343 unaliasable
+[  128.964]    redirects by cause: outside 1 (0x200380000), unmapped 42544 (0x8103ceac), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  138.771] status: game 20.9 fps, speed 100%, frame 47.2 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  138.786] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  138.839] gpu fences pending 0 (peak 5 since the last line)
+[  138.847] small allocations: ~40 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  138.858]    ~    9 MiB in ~    1408 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  138.870]    ~    4 MiB in ~   81024 (avg 55 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  138.882]    ~    3 MiB in ~    1792 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  138.895]    ~    3 MiB in ~    1664 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  138.907]    ~    3 MiB in ~     768 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  138.918]    ~    2 MiB in ~     640 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  138.930]    ~    2 MiB in ~     704 (avg 3221 B) from eboot+0x67dc <- 0x2b3943 <- 0x2b21c5 <- 0x2abc40 <- 0x273ee9
+[  138.946]    ~    2 MiB in ~     128 (avg 16384 B) from eboot+0x699c <- 0x21df99 <- 0x273ee9 <- 0x27411a <- 0x243a52
+[  138.958] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42555 slow-path redirects, 10343 unaliasable
+[  138.974]    redirects by cause: outside 1 (0x200380000), unmapped 42555 (0x81aa0a20), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  139.074] direct map: 3568 MiB used in 18 allocations, 1039 MiB free in 3 runs (largest 841 MiB), 11 allocations >= 2 MiB
+[  139.087]    new: 0xa0000000+1206M(t0)
+[  139.091] heap census: 386 MiB live in allocations >= 1 MiB, 26 sites (untracked overflow 0 MiB)
+[  139.101]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  139.109]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  139.117]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  139.129]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  139.137]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  139.145]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  139.152]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  139.160]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  139.169]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  139.177]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  139.186]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  139.193]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  148.777] status: game 21.3 fps, speed 100%, frame 46.4 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  148.793] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  148.846] gpu fences pending 0 (peak 5 since the last line)
+[  148.853] small allocations: ~43 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  148.864]    ~    9 MiB in ~    1536 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  148.877]    ~    5 MiB in ~    2688 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  148.889]    ~    5 MiB in ~    2496 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  148.901]    ~    4 MiB in ~   78144 (avg 56 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  148.912]    ~    2 MiB in ~     640 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  148.927]    ~    2 MiB in ~     640 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  148.939]    ~    2 MiB in ~     640 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  148.951]    ~    2 MiB in ~    4672 (avg 557 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  148.965] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42557 slow-path redirects, 10343 unaliasable
+[  148.981]    redirects by cause: outside 1 (0x200380000), unmapped 42557 (0x816b1d68), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  152.209] profile [VulkanWorker]: 1014 samples, busy 11% (jit 0% of busy), waiting 88%
+[  152.219]    hot: 0x18aff80=1% 0x18e2a00=1% 0x1a23140=1% 0x18b0880=1% 0x5d1f00=1% 0x1941540=1% 0x18d3700=0% 0x18b1000=0% 0x198c200=0% 0x18b1140=0% 0x18d3000=0% 0x18cd880=0%
+[  152.240] profile [CPUCore_0]: 1014 samples, busy 95% (jit 97% of busy), waiting 4%
+[  152.249]    hot: 0x4a92c0=0% 0x4c3f80=0% 0x1a066c0=0% 0x9b55c0=0% 0x1a072c0=0% 0x1a07780=0% 0x179940=0% 0x76ea40=0% 0x678a00=0% 0x3cc40=0% 0x659d00=0% 0x5c3200=0%
+[  152.265] profile [CPUCore_1]: 1014 samples, busy 0% (jit 0% of busy), waiting 100%
+[  152.274]    hot:
+[  152.278] profile [CPUCore_2]: 1014 samples, busy 49% (jit 92% of busy), waiting 50%
+[  152.288]    hot: 0x4c4380=0% 0x17e440=0% 0x4c3e40=0% 0x4ae180=0% 0x4c4340=0% 0x187d40=0% 0x4ac580=0% 0x18ab80=0% 0x4a92c0=0% 0x4c5680=0% 0x1ad780=0% 0x76ea80=0%
+[  152.304] profile [CPUCore_3]: 1014 samples, busy 2% (jit 0% of busy), waiting 97%
+[  152.312]    hot: 0x17eb40=13% 0x3cc40=9% 0x260a40=9% 0x190a00=9% 0xb5380=4% 0x181b80=4% 0x273040=4% 0x17de40=4% 0x17e300=4% 0x271c80=4% 0x18be00=4% 0x17e240=4%
+[  152.333] profile [GPU]: 1014 samples, busy 20% (jit 0% of busy), waiting 79%
+[  152.341]    hot: 0x538ec0=3% 0x1a23100=2% 0x5695c0=2% 0x5692c0=1% 0x1a230c0=1% 0x569340=1% 0x569500=1% 0x1a22f80=1% 0x53d700=1% 0x569580=1% 0x1a23140=1% 0x56f200=1%
+[  158.779] status: game 21.5 fps, speed 100%, frame 46.5 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  158.798] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  158.850] gpu fences pending 0 (peak 3 since the last line)
+[  158.858] small allocations: ~44 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  158.869]    ~   13 MiB in ~    2048 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  158.882]    ~    4 MiB in ~   78016 (avg 56 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  158.894]    ~    3 MiB in ~    1792 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  158.907]    ~    3 MiB in ~    1728 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  158.919]    ~    2 MiB in ~     704 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  158.935]    ~    2 MiB in ~     640 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  158.948]    ~    2 MiB in ~    4352 (avg 557 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  158.959]    ~    1 MiB in ~     768 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  158.971] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42558 slow-path redirects, 10343 unaliasable
+[  158.987]    redirects by cause: outside 1 (0x200380000), unmapped 42558 (0x81cbde50), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  168.785] status: game 21.5 fps, speed 100%, frame 46.7 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  168.802] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  168.854] gpu fences pending 0 (peak 5 since the last line)
+[  168.863] small allocations: ~49 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  168.874]    ~   15 MiB in ~    2432 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  168.886]    ~    5 MiB in ~    2496 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  168.897]    ~    4 MiB in ~   77056 (avg 56 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  168.911]    ~    3 MiB in ~     640 (avg 6338 B) from eboot+0x67dc <- 0x2b3943 <- 0x2b21c5 <- 0x2abc40 <- 0x273ee9
+[  168.923]    ~    3 MiB in ~     960 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  168.935]    ~    2 MiB in ~    1344 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  168.949]    ~    2 MiB in ~    4928 (avg 557 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  168.961]    ~    2 MiB in ~     576 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  168.973] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42558 slow-path redirects, 10343 unaliasable
+[  168.988]    redirects by cause: outside 1 (0x200380000), unmapped 42558 (0x81cbde50), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  169.086] direct map: 3568 MiB used in 18 allocations, 1039 MiB free in 3 runs (largest 841 MiB), 11 allocations >= 2 MiB
+[  169.099]    new: 0xa0000000+1206M(t0)
+[  169.104] heap census: 386 MiB live in allocations >= 1 MiB, 26 sites (untracked overflow 0 MiB)
+[  169.114]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  169.121]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  169.129]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  169.140]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  169.148]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  169.156]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  169.164]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  169.171]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  169.181]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  169.189]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  169.198]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  169.205]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  178.789] status: game 21.5 fps, speed 100%, frame 46.6 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  178.805] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  178.857] gpu fences pending 0 (peak 5 since the last line)
+[  178.864] small allocations: ~40 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  178.876]    ~   10 MiB in ~    1600 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  178.888]    ~    5 MiB in ~    2880 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  178.899]    ~    4 MiB in ~   77952 (avg 55 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  178.912]    ~    3 MiB in ~    1600 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  178.927]    ~    2 MiB in ~    4672 (avg 557 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  178.940]    ~    1 MiB in ~     512 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  178.951]    ~    1 MiB in ~     640 (avg 2829 B) from eboot+0x67dc <- 0x2b3943 <- 0x2b21c5 <- 0x2abc40 <- 0x273ee9
+[  178.965]    ~    1 MiB in ~     384 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  178.977] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42558 slow-path redirects, 10343 unaliasable
+[  178.993]    redirects by cause: outside 1 (0x200380000), unmapped 42558 (0x81cbde50), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  182.365] profile [VulkanWorker]: 1014 samples, busy 9% (jit 0% of busy), waiting 90%
+[  182.377]    hot: 0x1a23a40=3% 0x6382c0=2% 0x18b2dc0=2% 0x18ce480=2% 0x18d6c80=2% 0x18b2d00=2% 0x1a23140=2% 0x18b0880=2% 0x1221e80=2% 0x18f0680=2% 0x198d740=1% 0x196dc00=1%
+[  182.394] profile [CPUCore_0]: 1014 samples, busy 95% (jit 97% of busy), waiting 4%
+[  182.403]    hot: 0x1a07640=0% 0x4a9500=0% 0x4a92c0=0% 0x5195c0=0% 0x179f40=0% 0x3cd80=0% 0x1905c0=0% 0x1a29440=0% 0x4ac600=0% 0x17eb40=0% 0x4c3f40=0% 0x4ae280=0%
+[  182.422] profile [CPUCore_1]: 1013 samples, busy 0% (jit 0% of busy), waiting 100%
+[  182.431]    hot:
+[  182.435] profile [CPUCore_2]: 1013 samples, busy 51% (jit 90% of busy), waiting 48%
+[  182.444]    hot: 0x17eb40=0% 0x4a9500=0% 0x4c3e40=0% 0x9b55c0=0% 0x76ea40=0% 0x3cc80=0% 0x4ac600=0% 0x4ac640=0% 0x4a9280=0% 0x4ac580=0% 0x18ab80=0% 0x1a0e40=0%
+[  182.462] profile [CPUCore_3]: 1014 samples, busy 1% (jit 0% of busy), waiting 98%
+[  182.471]    hot: 0x18ab80=6% 0x1b5240=6% 0x1fcd40=6% 0x244000=6% 0x1810c0=6% 0x244600=6% 0x1fcc40=6% 0x243f00=6% 0x1b0480=6% 0x18ea80=6% 0x1a0fc0=6% 0x1a9900=6%
+[  182.487] profile [GPU]: 1014 samples, busy 20% (jit 0% of busy), waiting 79%
+[  182.495]    hot: 0x1a22f80=3% 0x538e80=3% 0x538ec0=3% 0x569300=2% 0x569580=1% 0x5694c0=1% 0x569280=1% 0x569500=1% 0x5692c0=1% 0x569340=1% 0x679680=1% 0x649980=1%
+[  188.791] status: game 21.4 fps, speed 100%, frame 46.6 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  188.807] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  188.859] gpu fences pending 0 (peak 5 since the last line)
+[  188.870] small allocations: ~40 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  188.881]    ~    9 MiB in ~    1536 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  188.893]    ~    5 MiB in ~    2880 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  188.905]    ~    4 MiB in ~    2176 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  188.918]    ~    4 MiB in ~   80640 (avg 54 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  188.931]    ~    2 MiB in ~     576 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  188.943]    ~    2 MiB in ~    4032 (avg 555 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  188.958]    ~    1 MiB in ~     640 (avg 2830 B) from eboot+0x67dc <- 0x2b3943 <- 0x2b21c5 <- 0x2abc40 <- 0x273ee9
+[  188.970]    ~    1 MiB in ~     640 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  188.982] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42558 slow-path redirects, 10343 unaliasable
+[  188.998]    redirects by cause: outside 1 (0x200380000), unmapped 42558 (0x81cbde50), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  198.796] status: game 21.4 fps, speed 100%, frame 46.7 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  198.813] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  198.865] gpu fences pending 0 (peak 5 since the last line)
+[  198.872] small allocations: ~48 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  198.883]    ~   12 MiB in ~    1984 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  198.897]    ~    4 MiB in ~    2432 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  198.909]    ~    4 MiB in ~   78400 (avg 59 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  198.920]    ~    3 MiB in ~     768 (avg 4698 B) from eboot+0x67dc <- 0x2b3943 <- 0x2b21c5 <- 0x2abc40 <- 0x273ee9
+[  198.933]    ~    3 MiB in ~    1664 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  198.949]    ~    2 MiB in ~     768 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  198.961]    ~    2 MiB in ~     640 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  198.973]    ~    2 MiB in ~    4160 (avg 553 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  198.985] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42558 slow-path redirects, 10343 unaliasable
+[  199.001]    redirects by cause: outside 1 (0x200380000), unmapped 42558 (0x81cbde50), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  199.097] direct map: 3568 MiB used in 18 allocations, 1039 MiB free in 3 runs (largest 841 MiB), 11 allocations >= 2 MiB
+[  199.109] heap census: 386 MiB live in allocations >= 1 MiB, 26 sites (untracked overflow 0 MiB)
+[  199.119]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  199.129]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  199.138]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  199.146]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  199.153]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  199.161]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  199.169]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  199.178]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  199.186]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  199.194]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  199.202]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  199.209]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  208.802] status: game 21.4 fps, speed 100%, frame 46.7 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  208.818] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  208.870] gpu fences pending 0 (peak 5 since the last line)
+[  208.876] small allocations: ~42 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  208.888]    ~    9 MiB in ~    1536 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  208.900]    ~    4 MiB in ~    2304 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  208.912]    ~    4 MiB in ~   77440 (avg 55 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  208.925]    ~    4 MiB in ~    1984 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  208.938]    ~    2 MiB in ~    4992 (avg 555 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  208.950]    ~    2 MiB in ~     640 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  208.961]    ~    2 MiB in ~     576 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  208.973]    ~    2 MiB in ~     576 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  208.989] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42558 slow-path redirects, 10343 unaliasable
+[  209.004]    redirects by cause: outside 1 (0x200380000), unmapped 42558 (0x81cbde50), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  212.522] profile [VulkanWorker]: 1014 samples, busy 10% (jit 0% of busy), waiting 89%
+[  212.534]    hot: 0x1a22f80=3% 0x18aff00=2% 0x13b5a80=1% 0x1a230c0=1% 0x1a23a40=1% 0x18b1780=1% 0x1a23000=1% 0x1a23140=1% 0x18b2f80=1% 0x18abac0=1% 0x18d3700=0% 0x1738180=0%
+[  212.551] profile [CPUCore_0]: 1013 samples, busy 95% (jit 97% of busy), waiting 4%
+[  212.559]    hot: 0x3ce00=0% 0x4a92c0=0% 0x4ad180=0% 0x9b5600=0% 0x3cc40=0% 0xb53c0=0% 0x519e40=0% 0x3cc80=0% 0x4ac600=0% 0x4ab900=0% 0x6475c0=0% 0x5c3140=0%
+[  212.576] profile [CPUCore_1]: 1014 samples, busy 0% (jit 0% of busy), waiting 100%
+[  212.585]    hot:
+[  212.588] profile [CPUCore_2]: 1014 samples, busy 49% (jit 91% of busy), waiting 50%
+[  212.597]    hot: 0x17eb40=0% 0x4ac580=0% 0x4a92c0=0% 0x4ac600=0% 0x1a1000=0% 0x181ec0=0% 0x17f300=0% 0x4a9500=0% 0x17e3c0=0% 0xb5380=0% 0x1b3e40=0% 0x3cc40=0%
+[  212.613] profile [CPUCore_3]: 1014 samples, busy 1% (jit 0% of busy), waiting 98%
+[  212.625]    hot: 0x17eb40=17% 0x183400=11% 0x1fc9c0=5% 0x70d500=5% 0x1a22f80=5% 0x17f6c0=5% 0x4c940=5% 0x3cc40=5% 0x243700=5% 0x191a40=5% 0x6f3200=5% 0x1a9980=5%
+[  212.642] profile [GPU]: 1014 samples, busy 20% (jit 0% of busy), waiting 79%
+[  212.650]    hot: 0x643b40=1% 0x538ec0=1% 0x538e80=1% 0x1a07780=1% 0x5692c0=1% 0x1a22f80=1% 0x569340=1% 0x1a23140=1% 0x5694c0=1% 0x53e4c0=1% 0x56f140=0% 0x570440=0%
+[  218.802] status: game 21.4 fps, speed 100%, frame 46.8 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  218.818] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 299 allocations 310 MiB, largest free range 44 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 298 allocations 182 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  218.871] gpu fences pending 0 (peak 5 since the last line)
+[  218.877] small allocations: ~43 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  218.889]    ~   13 MiB in ~    2048 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  218.901]    ~    4 MiB in ~    2304 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  218.913]    ~    4 MiB in ~   76544 (avg 56 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  218.926]    ~    2 MiB in ~     704 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  218.938]    ~    2 MiB in ~    1280 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  218.949]    ~    2 MiB in ~    4800 (avg 557 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  218.962]    ~    2 MiB in ~     640 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  218.974]    ~    1 MiB in ~     448 (avg 4032 B) from eboot+0x67dc <- 0x2b3943 <- 0x2b21c5 <- 0x2abc40 <- 0x273ee9
+[  218.986] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 42712 slow-path redirects, 10343 unaliasable
+[  219.003]    redirects by cause: outside 1 (0x200380000), unmapped 42712 (0x81520538), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  228.810] status: game 20.6 fps, speed 100%, frame 50.3 ms, guest+tables 1206 MiB committed (0 MiB given back), 841 MiB direct free, jit cache flushes 0/0/0/0
+[  228.826] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 553 allocations 347 MiB, largest free range 18 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 552 allocations 219 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  228.878] gpu fences pending 0 (peak 5 since the last line)
+[  228.885] small allocations: ~51 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  228.895]    ~   12 MiB in ~    1984 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  228.911]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  228.923]    ~    4 MiB in ~   75520 (avg 60 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  228.936]    ~    3 MiB in ~    1920 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  228.950]    ~    2 MiB in ~     320 (avg 7380 B) from eboot+0x67dc <- 0x2b2233 <- 0x2b399e <- 0x2b21c5 <- 0x2abc40
+[  228.962]    ~    2 MiB in ~     128 (avg 16384 B) from eboot+0x699c <- 0x21df99 <- 0x273ee9 <- 0x27411a <- 0x243a52
+[  228.974]    ~    1 MiB in ~     512 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  228.986]    ~    1 MiB in ~    3712 (avg 554 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  228.998] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 43338 slow-path redirects, 10343 unaliasable
+[  229.014]    redirects by cause: outside 1 (0x200380000), unmapped 43338 (0x81520548), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  229.110] direct map: 3568 MiB used in 18 allocations, 1039 MiB free in 3 runs (largest 841 MiB), 11 allocations >= 2 MiB
+[  229.122] heap census: 388 MiB live in allocations >= 1 MiB, 27 sites (untracked overflow 0 MiB)
+[  229.132]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  229.141]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  229.149]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  229.157]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  229.165]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  229.172]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  229.180]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  229.189]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  229.197]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  229.205]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  229.213]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  229.220]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  238.813] status: game 23.0 fps, speed 100%, frame 38.5 ms, guest+tables 1216 MiB committed (0 MiB given back), 831 MiB direct free, jit cache flushes 0/0/0/0
+[  238.828] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 576 allocations 348 MiB, largest free range 18 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 575 allocations 220 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  238.880] gpu fences pending 0 (peak 5 since the last line)
+[  238.887] small allocations: ~54 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  238.898]    ~   15 MiB in ~    2368 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  238.910]    ~    4 MiB in ~    2304 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  238.922]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  238.934]    ~    3 MiB in ~    1856 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  238.945]    ~    3 MiB in ~   64576 (avg 57 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  238.958]    ~    2 MiB in ~     704 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  238.970]    ~    2 MiB in ~     576 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  238.982]    ~    2 MiB in ~    3968 (avg 556 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  238.993] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 43876 slow-path redirects, 10343 unaliasable
+[  239.009]    redirects by cause: outside 1 (0x200380000), unmapped 43876 (0x8157a358), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  242.674] profile [VulkanWorker]: 1016 samples, busy 8% (jit 0% of busy), waiting 91%
+[  242.684]    hot: 0x1a22f80=3% 0x18f0240=3% 0x1a230c0=2% 0x691780=2% 0x1a23100=2% 0x691680=2% 0x171d040=2% 0x1a23180=2% 0x196dc00=1% 0x18e4bc0=1% 0x18ae0c0=1% 0x18aff80=1%
+[  242.701] profile [CPUCore_0]: 1017 samples, busy 96% (jit 95% of busy), waiting 3%
+[  242.710]    hot: 0x4c3f40=0% 0x9b55c0=0% 0x1a065c0=0% 0x1a23a00=0% 0x788e00=0% 0x4a9fc0=0% 0x4a92c0=0% 0x39e00=0% 0x1a06bc0=0% 0x183300=0% 0x777bc0=0% 0x7713c0=0%
+[  242.727] profile [CPUCore_1]: 1017 samples, busy 0% (jit 0% of busy), waiting 100%
+[  242.737]    hot:
+[  242.739] profile [CPUCore_2]: 1017 samples, busy 47% (jit 90% of busy), waiting 52%
+[  242.748]    hot: 0x4c4380=0% 0x4a92c0=0% 0x4c3e40=0% 0x9b55c0=0% 0x17eb80=0% 0x4a94c0=0% 0x4ac540=0% 0x4c3fc0=0% 0x94400=0% 0x4a9500=0% 0x4ac580=0% 0x18ab80=0%
+[  242.764] profile [CPUCore_3]: 1017 samples, busy 1% (jit 0% of busy), waiting 98%
+[  242.773]    hot: 0x18ab80=8% 0x70d500=8% 0x1aea80=8% 0x2435c0=8% 0x181d00=8% 0x5240=8% 0x271c80=8% 0x4afa40=8% 0x1833c0=8% 0x183640=8% 0x273e00=8% 0x260bc0=8%
+[  242.789] profile [GPU]: 1016 samples, busy 19% (jit 0% of busy), waiting 80%
+[  242.797]    hot: 0x1a22f80=2% 0x1a230c0=2% 0x5cf180=2% 0x5691c0=2% 0x1a23100=2% 0x569280=2% 0x1a23a40=1% 0x690800=1% 0x644440=1% 0x53e480=1% 0x569500=1% 0x1a23a00=1%
+[  248.816] status: game 43.0 fps, speed 100%, frame 16.7 ms, guest+tables 1220 MiB committed (0 MiB given back), 827 MiB direct free, jit cache flushes 0/0/0/0
+[  248.831] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 576 allocations 348 MiB, largest free range 18 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 575 allocations 220 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  248.883] gpu fences pending 0 (peak 5 since the last line)
+[  248.890] small allocations: ~50 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  248.901]    ~   11 MiB in ~    1792 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  248.913]    ~    8 MiB in ~    2112 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  248.925]    ~    5 MiB in ~    2688 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  248.939]    ~    3 MiB in ~    1920 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  248.951]    ~    3 MiB in ~     960 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  248.963]    ~    3 MiB in ~    1728 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  248.977]    ~    3 MiB in ~     832 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  248.990]    ~    2 MiB in ~    1472 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x48cfc9
+[  249.002] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 43923 slow-path redirects, 10343 unaliasable
+[  249.018]    redirects by cause: outside 1 (0x200380000), unmapped 43923 (0x81509fd8), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  258.816] status: game 60.0 fps, speed 100%, frame 16.7 ms, guest+tables 1230 MiB committed (0 MiB given back), 818 MiB direct free, jit cache flushes 0/0/0/0
+[  258.831] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 576 allocations 348 MiB, largest free range 18 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 575 allocations 220 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  258.884] gpu fences pending 0 (peak 4 since the last line)
+[  258.891] small allocations: ~62 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  258.902]    ~   16 MiB in ~    2496 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  258.914]    ~    7 MiB in ~    2048 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  258.926]    ~    6 MiB in ~    3264 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  258.938]    ~    5 MiB in ~    2624 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  258.950]    ~    4 MiB in ~    1216 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  258.962]    ~    4 MiB in ~    1088 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  258.977]    ~    4 MiB in ~    2048 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  258.989]    ~    2 MiB in ~    1280 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x48cfc9
+[  259.002] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 44454 slow-path redirects, 10343 unaliasable
+[  259.021]    redirects by cause: outside 1 (0x200380000), unmapped 44454 (0x8169a288), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  259.116] direct map: 3592 MiB used in 18 allocations, 1015 MiB free in 3 runs (largest 818 MiB), 11 allocations >= 2 MiB
+[  259.128]    new: 0xa0000000+1230M(t0)
+[  259.132] heap census: 388 MiB live in allocations >= 1 MiB, 27 sites (untracked overflow 0 MiB)
+[  259.143]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  259.151]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  259.158]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  259.166]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  259.174]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  259.181]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  259.189]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  259.197]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  259.205]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  259.213]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  259.221]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  259.228]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  268.822] status: game 49.1 fps, speed 100%, frame 26.2 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  268.838] vram (VMA): image: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 532 MiB; heap 1 (1834 MiB): 7 blocks 376 MiB, 557 allocations 356 MiB, largest free range 10 MiB, budget usage 376 of 1065 MiB; type 0 (heap 1, flags 0x1): 6 blocks 248 MiB, 556 allocations 228 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  268.891] gpu fences pending 0 (peak 7 since the last line)
+[  268.898] small allocations: ~66 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  268.911]    ~   14 MiB in ~    2176 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  268.923]    ~    5 MiB in ~    2816 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  268.938]    ~    3 MiB in ~    1024 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  268.950]    ~    3 MiB in ~    1920 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  268.962]    ~    3 MiB in ~    1792 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  268.974]    ~    3 MiB in ~     832 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  268.987]    ~    2 MiB in ~     704 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  268.999]    ~    2 MiB in ~   47040 (avg 57 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  269.010] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45225 slow-path redirects, 10343 unaliasable
+[  269.029]    redirects by cause: outside 1 (0x200380000), unmapped 45225 (0x81625448), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  272.823] profile [VulkanWorker]: 1023 samples, busy 6% (jit 0% of busy), waiting 93%
+[  272.832]    hot: 0x1a230c0=5% 0x1a22f80=4% 0x18aff00=2% 0x12b3bc0=1% 0x18b2ec0=1% 0x18dfc80=1% 0x196dc00=1% 0x18afac0=1% 0x180e0c0=1% 0x59cd40=1% 0x18b95c0=1% 0x18df200=1%
+[  272.850] profile [CPUCore_0]: 1023 samples, busy 94% (jit 95% of busy), waiting 5%
+[  272.860]    hot: 0x4a92c0=0% 0x771680=0% 0x4ac580=0% 0x1a07780=0% 0x98ea40=0% 0x4ac340=0% 0x7788c0=0% 0x9a3c80=0% 0x547ec0=0% 0x39700=0% 0x4abc40=0% 0x1a23a40=0%
+[  272.876] profile [CPUCore_1]: 1022 samples, busy 0% (jit 0% of busy), waiting 100%
+[  272.885]    hot:
+[  272.887] profile [CPUCore_2]: 1022 samples, busy 36% (jit 89% of busy), waiting 63%
+[  272.896]    hot: 0x4a9500=0% 0x17eb40=0% 0x4ac580=0% 0x4a92c0=0% 0x4ae280=0% 0x4ae180=0% 0x4c3e80=0% 0x4ae1c0=0% 0x9b55c0=0% 0x1a06bc0=0% 0x1a0c00=0% 0xb18d80=0%
+[  272.912] profile [CPUCore_3]: 1022 samples, busy 1% (jit 0% of busy), waiting 98%
+[  272.921]    hot: 0x17eb40=28% 0x18ea40=7% 0x1810c0=7% 0x17dc00=7% 0x1a9940=7% 0x272600=7% 0x260b80=7% 0x1aeb00=7% 0x244580=7% 0x2350c0=7% 0x17f780=7%
+[  272.936] profile [GPU]: 1023 samples, busy 17% (jit 0% of busy), waiting 82%
+[  272.945]    hot: 0x5cf180=5% 0x1a22f80=3% 0x1a23a40=2% 0x538ec0=2% 0x1a23a80=2% 0x569280=2% 0x5bec00=1% 0x12a95c0=1% 0x56f240=1% 0x53e600=1% 0x645d80=1% 0x517380=1%
+[  278.827] status: game 28.8 fps, speed 100%, frame 51.5 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  278.842] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  278.895] gpu fences pending 0 (peak 5 since the last line)
+[  278.901] small allocations: ~51 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  278.913]    ~   13 MiB in ~    2048 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  278.926]    ~    4 MiB in ~   70912 (avg 64 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  278.938]    ~    3 MiB in ~    1856 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  278.950]    ~    3 MiB in ~    1856 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  278.962]    ~    2 MiB in ~     768 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  278.974]    ~    2 MiB in ~     448 (avg 6704 B) from eboot+0x67dc <- 0x2b2233 <- 0x2b399e <- 0x2b21c5 <- 0x2abc40
+[  278.986]    ~    2 MiB in ~    5248 (avg 559 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  278.999]    ~    1 MiB in ~     448 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  279.011] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45606 slow-path redirects, 10343 unaliasable
+[  279.027]    redirects by cause: outside 1 (0x200380000), unmapped 45606 (0x8160d1d8), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  288.828] status: game 27.8 fps, speed 100%, frame 27.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  288.843] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  288.896] gpu fences pending 0 (peak 4 since the last line)
+[  288.904] small allocations: ~51 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  288.914]    ~   12 MiB in ~    1984 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  288.926]    ~    4 MiB in ~    1280 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  288.938]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  288.950]    ~    4 MiB in ~    2112 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  288.962]    ~    3 MiB in ~     960 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  288.974]    ~    3 MiB in ~    6272 (avg 557 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  288.988]    ~    2 MiB in ~   58368 (avg 52 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  289.000]    ~    2 MiB in ~     704 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  289.012] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45786 slow-path redirects, 10343 unaliasable
+[  289.030]    redirects by cause: outside 1 (0x200380000), unmapped 45786 (0x815767f8), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  289.124] direct map: 3610 MiB used in 18 allocations, 997 MiB free in 3 runs (largest 799 MiB), 11 allocations >= 2 MiB
+[  289.137]    new: 0xa0000000+1248M(t0)
+[  289.142] heap census: 388 MiB live in allocations >= 1 MiB, 27 sites (untracked overflow 0 MiB)
+[  289.152]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  289.160]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  289.168]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  289.176]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  289.184]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  289.192]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  289.200]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  289.208]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  289.216]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  289.224]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  289.232]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  289.240]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  298.833] status: game 48.1 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  298.849] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  298.902] gpu fences pending 0 (peak 5 since the last line)
+[  298.909] small allocations: ~56 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  298.921]    ~   12 MiB in ~    1856 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  298.933]    ~    7 MiB in ~    1984 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  298.945]    ~    7 MiB in ~    3520 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  298.957]    ~    4 MiB in ~    8768 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  298.969]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  298.981]    ~    4 MiB in ~    1088 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  298.993]    ~    4 MiB in ~    1024 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  299.005]    ~    2 MiB in ~    1408 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x48cfc9
+[  299.017] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45786 slow-path redirects, 10343 unaliasable
+[  299.034]    redirects by cause: outside 1 (0x200380000), unmapped 45786 (0x815767f8), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  302.971] profile [VulkanWorker]: 1020 samples, busy 7% (jit 0% of busy), waiting 92%
+[  302.980]    hot: 0x18b8800=4% 0x1736940=2% 0x1a23140=2% 0x18aff00=2% 0x59c100=2% 0x18e38c0=2% 0x12b3bc0=1% 0x18d4d80=1% 0x18d82c0=1% 0x18aff80=1% 0x18ce580=1% 0x18b3000=1%
+[  302.998] profile [CPUCore_0]: 1020 samples, busy 78% (jit 93% of busy), waiting 21%
+[  303.007]    hot: 0x4ac0c0=0% 0x18fd40=0% 0x4ac580=0% 0x775a80=0% 0x4a92c0=0% 0x1a06bc0=0% 0x5c2f80=0% 0x183900=0% 0x4ace00=0% 0x4ac100=0% 0x4ab8c0=0% 0x98e5c0=0%
+[  303.025] profile [CPUCore_1]: 1021 samples, busy 0% (jit 0% of busy), waiting 100%
+[  303.035]    hot:
+[  303.038] profile [CPUCore_2]: 1021 samples, busy 35% (jit 89% of busy), waiting 64%
+[  303.047]    hot: 0x4ae280=0% 0x4a9500=0% 0x9b55c0=0% 0x4a92c0=0% 0x9b5640=0% 0x4c3e40=0% 0x1a2bc0=0% 0x4ac580=0% 0x183680=0% 0x186bc0=0% 0x17f6c0=0% 0x76f500=0%
+[  303.064] profile [CPUCore_3]: 1021 samples, busy 0% (jit 0% of busy), waiting 99%
+[  303.073]    hot: 0x14ae00=10% 0x3cc40=10% 0x181b80=10% 0x1a0e80=10% 0x17e2c0=10% 0x2443c0=10% 0x18fd80=10% 0x17eb40=10% 0x4af300=10% 0x190a00=10%
+[  303.088] profile [GPU]: 1020 samples, busy 18% (jit 0% of busy), waiting 81%
+[  303.096]    hot: 0x1a22f80=3% 0x1a23a40=3% 0x5cf180=3% 0x1a230c0=2% 0x569280=2% 0x538ec0=2% 0x1a23a00=1% 0x569580=1% 0x1a23100=1% 0x5694c0=1% 0x538e40=1% 0x5ba180=1%
+[  308.835] status: game 60.0 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  308.851] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  308.904] gpu fences pending 0 (peak 3 since the last line)
+[  308.911] small allocations: ~56 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  308.922]    ~   12 MiB in ~    1920 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  308.934]    ~    7 MiB in ~    1984 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  308.946]    ~    5 MiB in ~    2496 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  308.957]    ~    4 MiB in ~    2368 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  308.971]    ~    4 MiB in ~    1152 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  308.983]    ~    4 MiB in ~    1152 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  308.995]    ~    4 MiB in ~    2048 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  309.007]    ~    3 MiB in ~    7232 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  309.019] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45786 slow-path redirects, 10343 unaliasable
+[  309.035]    redirects by cause: outside 1 (0x200380000), unmapped 45786 (0x815767f8), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  318.842] status: game 60.0 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  318.858] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  318.910] gpu fences pending 0 (peak 7 since the last line)
+[  318.917] small allocations: ~59 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  318.927]    ~   14 MiB in ~    2304 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  318.939]    ~    6 MiB in ~    1792 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  318.952]    ~    5 MiB in ~    1536 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  318.963]    ~    5 MiB in ~    2560 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  318.975]    ~    5 MiB in ~    2496 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  318.988]    ~    4 MiB in ~    8256 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  319.000]    ~    4 MiB in ~    1088 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  319.012]    ~    4 MiB in ~    2048 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  319.024] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45786 slow-path redirects, 10343 unaliasable
+[  319.040]    redirects by cause: outside 1 (0x200380000), unmapped 45786 (0x815767f8), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  319.132] direct map: 3610 MiB used in 18 allocations, 997 MiB free in 3 runs (largest 799 MiB), 11 allocations >= 2 MiB
+[  319.147] heap census: 389 MiB live in allocations >= 1 MiB, 27 sites (untracked overflow 0 MiB)
+[  319.157]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  319.165]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  319.173]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  319.180]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  319.188]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  319.196]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  319.204]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  319.212]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  319.221]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  319.228]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  319.237]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  319.245]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  328.848] status: game 59.9 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  328.864] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  328.916] gpu fences pending 0 (peak 5 since the last line)
+[  328.923] small allocations: ~53 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  328.933]    ~   10 MiB in ~    1600 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  328.945]    ~    6 MiB in ~    1664 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  328.958]    ~    6 MiB in ~    3136 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  328.970]    ~    4 MiB in ~    1280 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  328.982]    ~    4 MiB in ~    8512 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  328.994]    ~    4 MiB in ~    2112 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  329.006]    ~    3 MiB in ~     960 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  329.021]    ~    3 MiB in ~    1664 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x48cfc9
+[  329.035] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45787 slow-path redirects, 10343 unaliasable
+[  329.053]    redirects by cause: outside 1 (0x200380000), unmapped 45787 (0x82af34c0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  333.119] profile [VulkanWorker]: 1024 samples, busy 6% (jit 0% of busy), waiting 93%
+[  333.129]    hot: 0x18b1780=4% 0x1a230c0=3% 0x18d4cc0=3% 0x18d7180=3% 0x18b0740=3% 0x18ba880=1% 0x18d8180=1% 0x18afe40=1% 0x198c200=1% 0x6382c0=1% 0x18aff80=1% 0x196f280=1%
+[  333.146] profile [CPUCore_0]: 1024 samples, busy 65% (jit 93% of busy), waiting 34%
+[  333.155]    hot: 0x4a92c0=0% 0x190a00=0% 0x3cc40=0% 0x17eb40=0% 0x4ab800=0% 0x535dc0=0% 0x9b55c0=0% 0x198d740=0% 0xb5380=0% 0x17e500=0% 0x18fd40=0% 0x998a00=0%
+[  333.171] profile [CPUCore_1]: 1024 samples, busy 0% (jit 0% of busy), waiting 100%
+[  333.180]    hot:
+[  333.183] profile [CPUCore_2]: 1023 samples, busy 37% (jit 88% of busy), waiting 62%
+[  333.192]    hot: 0x17eb40=1% 0x4a9500=1% 0x4a92c0=0% 0x4ac640=0% 0x4c3e80=0% 0x4a9280=0% 0x94400=0% 0x9b55c0=0% 0x4ac580=0% 0xb18d80=0% 0x1ad180=0% 0x183900=0%
+[  333.208] profile [CPUCore_3]: 1023 samples, busy 2% (jit 0% of busy), waiting 97%
+[  333.217]    hot: 0x17eb40=21% 0x6f2540=7% 0x198d740=3% 0x1b21c0=3% 0x70d500=3% 0x22a240=3% 0x1a230c0=3% 0x70ef40=3% 0x92480=3% 0x18fd80=3% 0x245340=3% 0x14da40=3%
+[  333.233] profile [GPU]: 1024 samples, busy 14% (jit 0% of busy), waiting 85%
+[  333.242]    hot: 0x1719740=8% 0x1a22f80=4% 0x538e80=2% 0x5691c0=2% 0x5692c0=2% 0x1a230c0=2% 0x5cf180=2% 0x539ac0=2% 0x56f140=1% 0x1a072c0=1% 0x6374c0=1% 0x1a23a40=1%
+[  338.851] status: game 59.9 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  338.868] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  338.921] gpu fences pending 0 (peak 4 since the last line)
+[  338.928] small allocations: ~58 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  338.938]    ~   14 MiB in ~    2240 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  338.951]    ~    8 MiB in ~    2304 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  338.964]    ~    5 MiB in ~    2752 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  338.975]    ~    5 MiB in ~    2624 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  338.987]    ~    4 MiB in ~    8704 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  338.999]    ~    3 MiB in ~    1024 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  339.011]    ~    3 MiB in ~    1792 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  339.023]    ~    3 MiB in ~     768 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  339.035] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45787 slow-path redirects, 10343 unaliasable
+[  339.051]    redirects by cause: outside 1 (0x200380000), unmapped 45787 (0x82af34c0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  348.858] status: game 60.0 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  348.874] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  348.928] gpu fences pending 0 (peak 5 since the last line)
+[  348.934] small allocations: ~59 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  348.945]    ~   12 MiB in ~    1920 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  348.958]    ~    7 MiB in ~    3840 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  348.969]    ~    7 MiB in ~    1920 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  348.981]    ~    6 MiB in ~    3008 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  348.993]    ~    4 MiB in ~    8320 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  349.005]    ~    3 MiB in ~    1024 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  349.016]    ~    3 MiB in ~    1920 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  349.028]    ~    3 MiB in ~     960 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  349.041] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45787 slow-path redirects, 10343 unaliasable
+[  349.057]    redirects by cause: outside 1 (0x200380000), unmapped 45787 (0x82af34c0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  349.147] direct map: 3610 MiB used in 18 allocations, 997 MiB free in 3 runs (largest 799 MiB), 11 allocations >= 2 MiB
+[  349.161] heap census: 389 MiB live in allocations >= 1 MiB, 27 sites (untracked overflow 0 MiB)
+[  349.171]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  349.179]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  349.186]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  349.195]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  349.203]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  349.211]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  349.219]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  349.228]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  349.236]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  349.243]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  349.251]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  349.259]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  358.861] status: game 59.9 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  358.877] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  358.929] gpu fences pending 0 (peak 4 since the last line)
+[  358.936] small allocations: ~62 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  358.947]    ~   13 MiB in ~    2112 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  358.958]    ~    7 MiB in ~    3584 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  358.971]    ~    6 MiB in ~    3456 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  358.983]    ~    6 MiB in ~    1664 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  358.995]    ~    5 MiB in ~    1472 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  359.008]    ~    5 MiB in ~    2496 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  359.021]    ~    4 MiB in ~    7808 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  359.034]    ~    4 MiB in ~    1024 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  359.046] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45787 slow-path redirects, 10343 unaliasable
+[  359.063]    redirects by cause: outside 1 (0x200380000), unmapped 45787 (0x82af34c0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  363.265] profile [VulkanWorker]: 1021 samples, busy 6% (jit 0% of busy), waiting 93%
+[  363.276]    hot: 0x18aff00=5% 0x1a230c0=4% 0x36440=2% 0x18b0740=2% 0x18afac0=1% 0x6382c0=1% 0x18aff80=1% 0x18aa800=1% 0x18d9940=1% 0x18e1440=1% 0x18df200=1% 0x1738540=1%
+[  363.294] profile [CPUCore_0]: 1021 samples, busy 72% (jit 91% of busy), waiting 27%
+[  363.302]    hot: 0x4ab8c0=0% 0x659bc0=0% 0x659c00=0% 0x17eb40=0% 0x4abf00=0% 0x5240=0% 0x3ce00=0% 0x1a2bc0=0% 0x16f980=0% 0x9b55c0=0% 0x4a9e80=0% 0x98e580=0%
+[  363.318] profile [CPUCore_1]: 1021 samples, busy 0% (jit 0% of busy), waiting 100%
+[  363.327]    hot:
+[  363.329] profile [CPUCore_2]: 1022 samples, busy 36% (jit 85% of busy), waiting 63%
+[  363.339]    hot: 0x9b55c0=1% 0x4a9500=1% 0x4ac580=0% 0x4a92c0=0% 0x17eb40=0% 0x4c3e40=0% 0x4ac640=0% 0x4ae280=0% 0x4a9640=0% 0x1a1900=0% 0x1ade80=0% 0x1a22f80=0%
+[  363.355] profile [CPUCore_3]: 1022 samples, busy 1% (jit 0% of busy), waiting 98%
+[  363.364]    hot: 0x17eb40=14% 0x18ab80=7% 0x3cd80=7% 0xb53c0=7% 0x70ef40=7% 0x1b12c0=7% 0x1a9900=7% 0x17e300=7% 0x1982c80=7% 0x18e9c0=7% 0x244900=7% 0x183040=7%
+[  363.380] profile [GPU]: 1021 samples, busy 18% (jit 0% of busy), waiting 81%
+[  363.389]    hot: 0x1719740=18% 0x1a22f80=3% 0x538e80=2% 0x538ec0=2% 0x5bedc0=2% 0x569280=2% 0x5692c0=1% 0x5691c0=1% 0x539ac0=1% 0x694780=1% 0x569500=1% 0x5c11c0=1%
+[  368.863] status: game 59.9 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  368.879] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  368.932] gpu fences pending 0 (peak 3 since the last line)
+[  368.938] small allocations: ~54 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  368.949]    ~    8 MiB in ~    1344 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  368.961]    ~    6 MiB in ~    1792 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  368.973]    ~    6 MiB in ~    3328 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  368.985]    ~    6 MiB in ~    3136 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  368.998]    ~    5 MiB in ~    1408 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  369.010]    ~    4 MiB in ~    1152 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  369.022]    ~    4 MiB in ~    8256 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  369.034]    ~    2 MiB in ~    1472 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  369.046] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45787 slow-path redirects, 10343 unaliasable
+[  369.063]    redirects by cause: outside 1 (0x200380000), unmapped 45787 (0x82af34c0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  378.871] status: game 60.0 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  378.887] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  378.940] gpu fences pending 0 (peak 5 since the last line)
+[  378.946] small allocations: ~59 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  378.958]    ~   12 MiB in ~    1984 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  378.971]    ~    8 MiB in ~    2176 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  378.982]    ~    6 MiB in ~    3456 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  378.994]    ~    5 MiB in ~    1408 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  379.006]    ~    5 MiB in ~    1408 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  379.018]    ~    4 MiB in ~    2176 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  379.029]    ~    4 MiB in ~    8000 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  379.042]    ~    2 MiB in ~    1216 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x48cfc9
+[  379.054] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45787 slow-path redirects, 10343 unaliasable
+[  379.071]    redirects by cause: outside 1 (0x200380000), unmapped 45787 (0x82af34c0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  379.163] direct map: 3610 MiB used in 18 allocations, 997 MiB free in 3 runs (largest 799 MiB), 11 allocations >= 2 MiB
+[  379.176] heap census: 389 MiB live in allocations >= 1 MiB, 27 sites (untracked overflow 0 MiB)
+[  379.187]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  379.195]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  379.204]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  379.211]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  379.219]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  379.227]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  379.235]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  379.243]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  379.251]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  379.258]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  379.266]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  379.275]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  388.877] status: game 60.0 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  388.895] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  388.949] gpu fences pending 0 (peak 3 since the last line)
+[  388.955] small allocations: ~53 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  388.966]    ~    9 MiB in ~    1536 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  388.978]    ~    6 MiB in ~    1792 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  388.989]    ~    6 MiB in ~    3328 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  389.001]    ~    5 MiB in ~    2688 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  389.014]    ~    5 MiB in ~    1344 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  389.026]    ~    4 MiB in ~    7744 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  389.038]    ~    3 MiB in ~     960 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  389.051]    ~    3 MiB in ~    1792 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  389.062] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45787 slow-path redirects, 10343 unaliasable
+[  389.078]    redirects by cause: outside 1 (0x200380000), unmapped 45787 (0x82af34c0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  393.419] profile [VulkanWorker]: 1020 samples, busy 5% (jit 0% of busy), waiting 94%
+[  393.429]    hot: 0x1a230c0=6% 0x58e100=3% 0x691700=3% 0x1941540=3% 0x18d6780=1% 0x198c200=1% 0x1738fc0=1% 0x18b3000=1% 0x18f0440=1% 0x1221c80=1% 0x18b88c0=1% 0x58ae00=1%
+[  393.446] profile [CPUCore_0]: 1020 samples, busy 71% (jit 94% of busy), waiting 28%
+[  393.456]    hot: 0x4c3e40=0% 0x3cc40=0% 0x4ab8c0=0% 0x17e2c0=0% 0x4ae240=0% 0x17eb40=0% 0x4abf40=0% 0x9b55c0=0% 0x4ac580=0% 0x1b21c0=0% 0x183680=0% 0x4c5540=0%
+[  393.472] profile [CPUCore_1]: 1019 samples, busy 0% (jit 0% of busy), waiting 100%
+[  393.481]    hot:
+[  393.484] profile [CPUCore_2]: 1019 samples, busy 36% (jit 88% of busy), waiting 63%
+[  393.493]    hot: 0x4c4380=0% 0x4ae180=0% 0x4ac580=0% 0x9b5640=0% 0x4ae280=0% 0x4c3f80=0% 0x198d740=0% 0x98e580=0% 0x4a92c0=0% 0x4aef00=0% 0x17eb00=0% 0x4ad780=0%
+[  393.510] profile [CPUCore_3]: 1019 samples, busy 1% (jit 0% of busy), waiting 98%
+[  393.519]    hot: 0x198d740=5% 0x18ab80=5% 0x1b3840=5% 0x23b480=5% 0x1aeb80=5% 0x1a22f80=5% 0x243f00=5% 0x3cd80=5% 0x183340=5% 0x5200=5% 0x92480=5% 0x17eb40=5%
+[  393.535] profile [GPU]: 1020 samples, busy 17% (jit 0% of busy), waiting 82%
+[  393.543]    hot: 0x1719740=16% 0x569500=2% 0x1a22f80=2% 0x538ec0=2% 0x538e80=1% 0x569680=1% 0x1a23100=1% 0x1a23140=1% 0x569280=1% 0x1a072c0=1% 0x5691c0=1% 0x53df40=1%
+[  398.885] status: game 59.9 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  398.901] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  398.953] gpu fences pending 0 (peak 4 since the last line)
+[  398.961] small allocations: ~54 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  398.971]    ~   12 MiB in ~    1984 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  398.983]    ~    7 MiB in ~    1984 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  398.995]    ~    5 MiB in ~    2560 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  399.008]    ~    4 MiB in ~    2368 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  399.019]    ~    4 MiB in ~    8064 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  399.031]    ~    3 MiB in ~     960 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  399.045]    ~    3 MiB in ~    1728 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  399.057]    ~    2 MiB in ~     768 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  399.069] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45787 slow-path redirects, 10343 unaliasable
+[  399.085]    redirects by cause: outside 1 (0x200380000), unmapped 45787 (0x82af34c0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  408.892] status: game 59.9 fps, speed 100%, frame 16.7 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  408.908] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  408.963] gpu fences pending 0 (peak 3 since the last line)
+[  408.971] small allocations: ~62 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  408.981]    ~   12 MiB in ~    1856 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  408.993]    ~    7 MiB in ~    3776 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  409.005]    ~    6 MiB in ~    3328 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  409.019]    ~    6 MiB in ~    1664 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  409.031]    ~    5 MiB in ~    1472 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  409.042]    ~    5 MiB in ~    2560 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  409.055]    ~    4 MiB in ~    1216 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  409.067]    ~    4 MiB in ~    8256 (avg 560 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  409.079] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45787 slow-path redirects, 10343 unaliasable
+[  409.095]    redirects by cause: outside 1 (0x200380000), unmapped 45787 (0x82af34c0), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  409.186] direct map: 3610 MiB used in 18 allocations, 997 MiB free in 3 runs (largest 799 MiB), 11 allocations >= 2 MiB
+[  409.198] heap census: 389 MiB live in allocations >= 1 MiB, 27 sites (untracked overflow 0 MiB)
+[  409.208]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  409.216]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  409.224]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  409.232]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  409.240]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  409.248]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  409.257]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  409.265]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  409.273]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  409.280]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  409.288]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  409.296]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb
+[  418.899] status: game 55.2 fps, speed 100%, frame 19.9 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  418.916] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 767 allocations 377 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 766 allocations 249 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  418.970] gpu fences pending 0 (peak 5 since the last line)
+[  418.977] small allocations: ~53 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  418.987]    ~   14 MiB in ~    2304 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  419.000]    ~    5 MiB in ~    1536 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  419.012]    ~    5 MiB in ~    2752 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  419.026]    ~    5 MiB in ~    2496 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  419.041]    ~    3 MiB in ~    6976 (avg 557 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  419.054]    ~    3 MiB in ~     896 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5a60d7 <- 0x59b032
+[  419.069]    ~    2 MiB in ~     704 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  419.081]    ~    2 MiB in ~    1280 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  419.094] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 45822 slow-path redirects, 10343 unaliasable
+[  419.110]    redirects by cause: outside 1 (0x200380000), unmapped 45822 (0x81612680), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  423.570] profile [VulkanWorker]: 1018 samples, busy 6% (jit 0% of busy), waiting 93%
+[  423.581]    hot: 0x18b2dc0=4% 0x13b5a80=2% 0x1a23100=2% 0x198c1c0=2% 0x1941540=2% 0x18f0680=2% 0x12b3bc0=1% 0x6382c0=1% 0x130b9c0=1% 0x18b3000=1% 0x18b9940=1% 0x12accc0=1%
+[  423.598] profile [CPUCore_0]: 1018 samples, busy 77% (jit 93% of busy), waiting 22%
+[  423.607]    hot: 0x4ac0c0=0% 0x4c3e40=0% 0x17eb40=0% 0x17e380=0% 0x190a00=0% 0x4a9500=0% 0x9b55c0=0% 0x4ac580=0% 0x4ab880=0% 0x4aca40=0% 0x4a9e80=0% 0x1a072c0=0%
+[  423.623] profile [CPUCore_1]: 1018 samples, busy 0% (jit 0% of busy), waiting 100%
+[  423.635]    hot:
+[  423.638] profile [CPUCore_2]: 1018 samples, busy 35% (jit 86% of busy), waiting 64%
+[  423.647]    hot: 0x17eb40=1% 0x4c3e40=0% 0x4a9500=0% 0x9b55c0=0% 0x4ac580=0% 0x4ac600=0% 0x18e9c0=0% 0x4a94c0=0% 0x4c4cc0=0% 0xb5380=0% 0x1810c0=0% 0xb18d80=0%
+[  423.663] profile [CPUCore_3]: 1018 samples, busy 1% (jit 0% of busy), waiting 98%
+[  423.672]    hot: 0x18ab80=9% 0xb5380=9% 0x17e9c0=9% 0x3cd80=9% 0x18ea80=9% 0x3cc80=9% 0x4afa40=9% 0x273dc0=9% 0x198d700=9% 0x273e00=9% 0x190a00=9%
+[  423.689] profile [GPU]: 1018 samples, busy 16% (jit 0% of busy), waiting 83%
+[  423.699]    hot: 0x1719740=12% 0x1a22f80=5% 0x39dc0=2% 0x5694c0=1% 0x5bdd80=1% 0x538e80=1% 0x53d6c0=1% 0x517380=1% 0x649a00=1% 0x5691c0=1% 0x539ac0=1% 0x684fc0=1%
+[  428.904] status: game 34.7 fps, speed 100%, frame 52.8 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  428.919] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 795 allocations 378 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 794 allocations 250 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  428.972] gpu fences pending 0 (peak 3 since the last line)
+[  428.980] small allocations: ~44 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  428.991]    ~   13 MiB in ~    2048 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  429.002]    ~    4 MiB in ~    2432 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  429.017]    ~    4 MiB in ~    1984 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  429.031]    ~    3 MiB in ~   65792 (avg 60 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  429.043]    ~    2 MiB in ~    5568 (avg 554 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  429.055]    ~    2 MiB in ~     448 (avg 5914 B) from eboot+0x67dc <- 0x2b2233 <- 0x2b399e <- 0x2b21c5 <- 0x2abc40
+[  429.068]    ~    1 MiB in ~     512 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  429.082]    ~    1 MiB in ~     960 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x29b5ba
+[  429.094] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 46049 slow-path redirects, 10343 unaliasable
+[  429.109]    redirects by cause: outside 1 (0x200380000), unmapped 46049 (0x8103da58), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  438.908] status: game 20.5 fps, speed 100%, frame 45.5 ms, guest+tables 1248 MiB committed (0 MiB given back), 799 MiB direct free, jit cache flushes 0/0/0/0
+[  438.924] vram (VMA): buffer: heap 0 (917 MiB): 3 blocks 143 MiB, 2 allocations 47 MiB, largest free range 75 MiB, budget usage 143 of 488 MiB; heap 1 (1834 MiB): 8 blocks 440 MiB, 795 allocations 378 MiB, largest free range 28 MiB, budget usage 440 of 977 MiB; type 0 (heap 1, flags 0x1): 7 blocks 312 MiB, 794 allocations 250 MiB; type 2 (heap 0, flags 0x6): 2 blocks 128 MiB, 2 allocations 47 MiB; type 3 (heap 1, flags 0x7): 1 blocks 128 MiB, 1 allocations 128 MiB; type 5 (heap 0, flags 0xe): 1 blocks 14 MiB, 0 allocations 0 MiB; ; reclaims 0
+[  438.977] gpu fences pending 0 (peak 4 since the last line)
+[  438.983] small allocations: ~44 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  438.997]    ~   11 MiB in ~    1728 (avg 6816 B) from eboot+0x699c <- 0x286c55 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  439.009]    ~    5 MiB in ~    2560 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x3d1ffe
+[  439.021]    ~    4 MiB in ~    2112 (avg 2120 B) from eboot+0x67dc <- 0x1aebd0 <- 0x271cdc <- 0x27197a <- 0x27669e
+[  439.033]    ~    3 MiB in ~   56512 (avg 62 B) from eboot+0x67dc <- 0x572246 <- 0x5708e0 <- 0x62fe72 <- 0x53cb6a
+[  439.045]    ~    3 MiB in ~     832 (avg 4096 B) from eboot+0x699c <- 0x41e2c0 <- 0x273ee9 <- 0x27411a <- 0x24370b
+[  439.057]    ~    2 MiB in ~    4672 (avg 556 B) from eboot+0x18afa4f <- 0x5d1f54 <- 0x59c4bd <- 0x59c750 <- 0x9844
+[  439.069]    ~    2 MiB in ~     768 (avg 3176 B) from eboot+0x67dc <- 0x2b3943 <- 0x2b21c5 <- 0x2abc40 <- 0x273ee9
+[  439.088]    ~    1 MiB in ~     512 (avg 4080 B) from eboot+0x67dc <- 0x63e580 <- 0x63e237 <- 0x5ab57a <- 0x63bcf6
+[  439.100] fastmem: view 8 GiB (asked 512 GiB, last refusal 0x8002000c), 0 pages mapped (0 MiB), 0 first touches, 46050 slow-path redirects, 10343 unaliasable
+[  439.116]    redirects by cause: outside 1 (0x200380000), unmapped 46050 (0x81592c58), unreadable 0 (0x0), write to read-only 0 (0x0), other 0 (0x0)
+[  439.209] direct map: 3610 MiB used in 18 allocations, 997 MiB free in 3 runs (largest 799 MiB), 11 allocations >= 2 MiB
+[  439.222]    new: 0xa0000000+1248M(t0)
+[  439.227] heap census: 389 MiB live in allocations >= 1 MiB, 27 sites (untracked overflow 0 MiB)
+[  439.237]       64 MiB in    4 from eboot+0x1a0790b <- 0x6a2d <- 0x98e120
+[  439.249]       64 MiB in    4 from eboot+0x6a2d <- 0x98e120 <- 0x4c5509
+[  439.263]       34 MiB in    2 from eboot+0x67dc <- 0x25eca1 <- 0x4225ad
+[  439.271]       24 MiB in    1 from eboot+0x67dc <- 0xa12a0 <- 0x1841e4
+[  439.279]       24 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x534959
+[  439.287]       24 MiB in    1 from eboot+0x6a2d <- 0x534959 <- 0x61e75f
+[  439.295]       24 MiB in    1 from eboot+0x67dc <- 0x5e8be7 <- 0x62f7f3
+[  439.307]       19 MiB in    1 from eboot+0x1a0790b <- 0x6a2d <- 0x85919
+[  439.315]       19 MiB in    1 from eboot+0x6a2d <- 0x85919 <- 0xea03
+[  439.323]       16 MiB in    1 from eboot+0x67dc <- 0x659343 <- 0x659284
+[  439.330]       16 MiB in    1 from eboot+0x67dc <- 0x6595a3 <- 0x6594e4
+[  439.338]       10 MiB in    5 from eboot+0x67dc <- 0x150c45 <- 0x14e9bb

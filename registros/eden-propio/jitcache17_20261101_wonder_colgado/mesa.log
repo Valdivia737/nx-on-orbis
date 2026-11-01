@@ -1,0 +1,67 @@
+MESA: info: orbis-drm: arm built Jan  1 1980 00:00:00; knobs: TRACE=unset DUMP_SUBMIT=unset CMASK=unset TILE_MODE=unset ARENA_MIB=1408
+MESA: info: orbis-drm: direct memory pool is 4608 MiB
+MESA: info: orbis-drm: ORBIS_ARENA_MIB=1408 - the ladder is skipped
+MESA: info: orbis-drm: TF_SONY_BASE - 2 MiB of real memory mapped at 0xff0000000, which is where sceGnmGetTheTessellationFactorRingBufferBaseAddress() says Sony's factor ring is and where every faulting read has landed. The factor ring's DESCRIPTOR and its REGISTER both move here, so the write path and the read path agree whether or not our register write survives.
+MESA: info: orbis-drm: arena 1408 MiB, RADV's window 0x572404000..0x5c8400000 (phys 0x2ba00000)
+MESA: info: orbis-drm: page size 16384 bytes, as getpagesize() reports it
+MESA: info: orbis-drm: fence label 0x570400000, fence CB 0x570404000, RADV's window starts 0x572404000
+MESA: info: orbis-drm: arena self-test: writing 0x572404000 and 0x5c83fc000
+MESA: info: orbis-drm: arena self-test: read back 0xa5a50001 and 0xa5a50002 - OK
+MESA: info: orbis-drm: vq arena 0x572404000: start 0x570400000 end 0x5c8400000 off 0x2ba00000 direct 1 committed 1 flexible 0 pooled 0 name 'anon:0000016a1b8f'
+MESA: info: orbis-drm: vq arena raw: 0000000570400000 00000005c8400000 000000002ba00000 0000000000000033
+MESA: info: orbis-drm: address32_hi = 0x5, derived from the arena rather than assumed
+MESA: info: orbis-drm: RADV's window 0x572404000..0x5c8400000 (1375 MiB) is mapped but NOT ACCESSIBLE - a buffer gains access when it is mapped and loses it when it is unmapped, the way amdgpu's page tables behave
+MESA: info: orbis-drm: flattener self-test: 2 chains followed, 12 dwords, no chain packet left - OK
+MESA: info: orbis-drm: pad self-test: every length mod 8 pads to a stream that ends exactly at its size - OK
+MESA: info: orbis-drm: dead-pool self-test: a destroyed range is recognised and its first byte past the end is not - OK
+MESA: info: orbis-drm: raw syscall check: syscall(SYS_getpid)=-1 errno=78, getpid()=95 - raw syscalls are refused, so _umtx_op may exist behind libkernel
+MESA: info: orbis-drm: futex self-test: OK - the waiter SLEPT 200906 us and was woken by the wake across 1 wakeup(s) (wait returned 0/errno 0, wake returned 0). Both halves work; wakeups beyond the first are addresses sharing a bucket and are harmless.
+MESA: info: orbis-drm: futex shim: condition variables measure deadlines against CLOCK_REALTIME (the probe's own 20 ms wait took 0 ms)
+MESA: info: orbis-drm: futex timed self-test: OK - the waiter slept 150821 us against a 150 ms deadline and returned 60 (ETIMEDOUT is 60). The deadline reaches the right clock.
+MESA: info: orbis-drm: clock id 0: 20976 us across a 20000 us SLEEP, 20002 us across a 20000 us SPIN - WALL CLOCK - advances whether the process runs or not
+MESA: info: orbis-drm: clock id 1: 20976 us across a 20000 us SLEEP, 20001 us across a 20000 us SPIN - WALL CLOCK - advances whether the process runs or not
+MESA: info: orbis-drm: clock id 2: 20976 us across a 20000 us SLEEP, 20001 us across a 20000 us SPIN - WALL CLOCK - advances whether the process runs or not
+MESA: info: orbis-drm: clock id 3: 20976 us across a 20000 us SLEEP, 20001 us across a 20000 us SPIN - WALL CLOCK - advances whether the process runs or not
+MESA: info: orbis-drm: clock id 4: 20976 us across a 20000 us SLEEP, 20001 us across a 20000 us SPIN - WALL CLOCK - advances whether the process runs or not
+MESA: info: orbis-drm: getrusage user+sys: 112 us across a 20000 us SLEEP, 20038 us across a 20000 us SPIN - CPU TIME. THIS ANSWERS 'waiting or working' and needs no clock id
+MESA: info: orbis-drm: device up, reporting amdgpu interface 3.54, memory backed by direct memory (one ONION arena)
+MESA: info: orbis-drm: ac_drm_query_pci_bus_info refused - there is no PCI bus to enumerate on this platform
+MESA: info: orbis-drm: row size 2 KB - GB_ADDR_CONFIG.ROW_SIZE=1 and the 2 KB tile tables, from one knob (ORBIS_ROW_SIZE)
+MESA: warning: orbis-drm: GB_ADDR_CONFIG.NUM_SHADER_ENGINES is UNCITED - shader-array topology; SQ_WAVE_HW_ID would measure it
+MESA: warning: orbis-drm: MC_ARB_RAMCFG.NOOFRANKS is UNCITED - one rank assumed; addrlib's CIK path does not read it
+MESA: warning: orbis-drm: drm_amdgpu_info_device.device_id is UNCITED - Liverpool's PCI id is in no oracle; it reaches only radeon_info.pci_id
+MESA: warning: orbis-drm: drm_amdgpu_info_device.num_shader_engines et al is UNCITED - matches the published 18 CU / 72 TMU / 32 ROP spec, but is not measured from the hardware - SQ_WAVE_HW_ID would be
+MESA: warning: orbis-drm: drm_amdgpu_info_device.max_memory_clock is UNCITED - GDDR5 clock not established here
+MESA: warning: orbis-drm: drm_amdgpu_info_device geometry limits is UNCITED - ce_ram_size, gs_*_depth and max_gs_waves_per_vgt are Bonaire-shaped guesses
+MESA: info: orbis-drm: ac_drm_query_hw_ip_info refused - one ring on purpose - Sony's compute queues are a different door; see research/01-submission.md
+MESA: error: ac: no sync-file export on this device - has_fence_to_handle is false
+MESA: info: orbis-drm: ac_drm_query_video_caps_info refused - built with -Dvideo-codecs=, so there are no codecs to describe
+MESA: info: orbis-drm: ac_drm_query_info refused - RADV substitutes its own estimate of 50 when this is unavailable
+MESA: info: orbis-drm: syncobj table grown 0 -> 1024 slots
+MESA: info: orbis-drm: at teardown 0 BO(s), 0 syncobj(s), 0 context(s), 0 VA range(s), 0 KiB held - winsys-lifetime, and it did not grow
+MESA: info: orbis: vertex fetches are split to natural alignment (ORBIS_VS_STRICT_ALIGN=0 disables it, and 97 CTS cases fail when it is off)
+MESA: info: orbis-drm: device up, reporting amdgpu interface 3.54, memory backed by direct memory (one ONION arena)
+MESA: info: orbis-drm: device up, reporting amdgpu interface 3.54, memory backed by direct memory (one ONION arena)
+MESA: info: orbis-drm: AMDGPU_VA_RANGE_HIGH ignored - this device reports no high VA window
+MESA: info: orbis-drm: reserving one 16 KiB page of slack after every VA range - RADV's pad page cannot alias in a flat arena, so without it an overrun writes into the next allocation (ORBIS_NO_VA_GAP=1 disables it)
+MESA: info: orbis-drm: BO table grown 0 -> 4096 slots
+MESA: warning: orbis-drm: ORBIS_VRAM_GARLIC=0 - every surface is back on the cache-coherent bus, which cost this title two thirds of its frame rate. For comparison runs only.
+MESA: info: orbis-drm: live-mapping table grown 0 -> 8192 entries
+MESA: info: orbis-drm: GPU-side read-only mappings are not enforceable here - one shared page table
+MESA: info: orbis-drm: zeroing 16 KiB at 0x57247c000 - the BO asked for VRAM_CLEARED (RADV_DEBUG=zerovram or a buffer RADV reads back as zero)
+MESA: info: orbis: PA_CL_NANINF_CNTL <- 0x00000000, written because CLEAR_STATE was measured leaving 0x8b47008d there (twelve bits of it in reserved space)
+MESA: info: orbis-drm: BO 6 maps 0x572484000..0x572498000 back inside the range it held itself (0x572484000..0x572498000) - bookkeeping, unless this handle was recycled onto a different buffer.
+MESA: info: wsi/orbis: scan-out up - 1920x1080 pitch 1920, 5 swapchain buffer(s), A8B8G8R8_SRGB linear - ZERO COPY, the flip shows what the GPU rendered into
+MESA: info: wsi/orbis: present is DEFERRED by one frame - the GPU wait is overlapped with the next frame's recording
+MESA: info: radv/orbis: the tess FACTOR ring descriptor points at Sony's 0xff0000000, 261120 B - the same address VGT_TF_MEMORY_BASE holds. The OFFCHIP ring stays ours: its address travels in desc[4] and has never been in doubt.
+MESA: info: radv/orbis: tess rings are OURS - 0x57fa00000..0x58023fc00 (offchip 8388608 B, factor 261120 B, total 8649728 B); VGT_TF_MEMORY_BASE <- 0xff00000 - SONY's factor ring, backed by ORBIS_TF_SONY_BASE. Only the OFFCHIP ring is ours in this run.
+MESA: info: radv/orbis: offchip stride 32768 B, 256 buffer(s) allocated, 2 shader engine(s); VGT_HS_OFFCHIP_PARAM <- 0x00000100. A write fault at ring+N*32768 is offchip buffer N.
+MESA: info: orbis: VGT_TF_MEMORY_BASE <- SONY's factor ring 0xff0000000 (2097152 B mapped) and not ours at 0x580200000. The register now agrees with what it already held, so a write that never lands costs nothing.
+MESA: info: orbis: VGT_TF_RING_SIZE <- 65280 dwords (261120 B) undivided, as upstream; factor ring 0xff0000000..0xff003fc00, 2 shader engine(s)
+MESA: info: orbis-drm: READ_REGS firing before submission #1 (ORBIS_READ_REGS_AT=1)
+MESA: info: orbis-drm: BO 29 maps 0x57258c000..0x5725a0000 back inside the range it held itself (0x57258c000..0x5725a0000) - bookkeeping, unless this handle was recycled onto a different buffer.
+MESA: info: orbis-drm: BO 30 maps 0x5725a4000..0x5725a8000 back inside the range it held itself (0x5725a4000..0x5725a8000) - bookkeeping, unless this handle was recycled onto a different buffer.
+MESA: info: orbis-drm: BO 29 maps 0x57258c000..0x5725a0000 back inside the range it held itself (0x57258c000..0x5725a0000) - bookkeeping, unless this handle was recycled onto a different buffer.
+MESA: info: orbis-drm: BO 30 maps 0x572598000..0x57259c000 INTO A RANGE BO 29 HELD until it was unmapped (0x57258c000..0x5725a0000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 30 maps 0x57259c000..0x5725a0000 INTO A RANGE BO 29 HELD until it was unmapped (0x57258c000..0x5725a0000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 36 maps 0x5725a4000..0x5725a8000 INTO A RANGE BO 30 HELD until it was unmapped (0x5725a4000..0x5725a8000). Anything still writing through the old pointer lands in the new tenant.
