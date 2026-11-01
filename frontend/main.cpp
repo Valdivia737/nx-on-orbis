@@ -53,6 +53,9 @@
 // dynarmic/backend/x64/reg_alloc.cpp (Eden4's register allocation tweaks).
 extern "C" bool ps4_regalloc_free_moves;
 extern "C" bool ps4_regalloc_r13;
+// libkernel: Pro mode and the CPU clock, logged at startup like Eden4 does.
+extern "C" int32_t sceKernelIsNeoMode();
+extern "C" uint64_t sceKernelGetCpuFrequency();
 #include "core/hle/service/am/applet_manager.h"
 #include "core/hle/service/filesystem/filesystem.h"
 #include "core/loader/loader.h"
@@ -552,6 +555,11 @@ int main() {
     Ps4::Log("eden-ps4 starting (Eden %s %s)", Common::g_scm_branch, Common::g_scm_desc);
     Ps4::Log("PS4 build: %s; test 35: Eden4's register allocation (free RBX/R12/R13 before the stack, R13 without fastmem; regalloc=off turns it off), fastmem with partly mapped pages, fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
              EDEN_PS4_BUILD_ID);
+    // Same line as Eden4: a base-mode app without Boost Mode runs the CPU at 1.6 GHz instead of 2.1.
+    Ps4::Log("PS4 Pro mode: %s, CPU clock: %lu MHz, CPUs: %ld",
+             sceKernelIsNeoMode() ? "on" : "off",
+             static_cast<unsigned long>(sceKernelGetCpuFrequency() / 1000000),
+             static_cast<long>(sysconf(_SC_NPROCESSORS_ONLN)));
     Ps4::InstallCrashReporting();
     Ps4::StartWatchdog();
     Ps4::RegisterThread("main");
