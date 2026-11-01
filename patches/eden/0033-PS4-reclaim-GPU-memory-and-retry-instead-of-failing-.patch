@@ -1,0 +1,341 @@
+From 0d2afae398251ca6a306ed5838d104fb54eb46ed Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sat, 31 Oct 2026 23:40:00 -0300
+Subject: [PATCH] PS4: reclaim GPU memory and retry instead of failing (adapted
+ from Eden4)
+
+Adapted from Eden4 (github.com/xatyy/Eden4, GPL-3.0, 'staging buffer cap, reclaim and retry on low
+GPU memory'). The staging buffer pool registers a reclaim (scheduler.Finish(), then drop every idle
+staging buffer); vmaCreateImage / vmaCreateBuffer run it on the renderer's thread when memory is low
+and once more after a failure, then retry. Staging buffers are capped at 64 MiB (reclaim and reuse
+first) and released at every level every frame.
+
+Difference from Eden4: low memory is judged from VMA's device-local budget (VK_EXT_memory_budget),
+not the largest free direct block, because here the driver's arena (device-VA window) is what ran
+out; the reclaim count is added to the vram status line.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../vk_staging_buffer_pool.cpp                | 62 ++++++++++++
+ .../renderer_vulkan/vk_staging_buffer_pool.h  |  5 +
+ .../vulkan_common/vulkan_memory_allocator.cpp | 94 ++++++++++++++++++-
+ .../vulkan_common/vulkan_memory_allocator.h   | 18 ++++
+ 4 files changed, 174 insertions(+), 5 deletions(-)
+
+diff --git a/src/video_core/renderer_vulkan/vk_staging_buffer_pool.cpp b/src/video_core/renderer_vulkan/vk_staging_buffer_pool.cpp
+index 4270449..ca6a62d 100644
+--- a/src/video_core/renderer_vulkan/vk_staging_buffer_pool.cpp
++++ b/src/video_core/renderer_vulkan/vk_staging_buffer_pool.cpp
+@@ -107,11 +107,48 @@ StagingBufferPool::StagingBufferPool(const Device& device_, MemoryAllocator& mem
+     }
+     stream_pointer = stream_buffer.Mapped();
+     ASSERT_MSG(!stream_pointer.empty(), "Stream buffer must be host visible!");
++#ifdef __ORBIS__
++    // PS4 (adapted from Eden4, github.com/xatyy/Eden4): what MemoryAllocator runs when GPU memory
++    // gets low or an allocation fails, before it retries.
++    SetPs4MemoryReclaim([this] {
++        // Buffers handed out since the last submission may not be recorded yet: keep them.
++        const u64 keep = scheduler.CurrentTick();
++        scheduler.Finish();
++        ReleaseAllFree(keep);
++    });
++#endif
+ }
+ 
++#ifdef __ORBIS__
++StagingBufferPool::~StagingBufferPool() {
++    SetPs4MemoryReclaim({});
++}
++
++void StagingBufferPool::ReleaseAllFree(u64 keep) {
++    for (StagingBuffersCache* cache : {&device_local_cache, &upload_cache, &download_cache}) {
++        for (StagingBuffers& level : *cache) {
++            auto& entries = level.entries;
++            const auto it = std::remove_if(entries.begin(), entries.end(), [&](const StagingBuffer& entry) {
++                const bool idle = !entry.deferred && entry.tick < keep && scheduler.IsFree(entry.tick);
++                if (idle) {
++                    total_bytes -= size_t{1} << entry.log2_level;
++                }
++                return idle;
++            });
++            entries.erase(it, entries.end());
++            level.delete_index = 0;
++            level.iterate_index = 0;
++        }
++    }
++}
++#else
+ StagingBufferPool::~StagingBufferPool() = default;
++#endif
+ 
+ StagingBufferRef StagingBufferPool::Request(size_t size, MemoryUsage usage, bool deferred) {
++#ifdef __ORBIS__
++    ClaimPs4ReclaimThread();
++#endif
+     if (!deferred && usage == MemoryUsage::Upload && size <= region_size) {
+         return GetStreamBuffer(size);
+     }
+@@ -131,11 +168,21 @@ void StagingBufferPool::FreeDeferred(StagingBufferRef& ref) {
+ }
+ 
+ void StagingBufferPool::TickFrame() {
++#ifdef __ORBIS__
++    // Every level every frame (upstream: one level per frame, so a buffer can idle for 64 frames).
++    ClaimPs4ReclaimThread();
++    for (size_t level = 0; level < NUM_LEVELS; ++level) {
++        ReleaseLevel(device_local_cache, level);
++        ReleaseLevel(upload_cache, level);
++        ReleaseLevel(download_cache, level);
++    }
++#else
+     current_delete_level = (current_delete_level + 1) % NUM_LEVELS;
+ 
+     ReleaseCache(MemoryUsage::DeviceLocal);
+     ReleaseCache(MemoryUsage::Upload);
+     ReleaseCache(MemoryUsage::Download);
++#endif
+ }
+ 
+ StagingBufferRef StagingBufferPool::GetStreamBuffer(size_t size) {
+@@ -215,6 +262,15 @@ std::optional<StagingBufferRef> StagingBufferPool::TryGetReservedBuffer(size_t s
+ 
+ StagingBufferRef StagingBufferPool::CreateStagingBuffer(size_t size, MemoryUsage usage, bool deferred) {
+     auto const log2_size = Common::Log2Ceil<u32>(u32(size));
++#ifdef __ORBIS__
++    // Staging buffers past 64 MiB: wait for the GPU and drop the idle ones first, then reuse one.
++    constexpr size_t Ps4StagingCap = size_t{64} << 20;
++    if (total_bytes + (size_t{1} << log2_size) > Ps4StagingCap && Ps4Reclaim(memory_allocator.Ps4Allocator(), 0, true)) {
++        if (const std::optional<StagingBufferRef> ref = TryGetReservedBuffer(size, usage, deferred)) {
++            return *ref;
++        }
++    }
++#endif
+     VkBufferCreateInfo buffer_ci = {
+         .sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO,
+         .pNext = nullptr,
+@@ -243,6 +299,9 @@ StagingBufferRef StagingBufferPool::CreateStagingBuffer(size_t size, MemoryUsage
+         device.IsBufferDeviceAddressSupported()
+             ? device.GetLogical().GetBufferDeviceAddress(*buffer)
+             : VkDeviceAddress{};
++#ifdef __ORBIS__
++    total_bytes += size_t{1} << log2_size;
++#endif
+     StagingBuffer& entry = GetCache(usage)[log2_size].entries.emplace_back(StagingBuffer{
+         .buffer = std::move(buffer),
+         .device_address = buffer_address,
+@@ -287,6 +346,9 @@ void StagingBufferPool::ReleaseLevel(StagingBuffersCache& cache, size_t log2) {
+     const size_t end_offset = (std::min)(begin_offset + deletions_per_tick, old_size);
+     const auto begin = entries.begin() + begin_offset;
+     const auto end = entries.begin() + end_offset;
++#ifdef __ORBIS__
++    total_bytes -= static_cast<size_t>(std::count_if(begin, end, is_deletable)) << log2;
++#endif
+     entries.erase(std::remove_if(begin, end, is_deletable), end);
+ 
+     const size_t new_size = entries.size();
+diff --git a/src/video_core/renderer_vulkan/vk_staging_buffer_pool.h b/src/video_core/renderer_vulkan/vk_staging_buffer_pool.h
+index 6d967ab..e5df04e 100644
+--- a/src/video_core/renderer_vulkan/vk_staging_buffer_pool.h
++++ b/src/video_core/renderer_vulkan/vk_staging_buffer_pool.h
+@@ -100,6 +100,11 @@ private:
+     void ReleaseCache(MemoryUsage usage);
+ 
+     void ReleaseLevel(StagingBuffersCache& cache, size_t log2);
++#ifdef __ORBIS__
++    /// Drops every staging buffer the GPU is done with that was not handed out at or after `keep`.
++    void ReleaseAllFree(u64 keep);
++    size_t total_bytes = 0; ///< Bytes held in staging buffers (not the stream buffer).
++#endif
+     size_t Region(size_t iter) const noexcept {
+         return iter / region_size;
+     }
+diff --git a/src/video_core/vulkan_common/vulkan_memory_allocator.cpp b/src/video_core/vulkan_common/vulkan_memory_allocator.cpp
+index fa584ae..0765861 100644
+--- a/src/video_core/vulkan_common/vulkan_memory_allocator.cpp
++++ b/src/video_core/vulkan_common/vulkan_memory_allocator.cpp
+@@ -25,10 +25,12 @@
+ #include "video_core/gpu_logging/gpu_logging.h"
+ #include "common/settings.h"
+ #ifdef __ORBIS__
++#include <atomic>
+ #include <chrono>
+ #include <cstdio>
+ #include <mutex>
+ #include <string>
++#include <thread>
+ #endif
+ 
+ namespace Vulkan {
+@@ -281,11 +283,73 @@ void Ps4VramSnapshot(VmaAllocator allocator, const char* why, bool failed) {
+ }
+ } // Anonymous namespace
+ 
++namespace {
++std::function<void()> g_ps4_reclaim;
++std::atomic<std::thread::id> g_ps4_reclaim_thread{};
++thread_local bool t_ps4_reclaiming = false;
++std::atomic<std::uint32_t> g_ps4_reclaims{0};
++
++/// Least room left in a device-local heap, from VMA's budget (VK_EXT_memory_budget: the driver's
++/// own view of its arena, which is what ran out - the largest free direct block did not).
++VkDeviceSize Ps4DeviceLocalRoom(VmaAllocator allocator) {
++    VmaBudget budgets[VK_MAX_MEMORY_HEAPS]{};
++    vmaGetHeapBudgets(allocator, budgets);
++    const VkPhysicalDeviceMemoryProperties* props = nullptr;
++    vmaGetMemoryProperties(allocator, &props);
++    VkDeviceSize room = ~VkDeviceSize{0};
++    for (u32 h = 0; h < props->memoryHeapCount; ++h) {
++        if ((props->memoryHeaps[h].flags & VK_MEMORY_HEAP_DEVICE_LOCAL_BIT) == 0) {
++            continue;
++        }
++        const VkDeviceSize left = budgets[h].budget > budgets[h].usage ? budgets[h].budget - budgets[h].usage : 0;
++        room = (std::min)(room, left);
++    }
++    return room;
++}
++} // Anonymous namespace
++
++void SetPs4MemoryReclaim(std::function<void()> reclaim) {
++    g_ps4_reclaim = std::move(reclaim);
++}
++
++void ClaimPs4ReclaimThread() {
++    g_ps4_reclaim_thread.store(std::this_thread::get_id(), std::memory_order_relaxed);
++}
++
++bool Ps4Reclaim(VmaAllocator allocator, size_t need, bool force) {
++    constexpr VkDeviceSize Headroom = 48ull << 20;
++    if (!g_ps4_reclaim || t_ps4_reclaiming ||
++        g_ps4_reclaim_thread.load(std::memory_order_relaxed) != std::this_thread::get_id()) {
++        return false;
++    }
++    const VkDeviceSize room_before = Ps4DeviceLocalRoom(allocator);
++    if (!force && room_before >= need + Headroom) {
++        return false;
++    }
++    // Low memory that a reclaim cannot fix would otherwise stall every allocation on the GPU.
++    static std::chrono::steady_clock::time_point last_low_memory_reclaim{};
++    const auto now = std::chrono::steady_clock::now();
++    if (!force) {
++        if (now - last_low_memory_reclaim < std::chrono::milliseconds(250)) {
++            return false;
++        }
++        last_low_memory_reclaim = now;
++    }
++    t_ps4_reclaiming = true;
++    g_ps4_reclaim();
++    t_ps4_reclaiming = false;
++    g_ps4_reclaims.fetch_add(1, std::memory_order_relaxed);
++    LOG_WARNING(Render_Vulkan, "PS4 memory reclaim ({}): device-local budget room {} -> {} MiB",
++                force ? "allocation failed" : "low memory", room_before >> 20,
++                Ps4DeviceLocalRoom(allocator) >> 20);
++    return true;
++}
++
+ /// The last VMA snapshot, for the frontend's status line (it never touches VMA itself).
+ extern "C" void Ps4VramStatusLine(void (*log)(const char*, ...)) {
+     std::scoped_lock lock{g_vram_mutex};
+     if (!g_vram_line.empty()) {
+-        log("vram (VMA): %s", g_vram_line.c_str());
++        log("vram (VMA): %s; reclaims %u", g_vram_line.c_str(), g_ps4_reclaims.load());
+     }
+ }
+ #endif
+@@ -306,9 +370,15 @@ vk::Image MemoryAllocator::CreateImage(const VkImageCreateInfo &ci) const
+     VkImage handle{};
+     VmaAllocation allocation{};
+     VmaAllocationInfo alloc_info{};
+-    const VkResult image_result = vmaCreateImage(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info);
+ #ifdef __ORBIS__
++    Ps4Reclaim(allocator, 0, false);
++    VkResult image_result = vmaCreateImage(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info);
++    if (image_result != VK_SUCCESS && Ps4Reclaim(allocator, 0, true)) {
++        image_result = vmaCreateImage(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info);
++    }
+     Ps4VramSnapshot(allocator, "image", image_result != VK_SUCCESS);
++#else
++    const VkResult image_result = vmaCreateImage(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info);
+ #endif
+     vk::Check(image_result);
+ 
+@@ -347,9 +417,15 @@ vk::Buffer MemoryAllocator::CreateBuffer(const VkBufferCreateInfo &ci, MemoryUsa
+     VmaAllocation allocation{};
+     VkMemoryPropertyFlags property_flags{};
+ 
+-    const VkResult buffer_result = vmaCreateBuffer(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info);
+ #ifdef __ORBIS__
++    Ps4Reclaim(allocator, ci.size, false);
++    VkResult buffer_result = vmaCreateBuffer(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info);
++    if (buffer_result != VK_SUCCESS && Ps4Reclaim(allocator, ci.size, true)) {
++        buffer_result = vmaCreateBuffer(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info);
++    }
+     Ps4VramSnapshot(allocator, "buffer", buffer_result != VK_SUCCESS);
++#else
++    const VkResult buffer_result = vmaCreateBuffer(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info);
+ #endif
+     vk::Check(buffer_result);
+     vmaGetAllocationMemoryProperties(allocator, allocation, &property_flags);
+@@ -407,10 +483,18 @@ vk::Buffer MemoryAllocator::CreateBuffer(const VkBufferCreateInfo &ci, MemoryUsa
+     VmaAllocation allocation{};
+     VkMemoryPropertyFlags property_flags{};
+ 
+-    const VkResult buffer_result = vmaCreateBufferWithAlignment(allocator, &ci, &alloc_ci, min_alignment,
+-                                                                &handle, &allocation, &alloc_info);
+ #ifdef __ORBIS__
++    Ps4Reclaim(allocator, ci.size, false);
++    VkResult buffer_result = vmaCreateBufferWithAlignment(allocator, &ci, &alloc_ci, min_alignment,
++                                                          &handle, &allocation, &alloc_info);
++    if (buffer_result != VK_SUCCESS && Ps4Reclaim(allocator, ci.size, true)) {
++        buffer_result = vmaCreateBufferWithAlignment(allocator, &ci, &alloc_ci, min_alignment, &handle,
++                                                     &allocation, &alloc_info);
++    }
+     Ps4VramSnapshot(allocator, "aligned buffer", buffer_result != VK_SUCCESS);
++#else
++    const VkResult buffer_result = vmaCreateBufferWithAlignment(allocator, &ci, &alloc_ci, min_alignment,
++                                                                &handle, &allocation, &alloc_info);
+ #endif
+     vk::Check(buffer_result);
+     vmaGetAllocationMemoryProperties(allocator, allocation, &property_flags);
+diff --git a/src/video_core/vulkan_common/vulkan_memory_allocator.h b/src/video_core/vulkan_common/vulkan_memory_allocator.h
+index a0f9081..54c6ce8 100644
+--- a/src/video_core/vulkan_common/vulkan_memory_allocator.h
++++ b/src/video_core/vulkan_common/vulkan_memory_allocator.h
+@@ -6,6 +6,7 @@
+ 
+ #pragma once
+ 
++#include <functional>
+ #include <memory>
+ #include <span>
+ #include <vector>
+@@ -84,10 +85,27 @@ namespace Vulkan {
+         void *mapped_ptr{};  ///< Optional persistent mapped pointer
+     };
+ 
++#ifdef __ORBIS__
++    /// PS4 (adapted from Eden4, github.com/xatyy/Eden4, GPL-3.0): the renderer registers a way to
++    /// give GPU memory back (wait for the GPU, drop idle staging buffers); allocations run it, on
++    /// the renderer's thread only, when VMA's budget gets low or an allocation fails, then retry.
++    void SetPs4MemoryReclaim(std::function<void()> reclaim);
++    void ClaimPs4ReclaimThread();
++    /// Runs the reclaim if this is the renderer's thread and (force or) the device-local budget has
++    /// less than `need` plus a headroom left. Returns whether it ran.
++    bool Ps4Reclaim(VmaAllocator allocator, size_t need, bool force);
++#endif
++
+ /// Memory allocator container.
+ /// Allocates and releases memory allocations on demand.
+     class MemoryAllocator {
+     public:
++#ifdef __ORBIS__
++        /// For Ps4Reclaim's budget check from outside the allocator (the staging buffer pool).
++        VmaAllocator Ps4Allocator() const noexcept {
++            return allocator;
++        }
++#endif
+         /**
+          * Construct memory allocator
+          *
+-- 
+2.55.0.windows.3
+
