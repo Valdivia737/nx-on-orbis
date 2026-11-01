@@ -10,7 +10,10 @@
 //                                     nand/system/Contents/registered the first time)
 //   roms/*.nsp|*.xci                  listed in a menu at start (Up/Down, Cross), the last one
 //                                     played preselected, unless game.txt names one
-//                                     (with neither, the bundled Homebrew Menu starts)
+//                                     (with neither, the bundled Homebrew Menu starts);
+//                                     Triangle edits the game's own settings
+//   juegos/<game>.txt                 a game's own settings (written by the menu, same syntax as
+//                                     settings.txt), applied after settings.txt
 //   game.txt                          optional: the full path of the game to start
 //   updates/                          update and DLC NSPs, applied when the game starts
 //   nomenu.txt                        optional: skip the game menu, start the last game played
@@ -156,7 +159,7 @@ std::string FindGame() {
         }
         Ps4::SetPadLight(255, 255, 255);
         // nomenu.txt skips the menu (in case Eden cannot open the display after it).
-        if (const int chosen = fs::exists(data / "nomenu.txt", ec) ? -1 : RunRomMenu(names, int(index));
+        if (const int chosen = fs::exists(data / "nomenu.txt", ec) ? -1 : RunRomMenu(names, int(index), Ps4::DataDir);
             chosen >= 0) {
             index = size_t(chosen);
         }
@@ -345,8 +348,8 @@ void CheckHeapEnvironment() {
     }
 }
 
-void ApplySettingsFile() {
-    std::ifstream in{fs::path{Ps4::DataDir} / "settings.txt"};
+void ApplySettingsFile(const fs::path& file, const char* label) {
+    std::ifstream in{file};
     if (!in) {
         return;
     }
@@ -450,7 +453,7 @@ void ApplySettingsFile() {
         } else {
             known = false;
         }
-        Ps4::Log("settings.txt: %s=%s%s", key.c_str(), value.c_str(), known ? "" : " (unknown, ignored)");
+        Ps4::Log("%s: %s=%s%s", label, key.c_str(), value.c_str(), known ? "" : " (unknown, ignored)");
     }
 }
 
@@ -553,7 +556,7 @@ void CheckMutexes() {
 int main() {
     Ps4::OpenBootLog();
     Ps4::Log("eden-ps4 starting (Eden %s %s)", Common::g_scm_branch, Common::g_scm_desc);
-    Ps4::Log("PS4 build: %s; test 35: Eden4's register allocation (free RBX/R12/R13 before the stack, R13 without fastmem; regalloc=off turns it off), fastmem with partly mapped pages, fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
+    Ps4::Log("PS4 build: %s; test 36: per-game settings from the menu (Triangle; juegos/<game>.txt after settings.txt), Eden4's register allocation (regalloc=off turns it off), fastmem with partly mapped pages, fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
              EDEN_PS4_BUILD_ID);
     // Same line as Eden4: a base-mode app without Boost Mode runs the CPU at 1.6 GHz instead of 2.1.
     Ps4::Log("PS4 Pro mode: %s, CPU clock: %lu MHz, CPUs: %ld",
@@ -613,7 +616,9 @@ int main() {
 
     Ps4::SetPhase("core init");
     ApplyPs4Settings();
-    ApplySettingsFile();
+    ApplySettingsFile(fs::path{Ps4::DataDir} / "settings.txt", "settings.txt");
+    // The game's own settings (menu: Triangle), over the global ones.
+    ApplySettingsFile(GameSettingsPath(Ps4::DataDir, fs::path{game}.filename().string()), "game settings");
     MoveEnvironmentOutOfHeap();
     if (Settings::IsFastmemEnabled()) {
         char report[200];
