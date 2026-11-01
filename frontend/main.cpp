@@ -243,6 +243,7 @@ void ApplyPs4Settings() {
 /// settings.txt: lines "key=value" ('#' starts a comment). Each recognized line is logged; any
 /// other line is logged as unknown and ignored.
 ///   astc=gpu|cpu|async          ASTC texture decoding (default cpu)
+///   astc_recompress=off|bc1|bc3 store decoded ASTC as BC1/BC3 instead of RGBA8 (default off)
 ///   bgra=auto|on|off            B8G8R8A8 red/blue workaround (default auto: startup self-test)
 ///   a2b10=auto|off              A2B10G10R10 workaround from the startup self-test (default auto)
 ///   rg=auto|on|off              R8G8 red/green workaround (default auto: startup self-test)
@@ -277,6 +278,12 @@ void ApplySettingsFile() {
             v.accelerate_astc.SetValue(value == "gpu"   ? Settings::AstcDecodeMode::Gpu
                                        : value == "cpu" ? Settings::AstcDecodeMode::Cpu
                                                         : Settings::AstcDecodeMode::CpuAsynchronous);
+        } else if (key == "astc_recompress" && (value == "off" || value == "bc1" || value == "bc3")) {
+            // ASTC decoded on the CPU is RGBA8, 4 bytes a texel; BC3 is 1 and BC1 half of that. With
+            // RGBA8, Super Mario Bros. Wonder's level filled the driver's device-VA window with images.
+            v.astc_recompression.SetValue(value == "bc3"   ? Settings::AstcRecompression::Bc3
+                                          : value == "bc1" ? Settings::AstcRecompression::Bc1
+                                                           : Settings::AstcRecompression::Uncompressed);
         } else if (key == "bgra" && (value == "auto" || value == "on" || value == "off")) {
             Vulkan::ps4_bgra_mode = value == "auto" ? 0 : value == "on" ? 1 : 2;
         } else if (key == "profile" && (value == "on" || value == "off")) {
