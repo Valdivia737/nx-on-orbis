@@ -1,0 +1,407 @@
+MESA: info: orbis-drm: arm built Jan  1 1980 00:00:00; knobs: TRACE=unset DUMP_SUBMIT=unset CMASK=unset TILE_MODE=unset ARENA_MIB=1280
+MESA: info: orbis-drm: direct memory pool is 4608 MiB
+MESA: info: orbis-drm: ORBIS_ARENA_MIB=1280 - the ladder is skipped
+MESA: info: orbis-drm: TF_SONY_BASE - 2 MiB of real memory mapped at 0xff0000000, which is where sceGnmGetTheTessellationFactorRingBufferBaseAddress() says Sony's factor ring is and where every faulting read has landed. The factor ring's DESCRIPTOR and its REGISTER both move here, so the write path and the read path agree whether or not our register write survives.
+MESA: info: orbis-drm: arena 1280 MiB, RADV's window 0x367c04000..0x3b5c00000 (phys 0x21200000)
+MESA: info: orbis-drm: page size 16384 bytes, as getpagesize() reports it
+MESA: info: orbis-drm: fence label 0x365c00000, fence CB 0x365c04000, RADV's window starts 0x367c04000
+MESA: info: orbis-drm: arena self-test: writing 0x367c04000 and 0x3b5bfc000
+MESA: info: orbis-drm: arena self-test: read back 0xa5a50001 and 0xa5a50002 - OK
+MESA: info: orbis-drm: vq arena 0x367c04000: start 0x365c00000 end 0x3b5c00000 off 0x21200000 direct 1 committed 1 flexible 0 pooled 0 name 'anon:00000169820f'
+MESA: info: orbis-drm: vq arena raw: 0000000365c00000 00000003b5c00000 0000000021200000 0000000000000033
+MESA: info: orbis-drm: address32_hi = 0x3, derived from the arena rather than assumed
+MESA: info: orbis-drm: RADV's window 0x367c04000..0x3b5c00000 (1247 MiB) is mapped but NOT ACCESSIBLE - a buffer gains access when it is mapped and loses it when it is unmapped, the way amdgpu's page tables behave
+MESA: info: orbis-drm: flattener self-test: 2 chains followed, 12 dwords, no chain packet left - OK
+MESA: info: orbis-drm: pad self-test: every length mod 8 pads to a stream that ends exactly at its size - OK
+MESA: info: orbis-drm: dead-pool self-test: a destroyed range is recognised and its first byte past the end is not - OK
+MESA: info: orbis-drm: raw syscall check: syscall(SYS_getpid)=-1 errno=78, getpid()=80 - raw syscalls are refused, so _umtx_op may exist behind libkernel
+MESA: info: orbis-drm: futex self-test: OK - the waiter SLEPT 200911 us and was woken by the wake across 1 wakeup(s) (wait returned 0/errno 0, wake returned 0). Both halves work; wakeups beyond the first are addresses sharing a bucket and are harmless.
+MESA: info: orbis-drm: futex shim: condition variables measure deadlines against CLOCK_REALTIME (the probe's own 20 ms wait took 0 ms)
+MESA: info: orbis-drm: futex timed self-test: OK - the waiter slept 150938 us against a 150 ms deadline and returned 60 (ETIMEDOUT is 60). The deadline reaches the right clock.
+MESA: info: orbis-drm: clock id 0: 20954 us across a 20000 us SLEEP, 20004 us across a 20000 us SPIN - WALL CLOCK - advances whether the process runs or not
+MESA: info: orbis-drm: clock id 1: 20954 us across a 20000 us SLEEP, 20003 us across a 20000 us SPIN - WALL CLOCK - advances whether the process runs or not
+MESA: info: orbis-drm: clock id 2: 20953 us across a 20000 us SLEEP, 20003 us across a 20000 us SPIN - WALL CLOCK - advances whether the process runs or not
+MESA: info: orbis-drm: clock id 3: 20953 us across a 20000 us SLEEP, 20003 us across a 20000 us SPIN - WALL CLOCK - advances whether the process runs or not
+MESA: info: orbis-drm: clock id 4: 20953 us across a 20000 us SLEEP, 20003 us across a 20000 us SPIN - WALL CLOCK - advances whether the process runs or not
+MESA: info: orbis-drm: getrusage user+sys: 82 us across a 20000 us SLEEP, 20067 us across a 20000 us SPIN - CPU TIME. THIS ANSWERS 'waiting or working' and needs no clock id
+MESA: info: orbis-drm: device up, reporting amdgpu interface 3.54, memory backed by direct memory (one ONION arena)
+MESA: info: orbis-drm: ac_drm_query_pci_bus_info refused - there is no PCI bus to enumerate on this platform
+MESA: info: orbis-drm: row size 2 KB - GB_ADDR_CONFIG.ROW_SIZE=1 and the 2 KB tile tables, from one knob (ORBIS_ROW_SIZE)
+MESA: warning: orbis-drm: GB_ADDR_CONFIG.NUM_SHADER_ENGINES is UNCITED - shader-array topology; SQ_WAVE_HW_ID would measure it
+MESA: warning: orbis-drm: MC_ARB_RAMCFG.NOOFRANKS is UNCITED - one rank assumed; addrlib's CIK path does not read it
+MESA: warning: orbis-drm: drm_amdgpu_info_device.device_id is UNCITED - Liverpool's PCI id is in no oracle; it reaches only radeon_info.pci_id
+MESA: warning: orbis-drm: drm_amdgpu_info_device.num_shader_engines et al is UNCITED - matches the published 18 CU / 72 TMU / 32 ROP spec, but is not measured from the hardware - SQ_WAVE_HW_ID would be
+MESA: warning: orbis-drm: drm_amdgpu_info_device.max_memory_clock is UNCITED - GDDR5 clock not established here
+MESA: warning: orbis-drm: drm_amdgpu_info_device geometry limits is UNCITED - ce_ram_size, gs_*_depth and max_gs_waves_per_vgt are Bonaire-shaped guesses
+MESA: info: orbis-drm: ac_drm_query_hw_ip_info refused - one ring on purpose - Sony's compute queues are a different door; see research/01-submission.md
+MESA: error: ac: no sync-file export on this device - has_fence_to_handle is false
+MESA: info: orbis-drm: ac_drm_query_video_caps_info refused - built with -Dvideo-codecs=, so there are no codecs to describe
+MESA: info: orbis-drm: ac_drm_query_info refused - RADV substitutes its own estimate of 50 when this is unavailable
+MESA: info: orbis-drm: syncobj table grown 0 -> 1024 slots
+MESA: info: orbis-drm: at teardown 0 BO(s), 0 syncobj(s), 0 context(s), 0 VA range(s), 0 KiB held - winsys-lifetime, and it did not grow
+MESA: info: orbis: vertex fetches are split to natural alignment (ORBIS_VS_STRICT_ALIGN=0 disables it, and 97 CTS cases fail when it is off)
+MESA: info: orbis-drm: device up, reporting amdgpu interface 3.54, memory backed by direct memory (one ONION arena)
+MESA: info: orbis-drm: device up, reporting amdgpu interface 3.54, memory backed by direct memory (one ONION arena)
+MESA: info: orbis-drm: AMDGPU_VA_RANGE_HIGH ignored - this device reports no high VA window
+MESA: info: orbis-drm: reserving one 16 KiB page of slack after every VA range - RADV's pad page cannot alias in a flat arena, so without it an overrun writes into the next allocation (ORBIS_NO_VA_GAP=1 disables it)
+MESA: info: orbis-drm: BO table grown 0 -> 4096 slots
+MESA: info: orbis-drm: live-mapping table grown 0 -> 8192 entries
+MESA: info: orbis-drm: GPU-side read-only mappings are not enforceable here - one shared page table
+MESA: info: orbis-drm: BO 3 (64 KiB, heap 0x6) is on GARLIC at 0x367c24000 - off the CPU's bus
+MESA: info: orbis-drm: BO 4 (256 KiB, heap 0x6) is on GARLIC at 0x367c38000 - off the CPU's bus
+MESA: info: orbis-drm: BO 5 (16 KiB, heap 0x6) is on GARLIC at 0x367c7c000 - off the CPU's bus
+MESA: info: orbis-drm: zeroing 16 KiB at 0x367c7c000 - the BO asked for VRAM_CLEARED (RADV_DEBUG=zerovram or a buffer RADV reads back as zero)
+MESA: info: orbis: PA_CL_NANINF_CNTL <- 0x00000000, written because CLEAR_STATE was measured leaving 0x8b47008d there (twelve bits of it in reserved space)
+MESA: info: orbis-drm: BO 6 maps 0x367c84000..0x367c98000 back inside the range it held itself (0x367c84000..0x367c98000) - bookkeeping, unless this handle was recycled onto a different buffer.
+MESA: info: wsi/orbis: scan-out up - 1920x1080 pitch 1920, 5 swapchain buffer(s), A8B8G8R8_SRGB linear - ZERO COPY, the flip shows what the GPU rendered into
+MESA: info: wsi/orbis: present is DEFERRED by one frame - the GPU wait is overlapped with the next frame's recording
+MESA: info: orbis-drm: BO 23 (262144 KiB, heap 0x6) is on GARLIC at 0x36a600000 - off the CPU's bus
+MESA: info: radv/orbis: the tess FACTOR ring descriptor points at Sony's 0xff0000000, 261120 B - the same address VGT_TF_MEMORY_BASE holds. The OFFCHIP ring stays ours: its address travels in desc[4] and has never been in doubt.
+MESA: info: radv/orbis: tess rings are OURS - 0x37ce00000..0x37d63fc00 (offchip 8388608 B, factor 261120 B, total 8649728 B); VGT_TF_MEMORY_BASE <- 0xff00000 - SONY's factor ring, backed by ORBIS_TF_SONY_BASE. Only the OFFCHIP ring is ours in this run.
+MESA: info: radv/orbis: offchip stride 32768 B, 256 buffer(s) allocated, 2 shader engine(s); VGT_HS_OFFCHIP_PARAM <- 0x00000100. A write fault at ring+N*32768 is offchip buffer N.
+MESA: info: orbis: VGT_TF_MEMORY_BASE <- SONY's factor ring 0xff0000000 (2097152 B mapped) and not ours at 0x37d600000. The register now agrees with what it already held, so a write that never lands costs nothing.
+MESA: info: orbis: VGT_TF_RING_SIZE <- 65280 dwords (261120 B) undivided, as upstream; factor ring 0xff0000000..0xff003fc00, 2 shader engine(s)
+MESA: info: orbis-drm: READ_REGS firing before submission #1 (ORBIS_READ_REGS_AT=1)
+MESA: info: orbis-drm: BO 29 maps 0x367d8c000..0x367da0000 back inside the range it held itself (0x367d8c000..0x367da0000) - bookkeeping, unless this handle was recycled onto a different buffer.
+MESA: info: orbis-drm: BO 30 maps 0x367da4000..0x367da8000 back inside the range it held itself (0x367da4000..0x367da8000) - bookkeeping, unless this handle was recycled onto a different buffer.
+MESA: info: orbis-drm: BO 29 maps 0x367d8c000..0x367da0000 back inside the range it held itself (0x367d8c000..0x367da0000) - bookkeeping, unless this handle was recycled onto a different buffer.
+MESA: info: orbis-drm: BO 30 maps 0x367d98000..0x367d9c000 INTO A RANGE BO 29 HELD until it was unmapped (0x367d8c000..0x367da0000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 30 maps 0x367d9c000..0x367da0000 INTO A RANGE BO 29 HELD until it was unmapped (0x367d8c000..0x367da0000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 36 maps 0x367da4000..0x367da8000 INTO A RANGE BO 30 HELD until it was unmapped (0x367da4000..0x367da8000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BUDGET over 25565 ms and 3 submissions: this process burned 68534 ms of CPU, i.e. 2.68 cores busy on average, of which 0 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 0 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 0 render passes covering 0.00 screenfuls of 1920x1080, plus 0 dispatches of 0 workgroups
+MESA: info: orbis-drm: and recording: 0 draws and 0 descriptor-set binds a frame, inside 0 command buffers whose Begin-to-End spans total 0 us a frame - an upper bound on this driver's share, against 0 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 0 us in 0 calls, WaitForFences 0 us in 0 calls, AllocateDescriptorSets 0 us in 0 calls, AllocateMemory 0 us in 0 calls - 0 us a frame in all of them, against a frame of 0 us
+MESA: info: orbis-drm: syncobj POLL says not yet, label 6 - a zero timeout is a question, not a failure
+MESA: info: wsi/orbis: queue_present entered - 1 swapchain(s), 1 wait semaphore(s)
+MESA: info: vk_sync: WAIT_PENDING on a provider with no timelines and no sync-file export is satisfied on arrival - a binary payload is installed by the submission itself
+MESA: info: wsi/orbis: queue_present entered - image 0, scanout present
+MESA: info: orbis-drm: syncobj POLL says not yet, label 9 - a zero timeout is a question, not a failure
+MESA: info: orbis-drm: syncobj POLL says not yet, label 9 - a zero timeout is a question, not a failure
+MESA: info: orbis-drm: syncobj POLL says not yet, label 9 - a zero timeout is a question, not a failure
+MESA: info: wsi/orbis: queue_present entered - 1 swapchain(s), 1 wait semaphore(s)
+MESA: info: wsi/orbis: queue_present entered - image 1, scanout present
+MESA: info: wsi/orbis: present entered - index 0, src 0x367e00000, src pitch 7680, dst pitch 7680, 1920x1080
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 1 us over 1 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: present copied 8100 KiB, flipping index 0
+MESA: info: wsi/orbis: present flip 1 -> 0x00000000
+MESA: warning: orbis-drm: capping an unbounded fence-slot wait at 5 s - RADV asked to wait forever and this platform polls, so forever means a burning core with no diagnosis
+MESA: info: wsi/orbis: queue_present entered - 1 swapchain(s), 1 wait semaphore(s)
+MESA: info: wsi/orbis: queue_present entered - image 2, scanout present
+MESA: info: wsi/orbis: present entered - index 1, src 0x368600000, src pitch 7680, dst pitch 7680, 1920x1080
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 1 us over 2 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: present copied 8100 KiB, flipping index 1
+MESA: info: wsi/orbis: present flip 2 -> 0x00000000
+MESA: info: wsi/orbis: queue_present entered - 1 swapchain(s), 1 wait semaphore(s)
+MESA: info: wsi/orbis: queue_present entered - image 3, scanout present
+MESA: info: wsi/orbis: present entered - index 2, src 0x368e00000, src pitch 7680, dst pitch 7680, 1920x1080
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 1 us over 3 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: present copied 8100 KiB, flipping index 2
+MESA: info: wsi/orbis: present flip 3 -> 0x00000000
+MESA: info: wsi/orbis: present entered - index 3, src 0x369600000, src pitch 7680, dst pitch 7680, 1920x1080
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 1 us over 4 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: present copied 8100 KiB, flipping index 3
+MESA: info: wsi/orbis: present flip 4 -> 0x00000000
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 3 us over 64 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5003 ms and 233 submissions: this process burned 15070 ms of CPU, i.e. 3.01 cores busy on average, of which 10 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 74 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 5 render passes covering 4.25 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 10 draws and 3 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 67512 us a frame - an upper bound on this driver's share, against 136 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 228 us in 3 calls, QueuePresentKHR 119 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 1 calls, UpdateDescriptorSets 2 us in 2 calls, AllocateDescriptorSets 0 us in 0 calls, AllocateMemory 7 us in 0 calls - 367 us a frame in all of them, against a frame of 67610 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 3 us over 128 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 3 us over 192 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 3 us over 256 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5016 ms and 591 submissions: this process burned 14773 ms of CPU, i.e. 2.94 cores busy on average, of which 26 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 197 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 6 render passes covering 4.33 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 12 draws and 3 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 25386 us a frame - an upper bound on this driver's share, against 133 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 226 us in 3 calls, QueuePresentKHR 116 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 355 us a frame in all of them, against a frame of 25466 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 3 us over 320 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 3 us over 384 frames) - 8294400 MB/s
+MESA: info: orbis: 3D images are LINEAR_ALIGNED on this device (ORBIS_3D_LINEAR=0 disables it, and the title then dies on entering 3D)
+MESA: info: orbis-drm: BUDGET over 5027 ms and 465 submissions: this process burned 16437 ms of CPU, i.e. 3.26 cores busy on average, of which 23 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 153 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 18 render passes covering 4.46 screenfuls of 1920x1080, plus 4 dispatches of 5 workgroups
+MESA: info: orbis-drm: and recording: 25 draws and 6 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 32749 us a frame - an upper bound on this driver's share, against 155 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 250 us in 3 calls, QueuePresentKHR 112 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 1 calls, UpdateDescriptorSets 2 us in 1 calls, AllocateDescriptorSets 0 us in 0 calls, AllocateMemory 2 us in 0 calls - 376 us a frame in all of them, against a frame of 32856 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 3 us over 448 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 3 us over 512 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 3 us over 576 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 3 us over 640 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 5006 ms and 806 submissions: this process burned 17590 ms of CPU, i.e. 3.51 cores busy on average, of which 34 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 268 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 6 render passes covering 4.33 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 12 draws and 3 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 18573 us a frame - an upper bound on this driver's share, against 128 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 232 us in 3 calls, QueuePresentKHR 114 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 358 us a frame in all of them, against a frame of 18679 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 3 us over 704 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 3 us over 768 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 3 us over 832 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5000 ms and 424 submissions: this process burned 13233 ms of CPU, i.e. 2.64 cores busy on average, of which 24 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 141 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 24 render passes covering 6.18 screenfuls of 1920x1080, plus 11 dispatches of 11 workgroups
+MESA: info: orbis-drm: and recording: 40 draws and 13 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 35329 us a frame - an upper bound on this driver's share, against 172 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 261 us in 3 calls, QueuePresentKHR 111 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 386 us a frame in all of them, against a frame of 35461 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 3 us over 896 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5391 ms and 199 submissions: this process burned 14234 ms of CPU, i.e. 2.64 cores busy on average, of which 15 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 67 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 55 render passes covering 9.16 screenfuls of 1920x1080, plus 29 dispatches of 29 workgroups
+MESA: info: orbis-drm: and recording: 89 draws and 31 descriptor-set binds a frame, inside 2 command buffers whose Begin-to-End spans total 80257 us a frame - an upper bound on this driver's share, against 238 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 320 us in 2 calls, QueuePresentKHR 109 us in 1 calls, AcquireNextImage2 6 us in 0 calls, WaitForFences 3 us in 1 calls, UpdateDescriptorSets 2 us in 1 calls, AllocateMemory 5 us in 0 calls - 447 us a frame in all of them, against a frame of 80470 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 3 us over 960 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5025 ms and 244 submissions: this process burned 14278 ms of CPU, i.e. 2.84 cores busy on average, of which 24 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 81 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 65 render passes covering 11.27 screenfuls of 1920x1080, plus 32 dispatches of 32 workgroups
+MESA: info: orbis-drm: and recording: 180 draws and 34 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 61773 us a frame - an upper bound on this driver's share, against 296 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 379 us in 3 calls, QueuePresentKHR 114 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 507 us a frame in all of them, against a frame of 62040 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 6 us over 1024 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 6 us over 1088 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5000 ms and 412 submissions: this process burned 18810 ms of CPU, i.e. 3.76 cores busy on average, of which 47 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 137 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 87 render passes covering 18.29 screenfuls of 1920x1080, plus 30 dispatches of 30 workgroups
+MESA: info: orbis-drm: and recording: 206 draws and 32 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 36178 us a frame - an upper bound on this driver's share, against 345 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 436 us in 3 calls, QueuePresentKHR 113 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls, AllocateMemory 1 us in 0 calls - 563 us a frame in all of them, against a frame of 36498 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 1152 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 1216 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 5002 ms and 456 submissions: this process burned 19600 ms of CPU, i.e. 3.91 cores busy on average, of which 39 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 151 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 50 render passes covering 9.76 screenfuls of 1920x1080, plus 21 dispatches of 21 workgroups
+MESA: info: orbis-drm: and recording: 137 draws and 23 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 32911 us a frame - an upper bound on this driver's share, against 259 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 349 us in 3 calls, QueuePresentKHR 119 us in 1 calls, AcquireNextImage2 6 us in 0 calls, WaitForFences 3 us in 1 calls, UpdateDescriptorSets 2 us in 1 calls - 481 us a frame in all of them, against a frame of 33128 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 1280 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 1344 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 1408 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5027 ms and 504 submissions: this process burned 15577 ms of CPU, i.e. 3.09 cores busy on average, of which 22 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 168 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 6 render passes covering 4.33 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 15 draws and 3 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 29840 us a frame - an upper bound on this driver's share, against 135 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 227 us in 3 calls, QueuePresentKHR 117 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 356 us a frame in all of them, against a frame of 29924 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 1472 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 1536 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5003 ms and 491 submissions: this process burned 13700 ms of CPU, i.e. 2.73 cores busy on average, of which 26 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 161 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 20 render passes covering 4.66 screenfuls of 1920x1080, plus 5 dispatches of 5 workgroups
+MESA: info: orbis-drm: and recording: 31 draws and 7 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 30966 us a frame - an upper bound on this driver's share, against 164 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 260 us in 3 calls, QueuePresentKHR 116 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls, AllocateDescriptorSets 0 us in 0 calls - 388 us a frame in all of them, against a frame of 31074 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 1600 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 1664 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 1728 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 1792 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 1856 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5000 ms and 787 submissions: this process burned 18463 ms of CPU, i.e. 3.69 cores busy on average, of which 37 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 262 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 11 render passes covering 4.78 screenfuls of 1920x1080, plus 4 dispatches of 4 workgroups
+MESA: info: orbis-drm: and recording: 21 draws and 6 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 18978 us a frame - an upper bound on this driver's share, against 142 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 232 us in 3 calls, QueuePresentKHR 115 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 360 us a frame in all of them, against a frame of 19084 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 1920 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 5000 ms and 363 submissions: this process burned 17708 ms of CPU, i.e. 3.54 cores busy on average, of which 16 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 121 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 6 render passes covering 4.33 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 15 draws and 3 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 41218 us a frame - an upper bound on this driver's share, against 132 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 225 us in 3 calls, QueuePresentKHR 110 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 348 us a frame in all of them, against a frame of 41322 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 1984 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 2048 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 2112 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 2176 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 2240 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5002 ms and 889 submissions: this process burned 16249 ms of CPU, i.e. 3.24 cores busy on average, of which 37 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 297 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 5 render passes covering 4.32 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 15 draws and 2 descriptor-set binds a frame, inside 2 command buffers whose Begin-to-End spans total 16745 us a frame - an upper bound on this driver's share, against 126 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 208 us in 2 calls, QueuePresentKHR 114 us in 1 calls, AcquireNextImage2 6 us in 0 calls, WaitForFences 3 us in 1 calls, UpdateDescriptorSets 2 us in 1 calls - 334 us a frame in all of them, against a frame of 16842 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 2304 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 2368 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 2432 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 5014 ms and 565 submissions: this process burned 18170 ms of CPU, i.e. 3.62 cores busy on average, of which 24 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 188 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 6 render passes covering 4.34 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 15 draws and 3 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 26576 us a frame - an upper bound on this driver's share, against 132 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 223 us in 3 calls, QueuePresentKHR 115 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 350 us a frame in all of them, against a frame of 26672 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 2496 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 2560 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5000 ms and 445 submissions: this process burned 21119 ms of CPU, i.e. 4.22 cores busy on average, of which 18 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 148 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 6 render passes covering 4.34 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 15 draws and 3 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 33668 us a frame - an upper bound on this driver's share, against 127 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 219 us in 3 calls, QueuePresentKHR 114 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 2 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 345 us a frame in all of them, against a frame of 33785 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 2624 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 2688 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 2752 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 2816 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 5016 ms and 731 submissions: this process burned 18417 ms of CPU, i.e. 3.67 cores busy on average, of which 31 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 244 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 5 render passes covering 4.32 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 15 draws and 3 descriptor-set binds a frame, inside 2 command buffers whose Begin-to-End spans total 20461 us a frame - an upper bound on this driver's share, against 128 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 218 us in 2 calls, QueuePresentKHR 115 us in 1 calls, AcquireNextImage2 6 us in 0 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 345 us a frame in all of them, against a frame of 20560 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 2880 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 2944 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 3008 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 5000 ms and 579 submissions: this process burned 18654 ms of CPU, i.e. 3.73 cores busy on average, of which 24 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 193 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 6 render passes covering 4.33 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 15 draws and 3 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 25811 us a frame - an upper bound on this driver's share, against 128 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 216 us in 3 calls, QueuePresentKHR 115 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 343 us a frame in all of them, against a frame of 25906 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 3072 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 3136 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 5000 ms and 322 submissions: this process burned 20935 ms of CPU, i.e. 4.18 cores busy on average, of which 13 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 107 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 6 render passes covering 4.34 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 15 draws and 3 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 46609 us a frame - an upper bound on this driver's share, against 126 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 222 us in 3 calls, QueuePresentKHR 112 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 2 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 347 us a frame in all of them, against a frame of 46730 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 3200 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 3264 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 3328 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 3392 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 5000 ms and 827 submissions: this process burned 16337 ms of CPU, i.e. 3.26 cores busy on average, of which 36 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 276 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 6 render passes covering 4.33 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 15 draws and 3 descriptor-set binds a frame, inside 2 command buffers whose Begin-to-End spans total 18037 us a frame - an upper bound on this driver's share, against 132 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 225 us in 2 calls, QueuePresentKHR 114 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 3 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls - 352 us a frame in all of them, against a frame of 18116 us
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 3456 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 3520 frames) - 4147200 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 3584 frames) - 8294400 MB/s
+MESA: info: wsi/orbis: the scan-out copy took 2 us for 8100 KiB (mean 1 us, worst 19 us over 3648 frames) - 4147200 MB/s
+MESA: info: orbis-drm: BUDGET over 5002 ms and 682 submissions: this process burned 16374 ms of CPU, i.e. 3.27 cores busy on average, of which 31 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 228 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 5 render passes covering 4.32 screenfuls of 1920x1080, plus 1 dispatches of 1 workgroups
+MESA: info: orbis-drm: and recording: 15 draws and 2 descriptor-set binds a frame, inside 2 command buffers whose Begin-to-End spans total 21870 us a frame - an upper bound on this driver's share, against 136 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 225 us in 2 calls, QueuePresentKHR 114 us in 1 calls, AcquireNextImage2 6 us in 0 calls, WaitForFences 3 us in 1 calls, UpdateDescriptorSets 2 us in 1 calls - 351 us a frame in all of them, against a frame of 21940 us
+MESA: info: orbis-drm: BUDGET over 5108 ms and 81 submissions: this process burned 18044 ms of CPU, i.e. 3.53 cores busy on average, of which 7 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 26 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 197 render passes covering 5.67 screenfuls of 1920x1080, plus 5 dispatches of 8 workgroups
+MESA: info: orbis-drm: and recording: 210 draws and 7 descriptor-set binds a frame, inside 3 command buffers whose Begin-to-End spans total 196246 us a frame - an upper bound on this driver's share, against 282 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 382 us in 3 calls, QueuePresentKHR 111 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 2 us in 2 calls, UpdateDescriptorSets 2 us in 2 calls, AllocateMemory 136 us in 0 calls - 640 us a frame in all of them, against a frame of 196498 us
+MESA: info: orbis-drm: BUDGET over 5643 ms and 9 submissions: this process burned 26184 ms of CPU, i.e. 4.63 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 1 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 1859 render passes covering 57.30 screenfuls of 1920x1080, plus 33 dispatches of 33 workgroups
+MESA: info: orbis-drm: and recording: 2130 draws and 37 descriptor-set binds a frame, inside 9 command buffers whose Begin-to-End spans total 5640434 us a frame - an upper bound on this driver's share, against 2376 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 2662 us in 9 calls, QueuePresentKHR 97 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls, AllocateDescriptorSets 2 us in 1 calls, AllocateMemory 16103 us in 90 calls - 18878 us a frame in all of them, against a frame of 5643187 us
+MESA: info: orbis-drm: BUDGET over 5495 ms and 14 submissions: this process burned 16002 ms of CPU, i.e. 2.91 cores busy on average, of which 1 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 2 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 348 render passes covering 16.73 screenfuls of 1920x1080, plus 54 dispatches of 54 workgroups
+MESA: info: orbis-drm: and recording: 738 draws and 55 descriptor-set binds a frame, inside 7 command buffers whose Begin-to-End spans total 2746826 us a frame - an upper bound on this driver's share, against 872 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 1044 us in 7 calls, QueuePresentKHR 90 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 3 calls, AllocateMemory 4363 us in 24 calls - 5512 us a frame in all of them, against a frame of 2747891 us
+MESA: info: orbis-drm: BUDGET over 5238 ms and 18 submissions: this process burned 13327 ms of CPU, i.e. 2.54 cores busy on average, of which 1 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 3 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 93 render passes covering 10.96 screenfuls of 1920x1080, plus 48 dispatches of 48 workgroups
+MESA: info: orbis-drm: and recording: 467 draws and 49 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1745613 us a frame - an upper bound on this driver's share, against 505 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 641 us in 6 calls, QueuePresentKHR 101 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 3 calls, AllocateMemory 136 us in 0 calls - 894 us a frame in all of them, against a frame of 1746279 us
+MESA: info: orbis-drm: BUDGET over 6777 ms and 20 submissions: this process burned 20141 ms of CPU, i.e. 2.97 cores busy on average, of which 1 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 3 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 89 render passes covering 11.11 screenfuls of 1920x1080, plus 48 dispatches of 48 workgroups
+MESA: info: orbis-drm: and recording: 452 draws and 49 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 2258504 us a frame - an upper bound on this driver's share, against 556 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 769 us in 6 calls, QueuePresentKHR 105 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 3 calls, AllocateMemory 129 us in 0 calls - 1019 us a frame in all of them, against a frame of 2259181 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 3712 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 8167 ms and 90 submissions: this process burned 21925 ms of CPU, i.e. 2.68 cores busy on average, of which 7 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 15 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 89 render passes covering 10.94 screenfuls of 1920x1080, plus 48 dispatches of 48 workgroups
+MESA: info: orbis-drm: and recording: 455 draws and 49 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 543850 us a frame - an upper bound on this driver's share, against 506 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 648 us in 6 calls, QueuePresentKHR 104 us in 1 calls, AcquireNextImage2 8 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 3 calls - 769 us a frame in all of them, against a frame of 544468 us
+MESA: info: orbis-drm: BO 138 maps 0x37b060000..0x37b130000 INTO A RANGE BO 52 HELD until it was unmapped (0x37b110000..0x37b118000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 138 maps 0x37b130000..0x37b134000 INTO A RANGE BO 52 HELD until it was unmapped (0x37b130000..0x37b140000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 144 maps 0x393c00000..0x393cd0000 INTO A RANGE BO 63 HELD until it was unmapped (0x393c00000..0x39a404000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 144 maps 0x393cd0000..0x393cd4000 INTO A RANGE BO 63 HELD until it was unmapped (0x393c00000..0x39a404000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BUDGET over 6474 ms and 18 submissions: this process burned 18388 ms of CPU, i.e. 2.84 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 3 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 267 render passes covering 11.17 screenfuls of 1920x1080, plus 50 dispatches of 50 workgroups
+MESA: info: orbis-drm: and recording: 649 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 2157358 us a frame - an upper bound on this driver's share, against 691 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 851 us in 6 calls, QueuePresentKHR 108 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls, AllocateMemory 180 us in 0 calls - 1154 us a frame in all of them, against a frame of 2158091 us
+MESA: info: orbis-drm: BUDGET over 6398 ms and 18 submissions: this process burned 19111 ms of CPU, i.e. 2.98 cores busy on average, of which 1 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 3 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 91 render passes covering 11.15 screenfuls of 1920x1080, plus 49 dispatches of 49 workgroups
+MESA: info: orbis-drm: and recording: 473 draws and 50 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 2132362 us a frame - an upper bound on this driver's share, against 522 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 687 us in 6 calls, QueuePresentKHR 92 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 793 us a frame in all of them, against a frame of 2132995 us
+MESA: info: orbis-drm: BUDGET over 5226 ms and 30 submissions: this process burned 11884 ms of CPU, i.e. 2.27 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 5 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 92 render passes covering 11.72 screenfuls of 1920x1080, plus 50 dispatches of 50 workgroups
+MESA: info: orbis-drm: and recording: 501 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1044759 us a frame - an upper bound on this driver's share, against 502 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 628 us in 6 calls, QueuePresentKHR 112 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 3 us in 4 calls - 754 us a frame in all of them, against a frame of 1045371 us
+MESA: info: orbis-drm: BO 145 maps 0x367c84000..0x367c98000 INTO A RANGE BO 6 HELD until it was unmapped (0x367c84000..0x367c98000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 150 maps 0x367cbc000..0x367cd0000 INTO A RANGE BO 9 HELD until it was unmapped (0x367cbc000..0x367cd0000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 193 maps 0x37a68c000..0x37a6a0000 INTO A RANGE BO 48 HELD until it was unmapped (0x37a68c000..0x37a6a0000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 201 maps 0x37a6bc000..0x37a6d0000 INTO A RANGE BO 50 HELD until it was unmapped (0x37a6bc000..0x37a6d0000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 204 maps 0x367cec000..0x367cf0000 INTO A RANGE BO 11 HELD until it was unmapped (0x367cec000..0x367cf0000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 207 maps 0x367dfc000..0x367e00000 INTO A RANGE BO 40 HELD until it was unmapped (0x367dfc000..0x367e00000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 220 maps 0x36a5f4000..0x36a5fc000 INTO A RANGE BO 52 HELD until it was unmapped (0x36a5f4000..0x36a5f8000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 221 maps 0x37a72c000..0x37a754000 INTO A RANGE BO 61 HELD until it was unmapped (0x37a72c000..0x37a754000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BO 222 maps 0x37a764000..0x37a774000 INTO A RANGE BO 63 HELD until it was unmapped (0x37a764000..0x37a78c000). Anything still writing through the old pointer lands in the new tenant.
+MESA: info: orbis-drm: BUDGET over 5401 ms and 36 submissions: this process burned 14312 ms of CPU, i.e. 2.64 cores busy on average, of which 3 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 6 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 91 render passes covering 11.38 screenfuls of 1920x1080, plus 50 dispatches of 50 workgroups
+MESA: info: orbis-drm: and recording: 506 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 899556 us a frame - an upper bound on this driver's share, against 526 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 698 us in 6 calls, QueuePresentKHR 98 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 812 us a frame in all of them, against a frame of 900332 us
+MESA: info: orbis-drm: BUDGET over 5539 ms and 36 submissions: this process burned 14814 ms of CPU, i.e. 2.67 cores busy on average, of which 3 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 6 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 90 render passes covering 10.86 screenfuls of 1920x1080, plus 50 dispatches of 50 workgroups
+MESA: info: orbis-drm: and recording: 487 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 922674 us a frame - an upper bound on this driver's share, against 516 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 684 us in 6 calls, QueuePresentKHR 99 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 798 us a frame in all of them, against a frame of 923321 us
+MESA: info: orbis-drm: BUDGET over 8007 ms and 42 submissions: this process burned 22560 ms of CPU, i.e. 2.81 cores busy on average, of which 3 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 7 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 90 render passes covering 10.56 screenfuls of 1920x1080, plus 50 dispatches of 50 workgroups
+MESA: info: orbis-drm: and recording: 473 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1143288 us a frame - an upper bound on this driver's share, against 507 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 660 us in 6 calls, QueuePresentKHR 100 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 774 us a frame in all of them, against a frame of 1143908 us
+MESA: info: orbis-drm: BUDGET over 6083 ms and 12 submissions: this process burned 17744 ms of CPU, i.e. 2.91 cores busy on average, of which 1 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 2 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 95 render passes covering 11.01 screenfuls of 1920x1080, plus 50 dispatches of 51 workgroups
+MESA: info: orbis-drm: and recording: 479 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 3040830 us a frame - an upper bound on this driver's share, against 575 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 742 us in 6 calls, QueuePresentKHR 95 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 850 us a frame in all of them, against a frame of 3041516 us
+MESA: info: orbis-drm: BUDGET over 6104 ms and 24 submissions: this process burned 16721 ms of CPU, i.e. 2.73 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 4 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 106 render passes covering 13.46 screenfuls of 1920x1080, plus 53 dispatches of 54 workgroups
+MESA: info: orbis-drm: and recording: 490 draws and 53 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1525438 us a frame - an upper bound on this driver's share, against 572 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 715 us in 6 calls, QueuePresentKHR 93 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls, AllocateMemory 245 us in 1 calls - 1068 us a frame in all of them, against a frame of 1526135 us
+MESA: info: orbis-drm: BUDGET over 5006 ms and 84 submissions: this process burned 11738 ms of CPU, i.e. 2.34 cores busy on average, of which 7 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 14 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 99 render passes covering 11.66 screenfuls of 1920x1080, plus 54 dispatches of 58 workgroups
+MESA: info: orbis-drm: and recording: 486 draws and 54 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 356965 us a frame - an upper bound on this driver's share, against 537 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 680 us in 6 calls, QueuePresentKHR 110 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls, AllocateMemory 27 us in 0 calls - 833 us a frame in all of them, against a frame of 357593 us
+MESA: info: orbis-drm: BUDGET over 5002 ms and 36 submissions: this process burned 14029 ms of CPU, i.e. 2.80 cores busy on average, of which 3 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 6 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 98 render passes covering 11.55 screenfuls of 1920x1080, plus 54 dispatches of 59 workgroups
+MESA: info: orbis-drm: and recording: 483 draws and 54 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 833185 us a frame - an upper bound on this driver's share, against 523 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 659 us in 6 calls, QueuePresentKHR 96 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 768 us a frame in all of them, against a frame of 833806 us
+MESA: info: orbis-drm: BUDGET over 5112 ms and 30 submissions: this process burned 12771 ms of CPU, i.e. 2.49 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 5 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 99 render passes covering 11.81 screenfuls of 1920x1080, plus 54 dispatches of 59 workgroups
+MESA: info: orbis-drm: and recording: 485 draws and 54 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1021838 us a frame - an upper bound on this driver's share, against 564 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 729 us in 6 calls, QueuePresentKHR 96 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 839 us a frame in all of them, against a frame of 1022525 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 3776 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 5273 ms and 114 submissions: this process burned 12528 ms of CPU, i.e. 2.37 cores busy on average, of which 9 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 19 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 99 render passes covering 11.65 screenfuls of 1920x1080, plus 54 dispatches of 59 workgroups
+MESA: info: orbis-drm: and recording: 485 draws and 54 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 276930 us a frame - an upper bound on this driver's share, against 525 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 671 us in 6 calls, QueuePresentKHR 103 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 789 us a frame in all of them, against a frame of 277534 us
+MESA: info: orbis-drm: BUDGET over 5187 ms and 30 submissions: this process burned 13735 ms of CPU, i.e. 2.64 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 5 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 100 render passes covering 11.57 screenfuls of 1920x1080, plus 54 dispatches of 59 workgroups
+MESA: info: orbis-drm: and recording: 487 draws and 54 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1036844 us a frame - an upper bound on this driver's share, against 544 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 693 us in 6 calls, QueuePresentKHR 109 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 816 us a frame in all of them, against a frame of 1037452 us
+MESA: info: orbis-drm: BUDGET over 5325 ms and 72 submissions: this process burned 14152 ms of CPU, i.e. 2.65 cores busy on average, of which 6 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 12 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 99 render passes covering 11.62 screenfuls of 1920x1080, plus 54 dispatches of 59 workgroups
+MESA: info: orbis-drm: and recording: 484 draws and 54 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 443122 us a frame - an upper bound on this driver's share, against 527 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 665 us in 6 calls, QueuePresentKHR 97 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 777 us a frame in all of them, against a frame of 443756 us
+MESA: info: orbis-drm: BUDGET over 5888 ms and 96 submissions: this process burned 14812 ms of CPU, i.e. 2.51 cores busy on average, of which 9 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 16 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 99 render passes covering 11.60 screenfuls of 1920x1080, plus 53 dispatches of 58 workgroups
+MESA: info: orbis-drm: and recording: 484 draws and 54 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 367371 us a frame - an upper bound on this driver's share, against 571 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 730 us in 6 calls, QueuePresentKHR 103 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 849 us a frame in all of them, against a frame of 368048 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 3840 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 6509 ms and 90 submissions: this process burned 17107 ms of CPU, i.e. 2.62 cores busy on average, of which 8 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 15 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 100 render passes covering 11.46 screenfuls of 1920x1080, plus 52 dispatches of 54 workgroups
+MESA: info: orbis-drm: and recording: 483 draws and 53 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 433363 us a frame - an upper bound on this driver's share, against 546 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 685 us in 6 calls, QueuePresentKHR 114 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls, AllocateMemory 77 us in 0 calls - 892 us a frame in all of them, against a frame of 433992 us
+MESA: info: orbis-drm: BUDGET over 5800 ms and 12 submissions: this process burned 17772 ms of CPU, i.e. 3.06 cores busy on average, of which 1 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 2 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 91 render passes covering 11.01 screenfuls of 1920x1080, plus 50 dispatches of 52 workgroups
+MESA: info: orbis-drm: and recording: 474 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 2899842 us a frame - an upper bound on this driver's share, against 552 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 690 us in 6 calls, QueuePresentKHR 94 us in 1 calls, AcquireNextImage2 4 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 798 us a frame in all of them, against a frame of 2900460 us
+MESA: info: orbis-drm: BUDGET over 5628 ms and 12 submissions: this process burned 16723 ms of CPU, i.e. 2.97 cores busy on average, of which 1 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 2 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 90 render passes covering 10.56 screenfuls of 1920x1080, plus 50 dispatches of 52 workgroups
+MESA: info: orbis-drm: and recording: 473 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 2813642 us a frame - an upper bound on this driver's share, against 603 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 753 us in 6 calls, QueuePresentKHR 100 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 868 us a frame in all of them, against a frame of 2814348 us
+MESA: info: orbis-drm: BUDGET over 6295 ms and 24 submissions: this process burned 16374 ms of CPU, i.e. 2.60 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 4 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 98 render passes covering 13.01 screenfuls of 1920x1080, plus 50 dispatches of 52 workgroups
+MESA: info: orbis-drm: and recording: 490 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1573103 us a frame - an upper bound on this driver's share, against 582 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 720 us in 6 calls, QueuePresentKHR 116 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 850 us a frame in all of them, against a frame of 1573790 us
+MESA: info: orbis-drm: BUDGET over 5268 ms and 30 submissions: this process burned 13205 ms of CPU, i.e. 2.50 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 5 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 94 render passes covering 10.98 screenfuls of 1920x1080, plus 50 dispatches of 52 workgroups
+MESA: info: orbis-drm: and recording: 486 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1052942 us a frame - an upper bound on this driver's share, against 558 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 701 us in 6 calls, QueuePresentKHR 95 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 810 us a frame in all of them, against a frame of 1053615 us
+MESA: info: orbis-drm: BUDGET over 5139 ms and 36 submissions: this process burned 12720 ms of CPU, i.e. 2.47 cores busy on average, of which 3 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 6 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 94 render passes covering 10.93 screenfuls of 1920x1080, plus 50 dispatches of 53 workgroups
+MESA: info: orbis-drm: and recording: 488 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 855961 us a frame - an upper bound on this driver's share, against 551 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 722 us in 6 calls, QueuePresentKHR 104 us in 1 calls, AcquireNextImage2 6 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 842 us a frame in all of them, against a frame of 856587 us
+MESA: info: orbis-drm: BUDGET over 5592 ms and 90 submissions: this process burned 14804 ms of CPU, i.e. 2.64 cores busy on average, of which 7 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 15 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 95 render passes covering 11.16 screenfuls of 1920x1080, plus 50 dispatches of 53 workgroups
+MESA: info: orbis-drm: and recording: 489 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 372226 us a frame - an upper bound on this driver's share, against 522 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 677 us in 6 calls, QueuePresentKHR 104 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 796 us a frame in all of them, against a frame of 372851 us
+MESA: info: orbis-drm: BUDGET over 6795 ms and 78 submissions: this process burned 18545 ms of CPU, i.e. 2.72 cores busy on average, of which 6 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 13 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 95 render passes covering 11.07 screenfuls of 1920x1080, plus 50 dispatches of 53 workgroups
+MESA: info: orbis-drm: and recording: 489 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 522100 us a frame - an upper bound on this driver's share, against 522 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 661 us in 6 calls, QueuePresentKHR 105 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 781 us a frame in all of them, against a frame of 522720 us
+MESA: info: orbis-drm: BUDGET over 5217 ms and 24 submissions: this process burned 12299 ms of CPU, i.e. 2.35 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 4 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 95 render passes covering 11.07 screenfuls of 1920x1080, plus 50 dispatches of 53 workgroups
+MESA: info: orbis-drm: and recording: 489 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1303748 us a frame - an upper bound on this driver's share, against 590 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 733 us in 6 calls, QueuePresentKHR 97 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 844 us a frame in all of them, against a frame of 1304439 us
+MESA: info: orbis-drm: BUDGET over 5219 ms and 66 submissions: this process burned 14380 ms of CPU, i.e. 2.75 cores busy on average, of which 5 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 11 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 94 render passes covering 11.03 screenfuls of 1920x1080, plus 49 dispatches of 52 workgroups
+MESA: info: orbis-drm: and recording: 488 draws and 50 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 473869 us a frame - an upper bound on this driver's share, against 529 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 674 us in 6 calls, QueuePresentKHR 100 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 788 us a frame in all of them, against a frame of 474479 us
+MESA: info: wsi/orbis: the scan-out copy took 1 us for 8100 KiB (mean 1 us, worst 19 us over 3904 frames) - 8294400 MB/s
+MESA: info: orbis-drm: BUDGET over 5039 ms and 24 submissions: this process burned 12950 ms of CPU, i.e. 2.56 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 4 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 94 render passes covering 10.85 screenfuls of 1920x1080, plus 50 dispatches of 53 workgroups
+MESA: info: orbis-drm: and recording: 485 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1259228 us a frame - an upper bound on this driver's share, against 552 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 696 us in 6 calls, QueuePresentKHR 106 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 817 us a frame in all of them, against a frame of 1259856 us
+MESA: info: orbis-drm: BUDGET over 6495 ms and 24 submissions: this process burned 17918 ms of CPU, i.e. 2.75 cores busy on average, of which 2 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 4 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 95 render passes covering 11.18 screenfuls of 1920x1080, plus 50 dispatches of 53 workgroups
+MESA: info: orbis-drm: and recording: 488 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1623200 us a frame - an upper bound on this driver's share, against 582 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 732 us in 6 calls, QueuePresentKHR 97 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 843 us a frame in all of them, against a frame of 1623890 us
+MESA: info: orbis-drm: BUDGET over 7462 ms and 18 submissions: this process burned 19692 ms of CPU, i.e. 2.63 cores busy on average, of which 1 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 3 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 95 render passes covering 11.37 screenfuls of 1920x1080, plus 50 dispatches of 53 workgroups
+MESA: info: orbis-drm: and recording: 489 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 2486794 us a frame - an upper bound on this driver's share, against 599 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 778 us in 6 calls, QueuePresentKHR 103 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 894 us a frame in all of them, against a frame of 2487517 us
+MESA: info: orbis-drm: BUDGET over 5029 ms and 36 submissions: this process burned 14758 ms of CPU, i.e. 2.93 cores busy on average, of which 3 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 6 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 94 render passes covering 11.14 screenfuls of 1920x1080, plus 49 dispatches of 52 workgroups
+MESA: info: orbis-drm: and recording: 488 draws and 50 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 837707 us a frame - an upper bound on this driver's share, against 531 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 679 us in 6 calls, QueuePresentKHR 103 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 4 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls - 797 us a frame in all of them, against a frame of 838307 us
+MESA: info: orbis-drm: BUDGET over 5177 ms and 18 submissions: this process burned 13549 ms of CPU, i.e. 2.61 cores busy on average, of which 1 ms was inside this driver's submit path; and it waited 0 ms for the GPU across 3 presents, which is 0% of the window.
+MESA: info: orbis-drm: and per frame: 99 render passes covering 11.72 screenfuls of 1920x1080, plus 50 dispatches of 53 workgroups
+MESA: info: orbis-drm: and recording: 496 draws and 51 descriptor-set binds a frame, inside 6 command buffers whose Begin-to-End spans total 1725129 us a frame - an upper bound on this driver's share, against 570 us of submit which is a lower one
+MESA: info: orbis-drm: and per frame inside the Vulkan API: QueueSubmit2 720 us in 6 calls, QueuePresentKHR 100 us in 1 calls, AcquireNextImage2 5 us in 1 calls, WaitForFences 5 us in 2 calls, UpdateDescriptorSets 4 us in 4 calls, AllocateMemory 73 us in 0 calls - 908 us a frame in all of them, against a frame of 1725836 us

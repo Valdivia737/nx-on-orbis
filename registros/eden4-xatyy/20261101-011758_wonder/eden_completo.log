@@ -1,0 +1,212 @@
+[   0.000222] Frontend <Info> yuzu_ps4/main.cpp:1081:main: Eden4 1.0 starting
+[   0.002136] Frontend <Info> yuzu_ps4/main.cpp:1084:main: Host CPU: DG1501SML87LB                                  , AVX=true, AVX2=false, page size=16384
+[   0.002903] Frontend <Info> yuzu_ps4/main.cpp:1087:main: PS4 Pro mode: off, CPUs: 8, CPU clock: 2100 MHz, direct memory: 4608 MiB
+[   0.010520] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000010: 0x0
+[   0.013075] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000011: 0x0
+[   0.019095] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000022: 0x0
+[   0.021090] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000024: 0x0
+[   0.023476] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000001: 0x0
+[   0.024878] Frontend <Info> yuzu_ps4/platform.cpp:31:InitializeModules: PS4 UserService: 0x0
+[   0.025700] Input <Info> yuzu_ps4/platform.cpp:39:Controller: PS4 Pad initialization: 0x0
+[   0.026516] Input <Info> yuzu_ps4/platform.cpp:52:Open: PS4 controller for user 0x16a2555b in slot 1: handle 0x3430600
+[   0.046685] Frontend <Info> yuzu_ps4/platform.cpp:142:Display: PS4 launcher display: 1920x1080 ABGR garlic works
+[   0.049805] Frontend <Info> yuzu_ps4/main.cpp:160:ScanGames: PS4 HOME menu: 0 games from 1 sources
+[   0.050799] Frontend <Info> yuzu_ps4/main.cpp:674:Begin: PS4 HOME menu: users
+[   0.050800] Frontend <Info> yuzu_ps4/ui_metadata.cpp:120:Run: PS4 HOME menu: 0 of 0 games have saved icons (the others get theirs when started)
+[   0.051590] Frontend <Info> yuzu_ps4/main.cpp:676:Begin: PS4 HOME menu: sounds
+[   0.053599] Frontend <Info> yuzu_ps4/main.cpp:1024:Launcher: PS4 HOME menu: 0 games, 1 users
+[   0.054329] Frontend <Info> yuzu_ps4/main.cpp:1036:Launcher: PS4 HOME menu: first update
+[   0.054955] Frontend <Info> yuzu_ps4/main.cpp:1046:Launcher: PS4 HOME menu: first render
+[   0.060078] Frontend <Info> yuzu_ps4/main.cpp:1048:Launcher: PS4 HOME menu: first present
+[   0.079687] Frontend <Info> yuzu_ps4/main.cpp:1050:Launcher: PS4 HOME menu: first frame shown
+[  77.338255] Frontend <Info> yuzu_ps4/main.cpp:160:ScanGames: PS4 HOME menu: 0 games from 1 sources
+[  77.339384] Frontend <Info> yuzu_ps4/ui_metadata.cpp:120:Run: PS4 HOME menu: 0 of 0 games have saved icons (the others get theirs when started)
+[ 154.215255] Frontend <Info> yuzu_ps4/main.cpp:160:ScanGames: PS4 HOME menu: 4 games from 2 sources
+[ 154.216720] Frontend <Info> yuzu_ps4/ui_metadata.cpp:120:Run: PS4 HOME menu: 0 of 4 games have saved icons (the others get theirs when started)
+[ 158.552268] Frontend <Info> yuzu_ps4/main.cpp:160:ScanGames: PS4 HOME menu: 4 games from 1 sources
+[ 158.553553] Frontend <Info> yuzu_ps4/ui_metadata.cpp:120:Run: PS4 HOME menu: 0 of 4 games have saved icons (the others get theirs when started)
+[ 197.549239] Frontend <Info> yuzu_ps4/main.cpp:501:RunGame: Launching /data/edenps4/roms/Super Mario Bros. Wonder.xci
+[ 197.550094] Frontend <Info> yuzu_ps4/main.cpp:502:RunGame: PS4 options: docked=1 output=720 player1_type=pro player2_type=pro player3_type=pro player4_type=pro ui_theme=black ui_sounds=on profile=off renderer=vulkan inline_memory=1 direct_table=1 page_reuse=1 regalloc=on 
+[ 197.550712] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 before guest RAM: direct memory query=0x0, largest free block=4718592 KiB
+[ 197.551349] Input <Info> input_common/drivers/udp_client.cpp:144:UDPClient: Udp Initialization started
+[ 197.555356] HW.Memory <Info> common/host_memory.cpp:435:Impl: PS4 guest RAM: 4096 MiB at 0x200010000, software page tables
+[ 197.916099] Loader <Info> core/loader/nca.cpp:102:Load: Read heap size 0x6e6f69 bytes from main.npdm
+[ 197.916888] Loader <Info> core/file_sys/patch_manager.cpp:199:PatchExeFS: Patching ExeFS for title_id=010015100B514000
+[ 197.917945] Loader <Info> core/file_sys/patch_manager.cpp:358:PatchExeFS:     ExeFS: LayeredExeFS patches applied successfully
+[ 198.178931] Core <Info> dynarmic/backend/x64/block_of_code.cpp:89:alloc: PS4 JIT: 65552 KiB in regular flexible memory at 0x300010000
+[ 198.255497] Core <Info> dynarmic/backend/x64/block_of_code.cpp:89:alloc: PS4 JIT: 65552 KiB in regular flexible memory at 0x304014000
+[ 198.334424] Core <Info> dynarmic/backend/x64/block_of_code.cpp:89:alloc: PS4 JIT: 65552 KiB in regular flexible memory at 0x308018000
+[ 198.409841] Core <Info> dynarmic/backend/x64/block_of_code.cpp:89:alloc: PS4 JIT: 65552 KiB in regular flexible memory at 0x30c01c000
+[ 198.472450] Loader <Info> core/file_sys/patch_manager.cpp:475:HasNSOPatch: Querying NSO patch existence for build_id=2F1967113A281280A48CE3FC6DC23049327BF924, name=rtld
+[ 198.660998] Loader <Info> core/file_sys/patch_manager.cpp:475:HasNSOPatch: Querying NSO patch existence for build_id=CD6E42AEE7934F4D8393CD43893AE25EDC83D338, name=main
+[ 198.722551] Loader <Info> core/file_sys/patch_manager.cpp:475:HasNSOPatch: Querying NSO patch existence for build_id=3053B22935E32DDF15EF81997603E5C267534A9, name=sdk
+[ 198.728228] Loader <Info> core/loader/nca.cpp:121:Load: Set pointer buffer size to 0x8000 bytes for ProgramID 0x010015100b514000 (Heap size: 0x6e6f69)
+[ 198.729163] Loader <Warning> core/loader/nca.cpp:130:Load: No control data found for program 010015100B514000
+[ 198.729909] Core <Info> core/core.cpp:351:Load: Loading Super Mario Bros. Wonder (010015100B514000) ...
+[ 198.793952] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_EXT_conditional_rendering
+[ 198.794695] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_EXT_conservative_rasterization
+[ 198.795334] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_EXT_external_memory_host
+[ 198.795959] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_EXT_robustness2
+[ 198.796565] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_NV_geometry_shader_passthrough
+[ 198.797173] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_NV_viewport_array2
+[ 198.797800] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_NV_viewport_swizzle
+[ 198.798449] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1178:GetSuitability: Device doesn't support feature indexTypeUint8
+[ 198.799108] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1178:GetSuitability: Device doesn't support feature shaderFloat16
+[ 198.799780] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1677:CollectPhysicalMemoryInfo: PS4 GPU memory budget: 511 MiB of free direct memory
+[ 198.800374] Render.Vulkan <Warning> video_core/vulkan_common/vulkan_device.cpp:637:Device: AMD GCN4 and earlier have broken VK_EXT_sampler_filter_minmax
+[ 199.130573] Render.Vulkan <Info> video_core/renderer_vulkan/vk_swapchain_ps4.cpp:170:Create: PS4 display: loading screen shown until the first game frame
+[ 199.131411] Render.Vulkan <Info> video_core/renderer_vulkan/vk_swapchain_ps4.cpp:174:Create: PS4 RADV display ready: 1280x720, 3 buffers, pitch 1280
+[ 200.921304] HW.GPU <Info> ./video_core/texture_cache/texture_cache.h:81:TextureCache: PS4 texture cache GC: minimum 153 MiB, expected 255 MiB, critical 358 MiB
+[ 200.968698] Render.Vulkan <Info> video_core/renderer_vulkan/vk_pipeline_cache.cpp:506:PipelineCache: DynamicState setting value: 2
+[ 200.969935] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:293:Report: Driver: radv 26.0.8
+[ 200.970537] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:294:Report: Device: AMD Liverpool (PS4) (RADV BONAIRE)
+[ 200.971174] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:295:Report: Vulkan: 1.3.335
+[ 200.971805] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:296:Report: Available VRAM: 0.50 GiB
+[ 200.976956] Service <Error> core/hle/service/sockets/bsd.cpp:1143:BSD_USA: Network isn't initialized
+[ 200.978075] Service <Error> core/hle/service/sockets/bsd.cpp:1143:BSD_USA: Network isn't initialized
+[ 200.978910] Service <Error> core/hle/service/sockets/bsd.cpp:1143:BSD_USA: Network isn't initialized
+[ 200.992258] Core <Info> core/game_settings.cpp:137:LoadOverrides: Applied game settings for title ID 010015100B514000 on OS 7, GPU vendor 1 (RADV)
+[ 200.995543] Frontend <Info> yuzu_ps4/main.cpp:545:RunGame: PS4 HOME menu: saved "Super Mario Bros. Wonder" (010015100B514000, icon 93583 bytes)
+[ 200.996789] Frontend <Info> yuzu_ps4/main.cpp:552:RunGame: Emulation running; L3 + R3 + Options requests shutdown
+[ 200.997488] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 after renderer startup: direct memory query=0x0, largest free block=485360 KiB
+[ 201.052175] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:520:GetExternalSteadyClockSourceId: called, clock_source_id=00000000-0000-0000-0000-000000000000
+[ 201.067092] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:527:SetExternalSteadyClockSourceId: called, clock_source_id=0f666e6a-40df-f9ac-fe55-47556cfdf811
+[ 201.070247] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:536:GetUserSystemClockContext: called
+[ 201.070977] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:923:GetNetworkSystemClockContext: called
+[ 201.071621] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:941:IsUserSystemClockAutomaticCorrectionEnabled: called, out_automatic_correction_enabled=true
+[ 201.072248] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1371:GetUserSystemClockAutomaticCorrectionUpdatedTime: called
+[ 201.072872] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:897:GetDeviceTimeZoneLocationName: called
+[ 201.073537] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:905:SetDeviceTimeZoneLocationName: called
+[ 201.078524] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1362:SetDeviceTimeZoneLocationUpdatedTime: called
+[ 201.082638] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1354:GetDeviceTimeZoneLocationUpdatedTime: called
+[ 201.084359] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:544:SetUserSystemClockContext: called
+[ 201.085352] Input <Error> ./common/input.h:513:CreateDevice: Unknown engine name: joycon
+[ 201.088554] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:931:SetNetworkSystemClockContext: called
+[ 201.090191] Input <Error> ./common/input.h:513:CreateDevice: Unknown engine name: joycon
+[ 201.091098] Input <Warning> hid_core/frontend/emulated_console.cpp:49:SetTouchParams: touch_from_button_maps is unset by frontend config
+[ 201.091671] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:951:SetUserSystemClockAutomaticCorrectionEnabled: called, out_automatic_correction_enabled=true
+[ 201.094864] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1379:SetUserSystemClockAutomaticCorrectionUpdatedTime: called
+[ 201.317532] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:665:GetVibrationMasterVolume: called, vibration_master_volume=1
+[ 202.148516] Service.VI <Warning> core/hle/service/vi/application_display_service.cpp:81:GetManagerDisplayService: (STUBBED) called
+[ 202.152024] Service.AM <Info> core/hle/service/am/service/window_controller.cpp:38:GetAppletResourceUserId: called
+[ 202.159925] Service.AM <Warning> core/hle/service/am/service/common_state_getter.cpp:353:SetRequestExitToLibraryAppletAtExecuteNextProgramEnabled: (STUBBED) called
+[ 202.166045] Service.AM <Warning> core/hle/service/am/service/application_functions.cpp:495:GetGpuErrorDetectedSystemEvent: (STUBBED) called
+[ 202.189824] Service.AM <Info> core/hle/service/am/service/window_controller.cpp:57:AcquireForegroundRights: called
+[ 202.192121] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:189:SetFocusHandlingMode: called, notify=false background=false suspend=true
+[ 202.194601] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:219:SetOutOfFocusSuspendingEnabled: called, enabled=false
+[ 202.832421] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 5000 blocks, translate 678 ms, optimize 42 ms, emit 355 ms (mprotect 50 ms), 1 cache clears, 4651 ms since cache start
+[ 203.356898] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 10000 blocks, translate 722 ms, optimize 90 ms, emit 721 ms (mprotect 99 ms), 1 cache clears, 5176 ms since cache start
+[ 203.948937] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 15000 blocks, translate 774 ms, optimize 146 ms, emit 1136 ms (mprotect 149 ms), 1 cache clears, 5768 ms since cache start
+[ 204.531874] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 20000 blocks, translate 825 ms, optimize 202 ms, emit 1542 ms (mprotect 198 ms), 1 cache clears, 6351 ms since cache start
+[ 205.091620] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 25000 blocks, translate 874 ms, optimize 256 ms, emit 1932 ms (mprotect 247 ms), 1 cache clears, 6911 ms since cache start
+[ 205.646858] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 30000 blocks, translate 923 ms, optimize 309 ms, emit 2316 ms (mprotect 295 ms), 1 cache clears, 7466 ms since cache start
+[ 205.929458] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:200:SetRestartMessageEnabled: called, enabled=true
+[ 205.933587] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:171:SetOperationModeChangedNotification: called, enabled=true
+[ 205.934958] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:180:SetPerformanceModeChangedNotification: called, enabled=true
+[ 206.008478] Loader <Info> core/file_sys/patch_manager.cpp:610:PatchRomFS: Patching RomFS for title_id=010015100B514000, type=01
+[ 206.116305] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 35000 blocks, translate 963 ms, optimize 353 ms, emit 2625 ms (mprotect 344 ms), 1 cache clears, 7935 ms since cache start
+[ 206.197905] Service.NS <Info> core/hle/service/ns/read_only_application_control_data_interface.cpp:192:GetApplicationDesiredLanguage: called with supported_languages=00000000
+[ 206.200742] Service.NS <Info> core/hle/service/ns/read_only_application_control_data_interface.cpp:192:GetApplicationDesiredLanguage: called with supported_languages=00000000
+[ 206.237827] Service.NVDRV <Warning> core/hle/service/nvdrv/nvdrv_interface.cpp:158:Initialize: (STUBBED) called
+[ 206.258599] Service.NVDRV <Warning> core/hle/service/nvdrv/nvdrv_interface.cpp:215:SetAruid: (STUBBED) called, pid=0x51
+[ 206.262387] Service.NVDRV <Warning> core/hle/service/nvdrv/nvdrv_interface.cpp:223:SetGraphicsFirmwareMemoryMarginEnabled: (STUBBED) called
+[ 206.278928] Service.VI <Warning> core/hle/service/vi/application_display_service.cpp:81:GetManagerDisplayService: (STUBBED) called
+[ 206.282098] Service.VI <Warning> core/hle/service/vi/application_display_service.cpp:74:GetSystemDisplayService: (STUBBED) called
+[ 206.284368] Service.VI <Warning> core/hle/service/vi/application_display_service.cpp:68:GetRelayService: (STUBBED) called
+[ 206.309581] Service.AM <Warning> core/hle/service/am/service/self_controller.cpp:271:CreateManagedDisplaySeparableLayer: (STUBBED) called
+[ 206.560447] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 40000 blocks, translate 1001 ms, optimize 397 ms, emit 2901 ms (mprotect 392 ms), 1 cache clears, 8380 ms since cache start
+[ 206.657632] Service.NVDRV <Warning> core/hle/service/nvdrv/devices/nvhost_gpu.cpp:165:SetErrorNotifier: (STUBBED) called, offset=0, size=1000, mem=10
+[ 206.659340] Service.NVDRV <Info> core/hle/service/nvdrv/devices/nvhost_gpu.cpp:441:ChannelSetTimeout: called, timeout=0x266
+[ 206.664687] Service.NVDRV <Info> core/hle/service/nvdrv/devices/nvhost_gpu.cpp:447:ChannelSetTimeslice: called, timeslice=0x400
+[ 206.854339] Service.ACC <Warning> core/hle/service/acc/acc.cpp:1023:InitializeApplicationInfoV2: (STUBBED) called
+[ 206.857929] Service.AM <Info> core/hle/service/am/service/application_functions.cpp:136:PopLaunchParameter: called, kind=2
+[ 206.927076] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1428:GetTouchScreenMode: called, touch_screen_mode=1
+[ 206.941065] Service.HID <Info> hid_core/frontend/emulated_controller.cpp:1330:SetPollingMode: Set polling mode 0, device_index=3
+[ 207.086538] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 45000 blocks, translate 1041 ms, optimize 444 ms, emit 3241 ms (mprotect 443 ms), 1 cache clears, 8906 ms since cache start
+[ 211.001160] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=0, flips=0, audio buffers=0, pad=true, stage=waiting for guest display, overflow heap=32 MiB, memory callbacks=199671
+[ 211.002262] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=485360 KiB
+[ 211.003102] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 0.0 fps, emulation speed 100%, frame time -nan ms
+[ 212.086968] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 50000 blocks, translate 1081 ms, optimize 492 ms, emit 3586 ms (mprotect 505 ms), 1 cache clears, 13906 ms since cache start
+[ 212.882581] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 55000 blocks, translate 1127 ms, optimize 547 ms, emit 3951 ms (mprotect 555 ms), 1 cache clears, 14702 ms since cache start
+[ 214.565773] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 60000 blocks, translate 1171 ms, optimize 599 ms, emit 4309 ms (mprotect 607 ms), 1 cache clears, 16385 ms since cache start
+[ 215.146029] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 65000 blocks, translate 1212 ms, optimize 648 ms, emit 4654 ms (mprotect 657 ms), 1 cache clears, 16965 ms since cache start
+[ 215.752698] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 70000 blocks, translate 1254 ms, optimize 696 ms, emit 4997 ms (mprotect 709 ms), 1 cache clears, 17572 ms since cache start
+[ 216.856773] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 75000 blocks, translate 1294 ms, optimize 741 ms, emit 5313 ms (mprotect 761 ms), 1 cache clears, 18676 ms since cache start
+[ 219.218505] Audio.Sink <Info> audio_core/sink/ps4_sink.cpp:32:PS4SinkStream: PS4 AudioOut opened: port=536870919, 48000 Hz stereo, 2 guest channels
+[ 219.247311] Audio.Sink <Info> audio_core/sink/ps4_sink.cpp:32:PS4SinkStream: PS4 AudioOut opened: port=536870918, 48000 Hz stereo, 2 guest channels
+[ 219.287701] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 80000 blocks, translate 1335 ms, optimize 790 ms, emit 5658 ms (mprotect 817 ms), 1 cache clears, 21107 ms since cache start
+[ 219.403631] Audio.Sink <Info> audio_core/sink/ps4_sink.cpp:82:Output: PS4 first audio buffer submitted
+[ 221.008229] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=0, flips=0, audio buffers=76, pad=true, stage=waiting for guest display, overflow heap=64 MiB, memory callbacks=668717
+[ 221.009038] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=485360 KiB
+[ 221.009887] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 0.0 fps, emulation speed 100%, frame time -nan ms
+[ 221.270192] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 85000 blocks, translate 1374 ms, optimize 835 ms, emit 6002 ms (mprotect 895 ms), 1 cache clears, 23089 ms since cache start
+[ 221.955483] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:171:SetOperationModeChangedNotification: called, enabled=true
+[ 221.956909] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:180:SetPerformanceModeChangedNotification: called, enabled=true
+[ 222.033525] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 5000 blocks, translate 36 ms, optimize 42 ms, emit 536 ms (mprotect 64 ms), 1 cache clears, 23774 ms since cache start
+[ 222.062356] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 90000 blocks, translate 1412 ms, optimize 879 ms, emit 6506 ms (mprotect 947 ms), 1 cache clears, 23881 ms since cache start
+[ 222.637254] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 95000 blocks, translate 1448 ms, optimize 921 ms, emit 6816 ms (mprotect 998 ms), 1 cache clears, 24456 ms since cache start
+[ 223.194411] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 100000 blocks, translate 1486 ms, optimize 963 ms, emit 7113 ms (mprotect 1049 ms), 2 cache clears, 25013 ms since cache start
+[ 224.038419] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 105000 blocks, translate 1522 ms, optimize 1004 ms, emit 7408 ms (mprotect 1102 ms), 2 cache clears, 25857 ms since cache start
+[ 224.286517] Service.NS <Info> core/hle/service/ns/read_only_application_control_data_interface.cpp:192:GetApplicationDesiredLanguage: called with supported_languages=00000000
+[ 224.578264] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 110000 blocks, translate 1560 ms, optimize 1051 ms, emit 7738 ms (mprotect 1157 ms), 2 cache clears, 26397 ms since cache start
+[ 224.584841] Service.AM <Warning> core/hle/service/am/service/application_functions.cpp:349:GetPseudoDeviceId: (stubbed)
+[ 224.593059] Service.AM <Info> core/hle/service/am/service/application_functions.cpp:209:SetTerminateResult: (STUBBED) called, result=0x3fffff (2511-8191)
+[ 224.594791] Debug.Emulated <Critical> core/hle/kernel/svc/svc_exception.cpp:56:Break: Userspace PANIC! info1=0x00001084859f08, info2=0x00000000000004
+[ 224.595540] Debug.Emulated <Critical> core/hle/kernel/svc/svc_exception.cpp:37:operator(): debug_buffer_err_code=FFFFFFFF
+[ 224.596260] Debug.Emulated <Critical> core/hle/kernel/svc/svc_exception.cpp:106:Break: Emulated program broke execution! reason=0x00000000000000, info1=0x00001084859f08, info2=0x00000000000004
+[ 224.932024] Core.ARM <Error> core/arm/arm_interface.cpp:43:LogBacktrace: Backtrace @ PC=0000000083B160FC
+R00=0000000000000000 R01=0000001084859F08 R02=0000000000000004 R03=0000000000000000
+R04=0000001084859F08 R05=0000000000000000 R06=00000000844675EA R07=0000001084859EB0
+R08=0000000100000000 R09=0000000000D39518 R10=FEFEFEFEFEFEFEFF R11=0000000000800000
+R12=0000000000000000 R13=0000000000000000 R14=0000000000000000 R15=0000000000000000
+R16=0000000083A4E410 R17=00000000846F0518 R18=0000000000000000 R19=0000001084859F08
+R20=0000000000000000 R21=00000000844675EA R22=00000000844675EA R23=0000000000000000
+R24=00000000844675EA R25=0000001084859EB0 R26=00000000844675EA R27=0000000083A4CBA8
+R28=0000000000000120 R29=0000001084859D30 R30=0000000083A4E428 R31=0000001084859D30
+V00=0000000041020000_0000000000000000 V01=0000000041000000_0000000000000000
+V02=0000000000000000_0000000000000000 V03=0000000000000000_0000000000000000
+V04=0000000000000000_0000000000000000 V05=0000000000000000_0000000000000000
+V06=000000004F000000_0000000000000000 V07=000000004F3E0000_0000000000000000
+V08=0000000000000000_0000000000000000 V09=0000000000000000_0000000000000000
+V10=0000000000000000_0000000000000000 V11=0000000000000000_0000000000000000
+V12=0000000000000000_0000000000000000 V13=0000000000000000_0000000000000000
+V14=0000000000000000_0000000000000000 V15=0000000000000000_0000000000000000
+V16=3F800000BF800000_0000000000000000 V17=3F8000003F800000_0000000000000000
+V18=000000003F800000_0000000080000000 V19=3F8000003F800000_0000000000000000
+V20=0000000000000000_0000000000000000 V21=0000000000000000_0000000000000000
+V22=3D0000003D000000_0000000000000000 V23=000000003EAAAAAC_0000000000000000
+V24=00000000337A5193_0000000000000000 V25=0000000000000000_0000000000000000
+V26=0000000000000000_0000000000000000 V27=0000000080000000_0000000000000000
+V28=0000000000000000_0000000000000000 V29=0000000000000000_0000000000000000
+V30=0000000000000000_0000000000000000 V31=0000000000000000_0000000000000000
+PSTATE=20000000 FPCR=01000000 FPSR=00000013 TPIDR=0000002104819420
+Module              Address             Original Address    Offset              Symbol
+nnSdk               000000710015F0FC    0000000083B160FC    000000000015F0FC    
+nnSdk               0000007100097428    0000000083A4E428    0000000000097428    nn::diag::detail::Abort(nn::Result const*)
+nnSdk               0000007100095AF4    0000000083A4CAF4    0000000000095AF4    
+nnSdk               0000007100095BA8    0000000083A4CBA8    0000000000095BA8    
+nnSdk               0000007100095C88    0000000083A4CC88    0000000000095C88    
+nnSdk               0000007100398D20    0000000083D4FD20    0000000000398D20    nn::oe::EnableGamePlayRecording(void*, unsigned long)
+Secred.nss          0000007100677D84    00000000809E9D84    0000000000677D84    
+Secred.nss          0000007100677CE8    00000000809E9CE8    0000000000677CE8    
+Secred.nss          0000007100644D84    00000000809B6D84    0000000000644D84    
+Secred.nss          00000071004AAB0C    000000008081CB0C    00000000004AAB0C    
+Secred.nss          00000071004AA44C    000000008081C44C    00000000004AA44C    
+Secred.nss          00000071004A9190    000000008081B190    00000000004A9190    
+Secred.nss          00000071001B45E0    00000000805265E0    00000000001B45E0    
+Secred.nss          0000007100978928    0000000080CEA928    0000000000978928    
+Secred.nss          0000007101CACB20    000000008201EB20    0000000001CACB20    
+Secred.nss          000000710066B240    00000000809DD240    000000000066B240    
+Secred.nss          00000071005A4C84    0000000080916C84    00000000005A4C84    
+nnSdk               0000007100100674    0000000083AB7674    0000000000100674    nn::init::Start(unsigned long, unsigned long, void (*)(), void (*)(), void (*)())
+nnrtld              00000071000000D4    000000008036E0D4    00000000000000D4    
+
+[ 231.019184] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=0, flips=0, audio buffers=545, pad=true, stage=waiting for guest display, overflow heap=120 MiB, memory callbacks=1075432
+[ 231.020088] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=485360 KiB
+[ 231.020863] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 0.0 fps, emulation speed 100%, frame time -nan ms
+[ 241.030179] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=0, flips=0, audio buffers=1014, pad=true, stage=waiting for guest display, overflow heap=120 MiB, memory callbacks=1352276
+[ 241.031072] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=485360 KiB
+[ 241.031879] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 0.0 fps, emulation speed 100%, frame time -nan ms
+[ 251.034179] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=0, flips=0, audio buffers=1483, pad=true, stage=waiting for guest display, overflow heap=120 MiB, memory callbacks=1628519
+[ 251.035026] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=485360 KiB
+[ 251.035752] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 0.0 fps, emulation speed 100%, frame time -nan ms

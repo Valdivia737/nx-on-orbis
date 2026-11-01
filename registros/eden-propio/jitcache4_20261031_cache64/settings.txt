@@ -1,0 +1,5 @@
+# Prueba 2026-10-31: texturas dentro de la arena del driver (no fuera), para no agotar la memoria directa
+env=ORBIS_VRAM_GARLIC=0
+# Prueba jitcache3 (tabla de GPU con reserva perezosa): cache del JIT 64 MiB en nucleos 0-2, 8 MiB en el 3
+env=NX_JIT_CACHE_MIB=64
+env=NX_JIT_CACHE_MIB_CORE3=8

@@ -1,0 +1,10 @@
+# Prueba 2026-10-31: texturas dentro de la arena del driver (no fuera), para no agotar la memoria directa
+env=ORBIS_VRAM_GARLIC=0
+# Arena del driver (ventana de VA de la GPU) 1792 MiB: con 1280 y 1536 se acabo la VA ~90 s tras entrar al nivel
+env=ORBIS_ARENA_MIB=1792
+# Cache del JIT 64 MiB en nucleos 0-2, 8 MiB en el 3 (jitcache4: 17-21 fps en el nivel)
+env=NX_JIT_CACHE_MIB=64
+env=NX_JIT_CACHE_MIB_CORE3=8
+# Presupuestos de texturas y buferes (% de la arena): 30+15 = 806 MiB, mas el bufer de video de 256 MiB
+env=NX_TEX_CACHE_PCT=30
+env=NX_BUF_CACHE_PCT=15

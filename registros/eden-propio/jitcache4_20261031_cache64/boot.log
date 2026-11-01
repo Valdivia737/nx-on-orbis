@@ -1,0 +1,556 @@
+[    1.345] eden-ps4 starting (Eden master 3d8873f8d3-master)
+[    1.355] PS4 build: jitcache4-20261031T224138Z-3d8873f8d3eb; test 22: speed - btver2 build, gpu_accuracy low, no reactive flushing, texture audit off, profiler; defaults CPU ASTC, swizzle test off
+[    1.375]   | boot: crash handlers installed (terminate + SIGSEGV/SIGBUS/SIGFPE/SIGILL/SIGABRT, sigaction rc=0, sigaltstack rc=0 errno=0 no error - a stack overflow on THIS thread can now report itself)
+[    1.394]   | boot: sigaltstack readback rc=0 errno=0 - raw 000000020040eae0 0000000000010000 0000000000000000 - as FreeBSD stack_t: ss_sp=000000020040eae0 ss_size=65536 ss_flags=0 - FreeBSD field order confirmed (sp, size, flags)
+[    1.417]   | thread census [live]: 1 created, 1 raised to 2048 KiB - 1984 KiB of address space the platform's default would not have reserved; 0 on an alternate signal stack, 0 refused, 0 too small to spare one - 0 KiB, taken from those threads' own stacks rather than allocated
+[    1.417]   | thread alt stack: first worker thread - it INHERITED rc=0 errno=0 ss_sp=0 ss_size=0 ss_flags=4 (0=nothing set, 4=SS_DISABLE, a non-null sp is the MAIN thread's buffer and means td_sigstk is copied on create); installed 64 KiB of this thread's own stack at 0x7eede7f60 rc=0 errno=0 - a stack overflow on a WORKER thread can now report itself
+[    1.470]   | thread census [live]: 2 created, 2 raised to 2048 KiB - 3968 KiB of address space the platform's default would not have reserved; 1 on an alternate signal stack, 0 refused, 0 too small to spare one - 64 KiB, taken from those threads' own stacks rather than allocated
+[    1.505] TLS check: main ok, new thread ok, per-thread values ok
+[    1.513]   | thread census [live]: 4 created, 4 raised to 2048 KiB - 7936 KiB of address space the platform's default would not have reserved; 3 on an alternate signal stack, 0 refused, 0 too small to spare one - 192 KiB, taken from those threads' own stacks rather than allocated
+[    1.610]   | thread census [live]: 8 created, 8 raised to 2048 KiB - 15872 KiB of address space the platform's default would not have reserved; 7 on an alternate signal stack, 0 refused, 0 too small to spare one - 448 KiB, taken from those threads' own stacks rather than allocated
+[    2.032] mutex check: std::mutex 1200000/1200000 ok, std::recursive_mutex (nested) 1200000/1200000 ok
+[    2.044] find check: 1->0 3->1 7->2 0x10000->3 42->4 5->5 ok
+[    2.071] flat_map check: 89826 pairs in 4103 pages, 0 missing (first: page 0x0 id 0) ok
+[    2.081] == logging
+[    2.084] controller open
+[    2.092] menu: 2 games listed
+[    8.648] menu: game 2 of 2 chosen, display closed (0x0); framebuffers kept
+[    8.658] game 2 of 2 in roms/
+[    8.661] game: /data/edenps4/roms/Super Mario Bros. Wonder.xci
+[    8.668] == firmware
+[    8.691] firmware: 0 NCAs installed now, 229 already there, 0 failed
+[    8.698] == core init
+[    8.701] settings.txt: env=ORBIS_VRAM_GARLIC=0
+[    8.706] settings.txt: env=NX_JIT_CACHE_MIB=64
+[    8.712] settings.txt: env=NX_JIT_CACHE_MIB_CORE3=8
+[    8.753]   | paths: title id is 'EDPS00001'
+[    8.758]   | paths: anchor '/data/EDPS00001/' (this title's id)
+[    8.764]   | paths: relative paths are anchored - 'C:/Program Files/Git/app0/ssl/openssl.cnf' -> '/data/EDPS00001/C:/Program Files/Git/app0/ssl/openssl.cnf'. This process has NO working directory (getcwd = ENOSYS) and a relative open returns EINVAL, so without this nothing relative can be opened at all
+[    8.972] == loading game
+[    9.045]   | mem mmap-direct: carve-out 1 taken - 131072 KiB at 0x309400000 (phys 0x9200000), direct held 262144 KiB of a 1572864 KiB cap
+[    9.554]   | mem mmap-direct: carve-out 2 taken - 131072 KiB at 0x35dc00000 (phys 0x1da00000), direct held 393216 KiB of a 1572864 KiB cap
+[   10.274]   | thread census [live]: 16 created, 16 raised to 2048 KiB - 31744 KiB of address space the platform's default would not have reserved; 15 on an alternate signal stack, 0 refused, 0 too small to spare one - 960 KiB, taken from those threads' own stacks rather than allocated
+[   10.410]   | thread census [live]: 32 created, 32 raised to 2048 KiB - 63488 KiB of address space the platform's default would not have reserved; 31 on an alternate signal stack, 0 refused, 0 too small to spare one - 1984 KiB, taken from those threads' own stacks rather than allocated
+[   10.455] == starting GPU
+[   10.459] == shader cache
+[   10.489]    [CPUCore_3] eboot+0x7ffc01ddc <- 0x36c67 <- 0x36ec7 <- 0x436b <- 0x73c3 <- 0x3b8e3 <- 0x19fdb6f <- 0x67dc <- 0x3e7c9 <- 0x14508e <- 0x10591f <- 0x105f5f <- 0x114bf9 <- 0x10906a <- 0x10ba26 <- 0x324b33 <- 0x3270b4 <- 0x325d90 <- 0x188371 <- 0x91c36 <- 0xb101bf
+[   10.476]   | mem mmap-direct: carve-out 3 taken - 131072 KiB at 0x3ba400000 (phys 0x75c00000), direct held 524288 KiB of a 1572864 KiB cap
+[   11.004]    [GPU] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x56aa60 <- 0x56a7dd <- 0x569dfb <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   11.365] == running
+[   16.492] !! no new frame for 15 s during running (lazy memory 110 MiB, 0 failed commits)
+[   16.503] !! thread stacks (first); offsets are eboot+0x..., newest frame first:
+[   16.512]    [main] eboot+0x7ffc02bac <- 0x7ffc056f5 <- 0x1983c6b <- 0xf512 <- 0xe583 <- 0x1a20239
+[   16.536]   | mem mmap-direct: carve-out 4 taken - 131072 KiB at 0x3cac00000 (phys 0x7dc00000), direct held 655360 KiB of a 1572864 KiB cap
+[   16.573]    [KWorkerTaskManager] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x18a64d <- 0x18a389 <- 0x18a145 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.633]    [HostTiming] eboot+0x70c69e <- 0x70acb7 <- 0x8e644 <- 0x8ea8f <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.694]    [cemuhookWorker] eboot+0x7ffc0285c <- 0xab973 <- 0xad6fb <- 0xad312 <- 0x6bea57 <- 0x6b8543 <- 0x6c02af <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.755]    [VulkanWorker] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x598f95 <- 0x5994b0 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.769]    [VulkanWorker] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x598f95 <- 0x5994b0 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.816]    [TextureDecoder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x18a64d <- 0x18a389 <- 0x18a145 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.877]    [VkPipelineBuilder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x18a64d <- 0x18a389 <- 0x18a145 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.938]    [VkPipelineBuilder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x18a64d <- 0x18a389 <- 0x18a145 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   16.999]    [VkPipelineBuilder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x18a64d <- 0x18a389 <- 0x18a145 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.060]    [VkPipelineBuilder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x18a64d <- 0x18a389 <- 0x18a145 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.121]    [VkPipelineBuilder] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x18a64d <- 0x18a389 <- 0x18a145 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.182]    [VkPipelineSerialization] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x18a64d <- 0x18a389 <- 0x18a145 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.243]    [GPUFencingThread] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x6943f3 <- 0x6941de <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.304]    [AudioManager] eboot+0x7ffc02bac <- 0x7ffc056f5 <- 0x1983c6b <- 0x4d4bbc <- 0x4d4a53 <- 0x4d44ee <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.364]    [DSP_OpusDecoder_Init] (gone: 0x80020003)
+[   17.431]    [DSP_OpusDecoder_Main] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x4d0d70 <- 0x4d0b7e <- 0x4cf729 <- 0x4d0260 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.492]    [audio] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x187ccb <- 0x17b227 <- 0x177a03 <- 0x18090b <- 0x25dfaf <- 0x26ef50 <- 0x26ed5a <- 0x273a8e <- 0x18dc11 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.553]    [FS] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x187ccb <- 0x17b227 <- 0x177a03 <- 0x18090b <- 0x25dfaf <- 0x26ef50 <- 0x26ed5a <- 0x2042f2 <- 0x18dc11 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.614]    [ldn] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x187ccb <- 0x17b227 <- 0x177a03 <- 0x18090b <- 0x25dfaf <- 0x26ef50 <- 0x26ed5a <- 0x28b17c <- 0x18dc11 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.675]    [nvservices] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x187ccb <- 0x17b227 <- 0x177a03 <- 0x18090b <- 0x25dfaf <- 0x26ef50 <- 0x26ed5a <- 0x2989aa <- 0x18dc11 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.736]    [bsdsocket] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x187ccb <- 0x17b227 <- 0x177a03 <- 0x18090b <- 0x270473 <- 0x270410 <- 0x26eef1 <- 0x26ed5a <- 0x45f70a <- 0x18dc11 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.797]    [bsdsocket:1] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x187ccb <- 0x17b227 <- 0x177a03 <- 0x18090b <- 0x25dfaf <- 0x26ef50 <- 0x26fcfa <- 0x18dc11 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.858]    [bsdsocket:2] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x187ccb <- 0x17b227 <- 0x177a03 <- 0x18090b <- 0x270473 <- 0x270410 <- 0x26eef1 <- 0x26fcfa <- 0x18dc11 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.919]    [vi] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x187ccb <- 0x17b227 <- 0x177a03 <- 0x18090b <- 0x25dfaf <- 0x26ef50 <- 0x26ed5a <- 0x48a3b9 <- 0x272e14 <- 0x18dc11 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   17.980]    [CPUCore_0] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x19e3db <- 0x90741 <- 0x91c36 <- 0xb101bf
+[   18.041]    [CPUCore_1] eboot+0x3554b3083 <- 0x4c2910 <- 0x19e063 <- 0x9055e <- 0x90517 <- 0x91c36 <- 0xb101bf
+[   18.052]    [CPUCore_1] eboot+0x3554b3083 <- 0x4c2910 <- 0x19e063 <- 0x9055e <- 0x90517 <- 0x91c36 <- 0xb101bf
+[   18.102]    [CPUCore_2] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x19e3db <- 0x90741 <- 0x91c36 <- 0xb101bf
+[   18.113]    [CPUCore_2] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x19e3db <- 0x90741 <- 0x91c36 <- 0xb101bf
+[   18.163]    [CPUCore_3] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x19e3db <- 0x90741 <- 0x91c36 <- 0xb101bf
+[   18.223]    [GPU] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x56aa60 <- 0x56a7dd <- 0x569dfb <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   18.284]    [TimeWorker] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x187ccb <- 0x17b227 <- 0x177a03 <- 0x18090b <- 0x25dfaf <- 0x3c7942 <- 0x3c7818 <- 0x3c76dd <- 0x3c75a3 <- 0x3c7481 <- 0x3c688b <- 0x3c72b6 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   18.345]    [VSyncThread] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x481fcb <- 0x4823a0 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   18.406]    [am:EventObserver] eboot+0x7ffc02bac <- 0x7ffc0556f <- 0x1983be2 <- 0x187ccb <- 0x17b227 <- 0x177a03 <- 0x18090b <- 0x25dfaf <- 0x1fe43c <- 0x1fe739 <- 0x9844 <- 0x7ffc074d3 <- 0xffffffffffc00000
+[   21.374] status: game 0.0 fps, speed 100%, frame -nan ms, guest+tables 266 MiB committed (0 MiB given back), 1781 MiB direct free, jit cache flushes 0/0/0/0
+[   21.391] small allocations: ~902 MiB since the last report (sampled 1 in 64, 17 MiB of samples unplaced)
+[   21.402]    ~  120 MiB in ~     128 (avg 983048 B) from eboot+0x699c <- 0x66bdb3 <- 0x66b10e <- 0x66ac45 <- 0x18a459
+[   21.413]    ~   86 MiB in ~     128 (avg 710327 B) from eboot+0x699c <- 0x21b389 <- 0x2712d9 <- 0x27150a <- 0x240e42
+[   21.425]    ~   49 MiB in ~     384 (avg 134152 B) from eboot+0x699c <- 0xaa41ca <- 0xaa2815 <- 0xaa3494 <- 0xaa3494
+[   21.437]    ~   49 MiB in ~     384 (avg 134152 B) from eboot+0x699c <- 0x66c0ef <- 0x66b13a <- 0x66ac45 <- 0x18a459
+[   21.449]    ~   48 MiB in ~     768 (avg 65536 B) from eboot+0x15ff72c <- 0x19382e4 <- 0x18e10dc <- 0x18dfcfa <- 0x5f91d4
+[   21.461]    ~   40 MiB in ~     448 (avg 95760 B) from eboot+0x19fdfdd <- 0x19207c1 <- 0x1921be2 <- 0x5fabfc <- 0x6862f1
+[   21.473]    ~   33 MiB in ~   38336 (avg 905 B) from eboot+0x67dc <- 0xae99fe <- 0xaedc22 <- 0xae9019 <- 0xa9965f
+[   21.485]    ~   24 MiB in ~     192 (avg 134152 B) from eboot+0x699c <- 0x66c0ef <- 0xaa41e8 <- 0xaa2815 <- 0xaa3494
+[   21.497] heap census: 445 MiB live in allocations >= 1 MiB, 17 sites (untracked overflow 0 MiB)
+[   21.507]       96 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa6c
+[   21.515]       64 MiB in    4 from eboot+0x19fec8b <- 0x6a2d <- 0x988700
+[   21.522]       64 MiB in    4 from eboot+0x6a2d <- 0x988700 <- 0x4c28cc
+[   21.530]       40 MiB in    2 from eboot+0x67dc <- 0x9e760 <- 0x1815d4
+[   21.537]       34 MiB in    2 from eboot+0x67dc <- 0x25c091 <- 0x41f99d
+[   21.545]       24 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x531cf9
+[   21.553]       24 MiB in    1 from eboot+0x6a2d <- 0x531cf9 <- 0x61a7af
+[   21.560]       24 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa89
+[   21.568]       19 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x82dd9
+[   21.576]       19 MiB in    1 from eboot+0x6a2d <- 0x82dd9 <- 0xdd79
+[   21.583]       10 MiB in    5 from eboot+0x67dc <- 0x14e035 <- 0x14bdab
+[   21.591]        8 MiB in    1 from eboot+0x699c <- 0x63cd9f <- 0x62ab48
+[   31.381] status: game 0.0 fps, speed 100%, frame -nan ms, guest+tables 491 MiB committed (0 MiB given back), 1556 MiB direct free, jit cache flushes 0/0/0/0
+[   31.398] small allocations: ~108 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   31.409]    ~   12 MiB in ~   20416 (avg 631 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[   31.420]    ~    5 MiB in ~   21888 (avg 277 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[   31.432]    ~    3 MiB in ~   90496 (avg 40 B) from eboot+0x67dc <- 0x5493aa <- 0x548eae <- 0x999148 <- 0x98bbb3
+[   31.443]    ~    3 MiB in ~     320 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[   31.455]    ~    3 MiB in ~   33728 (avg 96 B) from eboot+0x67dc <- 0x7a81a4 <- 0x7a737d <- 0x7a4ac0 <- 0x98bc44
+[   31.467]    ~    2 MiB in ~    5120 (avg 480 B) from eboot+0x67dc <- 0x998363 <- 0x99f5dd <- 0x98ba5a <- 0x98942a
+[   31.480] profile [VulkanWorker]: 732 samples, busy 0% (jit 0% of busy), waiting 100%
+[   31.478]    ~    2 MiB in ~   94848 (avg 24 B) from eboot+0x67dc <- 0x549716 <- 0x999166 <- 0x98bbb3 <- 0x98942a
+[   31.496]    hot:
+[   31.500] profile [CPUCore_0]: 697 samples, busy 81% (jit 41% of busy), waiting 18%
+[   31.499]    ~    2 MiB in ~    8768 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x76a0c5 <- 0x76aa37 <- 0x98b9ec
+[   31.514]    hot: 0x76c700=3% 0x76c740=2% 0x19feb00=1% 0x545280=1% 0x545200=1% 0x76fb40=1% 0x19fe6c0=1% 0x545680=0% 0x19fdf40=0% 0x76d300=0% 0x783ec0=0% 0x38a40=0%
+[   31.533] profile [CPUCore_1]: 696 samples, busy 12% (jit 77% of busy), waiting 87%
+[   31.542]    hot: 0x17bf00=3% 0x76c700=2% 0x768ec0=2% 0x783d80=1% 0x19e3c0=1% 0x81440=1% 0x19fd940=1% 0x76ca80=1% 0x7705c0=1% 0x98cf80=1% 0x1a1a480=1% 0x783e40=1%
+[   31.558] profile [CPUCore_2]: 696 samples, busy 11% (jit 87% of busy), waiting 88%
+[   31.567]    hot: 0x76c700=2% 0x38a80=2% 0x98ba00=1% 0x54a000=1% 0x7a7440=1% 0x98bb40=1% 0x19fda00=1% 0x548f00=1%
+[   31.578] profile [CPUCore_3]: 696 samples, busy 0% (jit 0% of busy), waiting 99%
+[   31.587]    hot: 0x19fe640=20% 0xc2dc40=20% 0x1a1a480=20% 0x1a1ae00=20% 0x241d80=20%
+[   31.596] profile [GPU]: 696 samples, busy 0% (jit 0% of busy), waiting 100%
+[   31.604]    hot:
+[   41.384] status: game 6.1 fps, speed 100%, frame 251.2 ms, guest+tables 591 MiB committed (1 MiB given back), 1456 MiB direct free, jit cache flushes 1/0/0/0
+[   41.399] small allocations: ~306 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   41.410]    ~   23 MiB in ~    2304 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[   41.423]    ~   19 MiB in ~   70528 (avg 285 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[   41.435]    ~   18 MiB in ~   46208 (avg 419 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[   41.446]    ~    9 MiB in ~  246784 (avg 40 B) from eboot+0x67dc <- 0x5493aa <- 0x548eae <- 0x999148 <- 0x98bbb3
+[   41.460]    ~    9 MiB in ~   98688 (avg 96 B) from eboot+0x67dc <- 0x7a81a4 <- 0x7a737d <- 0x7a4ac0 <- 0x98bc44
+[   41.471]    ~    7 MiB in ~   32256 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x9921e8 <- 0x99101e <- 0x98bb71
+[   41.483]    ~    5 MiB in ~   25152 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x9921e8 <- 0x990f8e <- 0x98bb71
+[   41.495]    ~    5 MiB in ~  245952 (avg 24 B) from eboot+0x67dc <- 0x549716 <- 0x999166 <- 0x98bbb3 <- 0x98942a
+[   51.388] status: game 23.2 fps, speed 100%, frame 29.4 ms, guest+tables 646 MiB committed (1 MiB given back), 1401 MiB direct free, jit cache flushes 1/0/0/0
+[   51.407] small allocations: ~262 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   51.418]    ~   18 MiB in ~    1856 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[   51.430]    ~   13 MiB in ~   49408 (avg 281 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[   51.442]    ~   10 MiB in ~   30336 (avg 357 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[   51.455]    ~    7 MiB in ~  194048 (avg 40 B) from eboot+0x67dc <- 0x5493aa <- 0x548eae <- 0x999148 <- 0x98bbb3
+[   51.467]    ~    6 MiB in ~   67264 (avg 96 B) from eboot+0x67dc <- 0x7a81a4 <- 0x7a737d <- 0x7a4ac0 <- 0x98bc44
+[   51.479]    ~    5 MiB in ~      64 (avg 95760 B) from eboot+0x19207c1 <- 0x1921be2 <- 0x1795bd1 <- 0x181443b <- 0x1812e8a
+[   51.492]    ~    5 MiB in ~   21760 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x9921e8 <- 0x99101e <- 0x98bb71
+[   51.506]    ~    4 MiB in ~    1152 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[   51.517] heap census: 495 MiB live in allocations >= 1 MiB, 26 sites (untracked overflow 0 MiB)
+[   51.527]       96 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa6c
+[   51.535]       64 MiB in    4 from eboot+0x19fec8b <- 0x6a2d <- 0x988700
+[   51.543]       64 MiB in    4 from eboot+0x6a2d <- 0x988700 <- 0x4c28cc
+[   51.551]       40 MiB in    2 from eboot+0x67dc <- 0x9e760 <- 0x1815d4
+[   51.559]       34 MiB in    2 from eboot+0x67dc <- 0x25c091 <- 0x41f99d
+[   51.567]       24 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x531cf9
+[   51.576]       24 MiB in    1 from eboot+0x6a2d <- 0x531cf9 <- 0x61a7af
+[   51.584]       24 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa89
+[   51.595]       19 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x82dd9
+[   51.605]       19 MiB in    1 from eboot+0x6a2d <- 0x82dd9 <- 0xdd79
+[   51.613]       16 MiB in    1 from eboot+0x67dc <- 0x6543d3 <- 0x654314
+[   51.622]       16 MiB in    1 from eboot+0x67dc <- 0x654633 <- 0x654574
+[   54.586]    [CPUCore_0] eboot+0x7ffc01ddc <- 0x36c67 <- 0x36ec7 <- 0x436b <- 0x73c3 <- 0x3b8e3 <- 0x19fdb6f
+[   54.572]   | mem mmap-direct: carve-out 5 taken - 131072 KiB at 0x3d2c00000 (phys 0x85c00000), direct held 786432 KiB of a 1572864 KiB cap
+[   61.392] status: game 34.5 fps, speed 100%, frame 28.7 ms, guest+tables 670 MiB committed (1 MiB given back), 1377 MiB direct free, jit cache flushes 1/0/0/0
+[   61.408] small allocations: ~103 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   61.418]    ~   25 MiB in ~    2560 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[   61.431]    ~   12 MiB in ~    3264 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[   61.442]    ~    3 MiB in ~    1856 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[   61.456]    ~    3 MiB in ~     832 (avg 4096 B) from eboot+0x699c <- 0x41b6b0 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[   61.468]    ~    2 MiB in ~   11904 (avg 212 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[   61.480]    ~    2 MiB in ~    6592 (avg 343 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[   61.492]    ~    2 MiB in ~    1024 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x2989aa
+[   61.504]    ~    1 MiB in ~     448 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a2e37 <- 0x597d92
+[   61.614] profile [VulkanWorker]: 1021 samples, busy 2% (jit 0% of busy), waiting 97%
+[   61.623]    hot: 0x1a1a440=9% 0x18a3d80=4% 0x1a1ad40=4% 0x18ddcc0=4% 0x1814440=4% 0x591880=4% 0x1908840=4% 0x18a2d40=4% 0x18d6440=4% 0x18abec0=4% 0x19fe540=4% 0x5aaac0=4%
+[   61.640] profile [CPUCore_0]: 1020 samples, busy 67% (jit 37% of busy), waiting 32%
+[   61.649]    hot: 0x76c700=3% 0x76c740=3% 0x76fb40=1% 0x38a80=1% 0x17bf00=1% 0x545200=1% 0x783e80=0% 0x545280=0% 0x79a380=0% 0x383c0=0% 0x19fda40=0% 0x19fda80=0%
+[   61.665] profile [CPUCore_1]: 1020 samples, busy 50% (jit 57% of busy), waiting 49%
+[   61.674]    hot: 0x76c740=1% 0x76c700=1% 0x38a80=1% 0x19fda40=0% 0x76fb40=0% 0x4a6900=0% 0x98ba00=0% 0x545200=0% 0x79a380=0% 0x383c0=0% 0x769b00=0% 0x74e700=0%
+[   61.690] profile [CPUCore_2]: 1020 samples, busy 38% (jit 55% of busy), waiting 61%
+[   61.700]    hot: 0x17bf00=2% 0x76c700=2% 0x76fb40=1% 0x38a40=1% 0x76c740=1% 0x74e700=0% 0x76d300=0% 0x19feb00=0% 0x5442c0=0% 0x988b00=0% 0x9b4840=0% 0x38a80=0%
+[   61.716] profile [CPUCore_3]: 1020 samples, busy 0% (jit 0% of busy), waiting 99%
+[   61.725]    hot: 0x17bf00=16% 0x17b100=16% 0x17b740=16% 0x1ac880=16% 0x240a40=16% 0x17ee00=16%
+[   61.735] profile [GPU]: 1020 samples, busy 5% (jit 0% of busy), waiting 94%
+[   61.743]    hot: 0x1a1adc0=7% 0x19fe640=3% 0x5363c0=3% 0x62c580=1% 0x62e440=1% 0x588940=1% 0x382c0=1% 0x68f3c0=1% 0x19fe500=1% 0x56c5c0=1% 0x1945dc0=1% 0x63e400=1%
+[   71.394] status: game 32.4 fps, speed 100%, frame 33.3 ms, guest+tables 670 MiB committed (1 MiB given back), 1377 MiB direct free, jit cache flushes 1/0/0/0
+[   71.410] small allocations: ~48 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   71.423]    ~   19 MiB in ~    1920 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[   71.435]    ~   10 MiB in ~    2688 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[   71.447]    ~    3 MiB in ~    1728 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[   71.460]    ~    3 MiB in ~    1536 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x2989aa
+[   71.471]    ~    1 MiB in ~     512 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a2e37 <- 0x597d92
+[   71.483]    ~    1 MiB in ~     448 (avg 4096 B) from eboot+0x699c <- 0x41b6b0 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[   71.496]    ~    1 MiB in ~     832 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x2dd6e7
+[   71.508]    ~    0 MiB in ~    2304 (avg 412 B) from eboot+0x67dc <- 0x56f5e6 <- 0x56dc80 <- 0x62ceba <- 0x53b9fa
+[   81.399] status: game 27.7 fps, speed 100%, frame 39.2 ms, guest+tables 786 MiB committed (1 MiB given back), 1261 MiB direct free, jit cache flushes 1/0/0/0
+[   81.415] small allocations: ~238 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   81.425]    ~  104 MiB in ~     128 (avg 851968 B) from eboot+0x699c <- 0x21b389 <- 0x2712d9 <- 0x27150a <- 0x240e42
+[   81.438]    ~   18 MiB in ~    1856 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[   81.450]    ~   12 MiB in ~    3328 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[   81.462]    ~    6 MiB in ~   19392 (avg 342 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[   81.476]    ~    4 MiB in ~   12416 (avg 360 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[   81.489]    ~    3 MiB in ~    1920 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[   81.501]    ~    3 MiB in ~    1536 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x2989aa
+[   81.513]    ~    2 MiB in ~   75264 (avg 40 B) from eboot+0x67dc <- 0x5493aa <- 0x548eae <- 0x999148 <- 0x98bbb3
+[   81.525] heap census: 496 MiB live in allocations >= 1 MiB, 26 sites (untracked overflow 0 MiB)
+[   81.537]       96 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa6c
+[   81.546]       64 MiB in    4 from eboot+0x19fec8b <- 0x6a2d <- 0x988700
+[   81.555]       64 MiB in    4 from eboot+0x6a2d <- 0x988700 <- 0x4c28cc
+[   81.575]       40 MiB in    2 from eboot+0x67dc <- 0x9e760 <- 0x1815d4
+[   81.583]       34 MiB in    2 from eboot+0x67dc <- 0x25c091 <- 0x41f99d
+[   81.594]       24 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x531cf9
+[   81.602]       24 MiB in    1 from eboot+0x6a2d <- 0x531cf9 <- 0x61a7af
+[   81.612]       24 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa89
+[   81.620]       19 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x82dd9
+[   81.628]       19 MiB in    1 from eboot+0x6a2d <- 0x82dd9 <- 0xdd79
+[   81.635]       16 MiB in    1 from eboot+0x67dc <- 0x6543d3 <- 0x654314
+[   81.643]       16 MiB in    1 from eboot+0x67dc <- 0x654633 <- 0x654574
+[   86.258]   | mem mmap-direct: carve-out 6 taken - 131072 KiB at 0x3dac00000 (phys 0x8dc00000), direct held 917504 KiB of a 1572864 KiB cap
+[   86.510]   | mem mmap-direct: carve-out 7 taken - 131072 KiB at 0x3e2c00000 (phys 0x95c00000), direct held 1048576 KiB of a 1572864 KiB cap
+[   87.276]   | mem mmap-direct: carve-out 8 taken - 131072 KiB at 0x3eac00000 (phys 0xd8800000), direct held 1179648 KiB of a 1572864 KiB cap
+[   88.418]   | mem mmap-direct: carve-out 9 taken - 131072 KiB at 0x3f2c00000 (phys 0xe0c00000), direct held 1310720 KiB of a 1572864 KiB cap
+[   91.408] status: game 34.9 fps, speed 100%, frame 22.6 ms, guest+tables 944 MiB committed (15 MiB given back), 847 MiB direct free, jit cache flushes 1/0/0/0
+[   91.424] small allocations: ~322 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[   91.435]    ~  121 MiB in ~     256 (avg 496124 B) from eboot+0x699c <- 0x21b389 <- 0x2712d9 <- 0x27150a <- 0x240e42
+[   91.447]    ~   50 MiB in ~      64 (avg 823016 B) from eboot+0x67dc <- 0x76c2f0 <- 0x76c15e <- 0x76b99b <- 0x98bc64
+[   91.460]    ~   14 MiB in ~    1472 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[   91.473]    ~    8 MiB in ~    2176 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[   91.484]    ~    7 MiB in ~   26240 (avg 308 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[   91.496]    ~    6 MiB in ~   16896 (avg 390 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[   91.509]    ~    4 MiB in ~    2432 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x2989aa
+[   91.523]    ~    4 MiB in ~    2304 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[   91.770] profile [VulkanWorker]: 1022 samples, busy 6% (jit 0% of busy), waiting 93%
+[   91.779]    hot: 0x599200=3% 0x18c5780=3% 0x18b0b40=1% 0x18dad40=1% 0x129f7c0=1% 0x591d00=1% 0x1818b00=1% 0x1814a00=1% 0x181ed40=1% 0x19fe9c0=1% 0x18ad2c0=1% 0x1964f80=1%
+[   91.796] profile [CPUCore_0]: 1022 samples, busy 54% (jit 70% of busy), waiting 45%
+[   91.806]    hot: 0x17bf00=1% 0x76c740=1% 0x76c700=0% 0x38a80=0% 0x3ba40=0% 0x19fdf40=0% 0x74f1c0=0% 0x4a6900=0% 0x3b900=0% 0x3ba80=0% 0x98ba00=0% 0x7a8140=0%
+[   91.823] profile [CPUCore_1]: 1023 samples, busy 69% (jit 74% of busy), waiting 30%
+[   91.832]    hot: 0x76c740=1% 0x18d180=0% 0x4a66c0=0% 0x17bf00=0% 0x17b6c0=0% 0x74ef00=0% 0x76c700=0% 0x545200=0% 0x76d300=0% 0x76fb40=0% 0x549340=0% 0x38a80=0%
+[   91.848] profile [CPUCore_2]: 1023 samples, busy 46% (jit 67% of busy), waiting 53%
+[   91.857]    hot: 0x17bf00=1% 0x76c740=1% 0x1a1ae00=0% 0x74e6c0=0% 0x76c700=0% 0x783ec0=0% 0x98b9c0=0% 0x184000=0% 0xb2900=0% 0x3ba80=0% 0x4c1340=0% 0x98ba00=0%
+[   91.874] profile [CPUCore_3]: 1023 samples, busy 0% (jit 0% of busy), waiting 99%
+[   91.883]    hot: 0xb10140=33% 0x17e580=33% 0x271440=33%
+[   91.891] profile [GPU]: 1022 samples, busy 10% (jit 0% of busy), waiting 89%
+[   91.899]    hot: 0x1a1a4c0=7% 0x1a1a480=2% 0x62bfc0=1% 0x1a1a300=1% 0x536200=1% 0x566640=1% 0x536240=1% 0x53b680=1% 0x68f980=0% 0x56c580=0% 0x5665c0=0% 0x5b7100=0%
+[  101.408] status: game 42.9 fps, speed 100%, frame 24.1 ms, guest+tables 1067 MiB committed (15 MiB given back), 724 MiB direct free, jit cache flushes 2/0/0/0
+[  101.425] small allocations: ~261 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  101.436]    ~   20 MiB in ~    1984 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  101.447]    ~   13 MiB in ~   57984 (avg 238 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[  101.459]    ~   12 MiB in ~   31680 (avg 401 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[  101.472]    ~    7 MiB in ~   32128 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x9921e8 <- 0x99101e <- 0x98bb71
+[  101.484]    ~    7 MiB in ~  196032 (avg 40 B) from eboot+0x67dc <- 0x5493aa <- 0x548eae <- 0x999148 <- 0x98bbb3
+[  101.496]    ~    7 MiB in ~   79168 (avg 96 B) from eboot+0x67dc <- 0x7a81a4 <- 0x7a737d <- 0x7a4ac0 <- 0x98bc44
+[  101.508]    ~    6 MiB in ~   27968 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x9921e8 <- 0x990f8e <- 0x98bb71
+[  101.522]    ~    4 MiB in ~    2304 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  111.415] status: game 47.6 fps, speed 100%, frame 18.6 ms, guest+tables 1295 MiB committed (15 MiB given back), 496 MiB direct free, jit cache flushes 2/0/0/0
+[  111.431] small allocations: ~220 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  111.442]    ~   53 MiB in ~     192 (avg 289588 B) from eboot+0x699c <- 0x21b389 <- 0x2712d9 <- 0x27150a <- 0x240e42
+[  111.456]    ~   23 MiB in ~    2304 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  111.468]    ~    6 MiB in ~   24640 (avg 271 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[  111.480]    ~    6 MiB in ~   26752 (avg 240 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[  111.493]    ~    5 MiB in ~    1536 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  111.506]    ~    4 MiB in ~    2368 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  111.519]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x2989aa
+[  111.533]    ~    4 MiB in ~    1152 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a2e37 <- 0x597d92
+[  111.545] heap census: 503 MiB live in allocations >= 1 MiB, 27 sites (untracked overflow 0 MiB)
+[  111.556]       96 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa6c
+[  111.564]       64 MiB in    4 from eboot+0x19fec8b <- 0x6a2d <- 0x988700
+[  111.573]       64 MiB in    4 from eboot+0x6a2d <- 0x988700 <- 0x4c28cc
+[  111.581]       40 MiB in    2 from eboot+0x67dc <- 0x9e760 <- 0x1815d4
+[  111.590]       34 MiB in    2 from eboot+0x67dc <- 0x25c091 <- 0x41f99d
+[  111.598]       24 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x531cf9
+[  111.607]       24 MiB in    1 from eboot+0x6a2d <- 0x531cf9 <- 0x61a7af
+[  111.614]       24 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa89
+[  111.623]       19 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x82dd9
+[  111.631]       19 MiB in    1 from eboot+0x6a2d <- 0x82dd9 <- 0xdd79
+[  111.640]       16 MiB in    1 from eboot+0x67dc <- 0x6543d3 <- 0x654314
+[  111.648]       16 MiB in    1 from eboot+0x67dc <- 0x654633 <- 0x654574
+[  121.421] status: game 54.1 fps, speed 100%, frame 18.4 ms, guest+tables 1394 MiB committed (15 MiB given back), 397 MiB direct free, jit cache flushes 2/0/0/0
+[  121.439] small allocations: ~208 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  121.450]    ~   52 MiB in ~     128 (avg 431634 B) from eboot+0x699c <- 0x21b389 <- 0x2712d9 <- 0x27150a <- 0x240e42
+[  121.462]    ~   20 MiB in ~    2048 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  121.475]    ~    8 MiB in ~    3968 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x2989aa
+[  121.487]    ~    6 MiB in ~   27136 (avg 237 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[  121.499]    ~    5 MiB in ~   22912 (avg 249 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[  121.511]    ~    3 MiB in ~    1024 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  121.523]    ~    3 MiB in ~   98560 (avg 40 B) from eboot+0x67dc <- 0x5493aa <- 0x548eae <- 0x999148 <- 0x98bbb3
+[  121.534]    ~    3 MiB in ~     960 (avg 4096 B) from eboot+0x699c <- 0x41b6b0 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  121.926] profile [VulkanWorker]: 1024 samples, busy 2% (jit 0% of busy), waiting 97%
+[  121.935]    hot: 0x171c400=7% 0x1795100=3% 0x129f7c0=3% 0x172e200=3% 0x18a3300=3% 0x18d8400=3% 0x17300c0=3% 0x1964f80=3% 0x6333c0=3% 0x18b19c0=3% 0x19fdf40=3% 0x1a1a300=3%
+[  121.952] profile [CPUCore_0]: 1024 samples, busy 80% (jit 51% of busy), waiting 19%
+[  121.960]    hot: 0x76c700=2% 0x76c740=1% 0x98ba00=1% 0x38a80=1% 0x38a40=0% 0x76fb40=0% 0x545200=0% 0x19fdf40=0% 0x19fe6c0=0% 0x17bf00=0% 0x19fda40=0% 0x783e40=0%
+[  121.977] profile [CPUCore_1]: 1023 samples, busy 81% (jit 68% of busy), waiting 18%
+[  121.986]    hot: 0x76c700=1% 0x76c740=0% 0x76fb40=0% 0x3b900=0% 0x4a9a00=0% 0x769b40=0% 0x7a8140=0% 0x545200=0% 0x74f1c0=0% 0x38a80=0% 0x19fe5c0=0% 0x9b4880=0%
+[  122.002] profile [CPUCore_2]: 1023 samples, busy 62% (jit 65% of busy), waiting 37%
+[  122.010]    hot: 0x76c700=1% 0x17bf00=1% 0x76c740=1% 0x19fdf40=0% 0x545200=0% 0x38a80=0% 0x19fe6c0=0% 0x9b6c40=0% 0x19fda40=0% 0x545b40=0% 0x18d180=0% 0x784140=0%
+[  122.028] profile [CPUCore_3]: 1023 samples, busy 1% (jit 0% of busy), waiting 98%
+[  122.037]    hot: 0x17e440=18% 0x3b940=9% 0x242180=9% 0x1849c0=9% 0x240a00=9% 0x25de40=9% 0x180900=9% 0x1b0c00=9% 0x1ae680=9% 0x3b900=9%
+[  122.053] profile [GPU]: 1024 samples, busy 6% (jit 0% of busy), waiting 93%
+[  122.061]    hot: 0x5cbdc0=8% 0x12a0940=7% 0x19fdf40=5% 0x19feac0=2% 0x57b340=2% 0x566600=2% 0x5b7f80=2% 0x5c04c0=1% 0x62e440=1% 0x1a1a500=1% 0x53c3c0=1% 0x56f280=1%
+[  131.426] status: game 44.9 fps, speed 100%, frame 24.4 ms, guest+tables 1445 MiB committed (15 MiB given back), 346 MiB direct free, jit cache flushes 2/1/0/0
+[  131.444] small allocations: ~219 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  131.455]    ~   22 MiB in ~    2240 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  131.467]    ~   11 MiB in ~   42304 (avg 280 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[  131.479]    ~    9 MiB in ~   20416 (avg 509 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[  131.696]    ~    6 MiB in ~    1792 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  131.708]    ~    5 MiB in ~      64 (avg 95760 B) from eboot+0x19207c1 <- 0x1921be2 <- 0x1795bd1 <- 0x180d799 <- 0x180cf2b
+[  131.724]    ~    5 MiB in ~  144448 (avg 40 B) from eboot+0x67dc <- 0x5493aa <- 0x548eae <- 0x999148 <- 0x98bbb3
+[  131.739]    ~    5 MiB in ~   55104 (avg 96 B) from eboot+0x67dc <- 0x7a81a4 <- 0x7a737d <- 0x7a4ac0 <- 0x98bc44
+[  131.751]    ~    4 MiB in ~   18880 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x9921e8 <- 0x99101e <- 0x98bb71
+[  141.428] status: game 17.8 fps, speed 100%, frame 4984.4 ms, guest+tables 1445 MiB committed (15 MiB given back), 346 MiB direct free, jit cache flushes 3/1/1/0
+[  141.444] small allocations: ~400 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  141.454]    ~   23 MiB in ~   89280 (avg 271 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[  141.466]    ~   18 MiB in ~   35648 (avg 546 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[  141.478]    ~   18 MiB in ~    1792 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  141.490]    ~   12 MiB in ~  317056 (avg 40 B) from eboot+0x67dc <- 0x5493aa <- 0x548eae <- 0x999148 <- 0x98bbb3
+[  141.502]    ~   11 MiB in ~  121408 (avg 96 B) from eboot+0x67dc <- 0x7a81a4 <- 0x7a737d <- 0x7a4ac0 <- 0x98bc44
+[  141.515]    ~   10 MiB in ~   45568 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x9921e8 <- 0x99101e <- 0x98bb71
+[  141.527]    ~    9 MiB in ~   43392 (avg 231 B) from eboot+0x67dc <- 0x998363 <- 0x99c729 <- 0x98ba5a <- 0x98942a
+[  141.539]    ~    8 MiB in ~   36608 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x9921e8 <- 0x990f8e <- 0x98bb71
+[  141.552] heap census: 540 MiB live in allocations >= 1 MiB, 27 sites (untracked overflow 0 MiB)
+[  141.562]       96 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa6c
+[  141.569]       64 MiB in    4 from eboot+0x19fec8b <- 0x6a2d <- 0x988700
+[  141.577]       64 MiB in    4 from eboot+0x6a2d <- 0x988700 <- 0x4c28cc
+[  141.585]       40 MiB in    2 from eboot+0x67dc <- 0x9e760 <- 0x1815d4
+[  141.592]       34 MiB in    2 from eboot+0x67dc <- 0x25c091 <- 0x41f99d
+[  141.600]       32 MiB in    2 from eboot+0x67dc <- 0x6543d3 <- 0x654314
+[  141.608]       32 MiB in    2 from eboot+0x67dc <- 0x654633 <- 0x654574
+[  141.615]       24 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x531cf9
+[  141.623]       24 MiB in    1 from eboot+0x6a2d <- 0x531cf9 <- 0x61a7af
+[  141.631]       24 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa89
+[  141.638]       19 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x82dd9
+[  141.646]       19 MiB in    1 from eboot+0x6a2d <- 0x82dd9 <- 0xdd79
+[  151.434] status: game 3.3 fps, speed 100%, frame 180.1 ms, guest+tables 1447 MiB committed (15 MiB given back), 344 MiB direct free, jit cache flushes 3/1/1/0
+[  151.450] small allocations: ~263 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  151.461]    ~   18 MiB in ~    1856 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  151.476]    ~   15 MiB in ~   58752 (avg 281 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[  151.489]    ~    9 MiB in ~   21888 (avg 477 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[  151.501]    ~    8 MiB in ~      64 (avg 131072 B) from eboot+0x699c <- 0x21b389 <- 0x2712d9 <- 0x27150a <- 0x240e42
+[  151.515]    ~    7 MiB in ~  192704 (avg 40 B) from eboot+0x67dc <- 0x5493aa <- 0x548eae <- 0x999148 <- 0x98bbb3
+[  151.528]    ~    7 MiB in ~   80000 (avg 96 B) from eboot+0x67dc <- 0x7a81a4 <- 0x7a737d <- 0x7a4ac0 <- 0x98bc44
+[  151.541]    ~    6 MiB in ~   28736 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x9921e8 <- 0x99101e <- 0x98bb71
+[  151.553]    ~    5 MiB in ~   23616 (avg 248 B) from eboot+0x67dc <- 0x768f41 <- 0x9921e8 <- 0x990f8e <- 0x98bb71
+[  152.086] profile [VulkanWorker]: 982 samples, busy 3% (jit 0% of busy), waiting 96%
+[  152.095]    hot: 0x1a1a300=9% 0x18d1840=3% 0x18c3a00=3% 0x18db800=3% 0x18cccc0=3% 0x1921200=3% 0x18a6e40=3% 0x18a8980=3% 0x1805580=3% 0x18b0100=3% 0x18dac80=3% 0x121b140=3%
+[  152.113] profile [CPUCore_0]: 982 samples, busy 58% (jit 32% of busy), waiting 41%
+[  152.123]    hot: 0x76c700=4% 0x76c740=3% 0x38a80=2% 0x76fb40=1% 0x545200=1% 0x19fda80=1% 0x98ba00=1% 0x19fe640=1% 0x19fdf40=1% 0x38a40=1% 0x545280=0% 0x79a380=0%
+[  152.141] profile [CPUCore_1]: 983 samples, busy 53% (jit 34% of busy), waiting 46%
+[  152.149]    hot: 0x76c700=4% 0x76c740=2% 0x19fdf40=1% 0x76fb40=1% 0x38a80=1% 0x545200=1% 0x545280=1% 0x19feb80=1% 0x19fda40=0% 0x19fdf00=0% 0x19fe640=0% 0x773880=0%
+[  152.166] profile [CPUCore_2]: 983 samples, busy 50% (jit 32% of busy), waiting 49%
+[  152.175]    hot: 0x76c740=4% 0x76c700=2% 0x38a80=2% 0x19fdf40=1% 0x19fda80=1% 0x545200=1% 0x76fb40=1% 0x19fda40=1% 0x19feb80=1% 0x19fdf00=1% 0x19fe640=1% 0x76d2c0=1%
+[  152.194] profile [CPUCore_3]: 982 samples, busy 0% (jit 0% of busy), waiting 99%
+[  152.202]    hot: 0x831c0=33% 0x38a40=33% 0x1abdc0=33%
+[  152.208] profile [GPU]: 982 samples, busy 5% (jit 0% of busy), waiting 94%
+[  152.216]    hot: 0x616340=9% 0x1a1a300=3% 0x1a1adc0=3% 0x1a1ae00=3% 0x5c9e80=1% 0x16e5d80=1% 0x19fda40=1% 0x68f740=1% 0x17251c0=1% 0x537700=1% 0x5a8f40=1% 0x11ea100=1%
+[  161.441] status: game 10.8 fps, speed 100%, frame 65.0 ms, guest+tables 1448 MiB committed (15 MiB given back), 343 MiB direct free, jit cache flushes 3/1/1/0
+[  161.458] small allocations: ~131 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  161.469]    ~   21 MiB in ~    2112 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  161.481]    ~    5 MiB in ~    2624 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  161.493]    ~    4 MiB in ~    1216 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  161.504]    ~    4 MiB in ~    2304 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[  161.516]    ~    4 MiB in ~   17664 (avg 256 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[  161.528]    ~    3 MiB in ~    6080 (avg 672 B) from eboot+0x18a6dcf <- 0x5ceb94 <- 0x59921d <- 0x5994b0 <- 0x9844
+[  161.539]    ~    2 MiB in ~    8256 (avg 356 B) from eboot+0x67dc <- 0x998363 <- 0x99ff5d <- 0x98ba5a <- 0x98942a
+[  161.552]    ~    2 MiB in ~     640 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a2e37 <- 0x597d92
+[  171.442] status: game 16.0 fps, speed 100%, frame 60.0 ms, guest+tables 1448 MiB committed (15 MiB given back), 343 MiB direct free, jit cache flushes 3/1/1/0
+[  171.458] small allocations: ~136 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  171.469]    ~   12 MiB in ~    1280 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  171.481]    ~   10 MiB in ~    2816 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  171.492]    ~    5 MiB in ~      64 (avg 95760 B) from eboot+0x19207c1 <- 0x1921be2 <- 0x5fabfc <- 0x6862f1 <- 0x6840d9
+[  171.505]    ~    4 MiB in ~    2112 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  171.517]    ~    4 MiB in ~    6464 (avg 672 B) from eboot+0x18a6dcf <- 0x5ceb94 <- 0x59921d <- 0x5994b0 <- 0x9844
+[  171.530]    ~    4 MiB in ~    1984 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[  171.543]    ~    3 MiB in ~     256 (avg 13004 B) from eboot+0x1309d7c <- 0x1303686 <- 0x1302630 <- 0x14fb413 <- 0x14fb693
+[  171.556]    ~    3 MiB in ~   13248 (avg 244 B) from eboot+0x67dc <- 0x998363 <- 0x99cfe9 <- 0x98ba5a <- 0x98942a
+[  171.568] heap census: 541 MiB live in allocations >= 1 MiB, 28 sites (untracked overflow 0 MiB)
+[  171.578]       96 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa6c
+[  171.587]       64 MiB in    4 from eboot+0x19fec8b <- 0x6a2d <- 0x988700
+[  171.594]       64 MiB in    4 from eboot+0x6a2d <- 0x988700 <- 0x4c28cc
+[  171.602]       40 MiB in    2 from eboot+0x67dc <- 0x9e760 <- 0x1815d4
+[  171.610]       34 MiB in    2 from eboot+0x67dc <- 0x25c091 <- 0x41f99d
+[  171.618]       32 MiB in    2 from eboot+0x67dc <- 0x6543d3 <- 0x654314
+[  171.626]       32 MiB in    2 from eboot+0x67dc <- 0x654633 <- 0x654574
+[  171.635]       24 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x531cf9
+[  171.643]       24 MiB in    1 from eboot+0x6a2d <- 0x531cf9 <- 0x61a7af
+[  171.650]       24 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa89
+[  171.658]       19 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x82dd9
+[  171.666]       19 MiB in    1 from eboot+0x6a2d <- 0x82dd9 <- 0xdd79
+[  181.450] status: game 18.6 fps, speed 100%, frame 48.9 ms, guest+tables 1448 MiB committed (15 MiB given back), 343 MiB direct free, jit cache flushes 3/1/1/0
+[  181.466] small allocations: ~71 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  181.477]    ~   17 MiB in ~    1728 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  181.488]    ~   10 MiB in ~    2816 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  181.500]    ~    4 MiB in ~    7744 (avg 672 B) from eboot+0x18a6dcf <- 0x5ceb94 <- 0x59921d <- 0x5994b0 <- 0x9844
+[  181.513]    ~    3 MiB in ~    1920 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[  181.525]    ~    3 MiB in ~   88192 (avg 42 B) from eboot+0x67dc <- 0x56f5e6 <- 0x56dc80 <- 0x62b092 <- 0x539f0a
+[  181.536]    ~    3 MiB in ~    1728 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  181.548]    ~    2 MiB in ~     768 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a2e37 <- 0x597d92
+[  181.561]    ~    1 MiB in ~     576 (avg 3088 B) from eboot+0x67dc <- 0x2b0d33 <- 0x2af5b5 <- 0x2a9030 <- 0x2712d9
+[  182.245] profile [VulkanWorker]: 1022 samples, busy 13% (jit 0% of busy), waiting 86%
+[  182.255]    hot: 0x1a1a4c0=3% 0x1a1a480=2% 0x18e7a00=2% 0x635600=2% 0x18c4c00=2% 0x1a1a440=2% 0x12010c0=1% 0x18a3a40=1% 0x18a84c0=1% 0x1a1a300=1% 0x18aa140=1% 0x1a1adc0=1%
+[  182.272] profile [CPUCore_0]: 1022 samples, busy 63% (jit 83% of busy), waiting 36%
+[  182.282]    hot: 0x17bf00=1% 0x38a80=0% 0x76c700=0% 0x19ecc0=0% 0x76fb40=0% 0x76c740=0% 0x74f140=0% 0x98ba00=0% 0x38a40=0% 0x3bac0=0% 0x18ee40=0% 0x4a68c0=0%
+[  182.298] profile [CPUCore_1]: 1022 samples, busy 66% (jit 79% of busy), waiting 33%
+[  182.307]    hot: 0x76c740=0% 0x545200=0% 0x4a66c0=0% 0x17bf00=0% 0x3ba80=0% 0x76c700=0% 0x74f1c0=0% 0x4a6900=0% 0x9b6c00=0% 0x197a040=0% 0x769b00=0% 0x4ab680=0%
+[  182.324] profile [CPUCore_2]: 1021 samples, busy 61% (jit 80% of busy), waiting 38%
+[  182.334]    hot: 0x76c700=0% 0x17bf00=0% 0x74f1c0=0% 0x9b6c40=0% 0x74ef00=0% 0x19fe640=0% 0x76c740=0% 0x4a6900=0% 0x1a1a4c0=0% 0x187fc0=0% 0x19fda40=0% 0x19fdf40=0%
+[  182.350] profile [CPUCore_3]: 1022 samples, busy 0% (jit 0% of busy), waiting 99%
+[  182.359]    hot: 0x1b0c00=33% 0x180800=33% 0x26f940=33%
+[  182.365] profile [GPU]: 1022 samples, busy 26% (jit 0% of busy), waiting 73%
+[  182.374]    hot: 0x1a1a300=4% 0x1a1a4c0=3% 0x1a1a440=2% 0x1a1a480=2% 0x566940=1% 0x566880=1% 0x566a40=1% 0x674780=1% 0x5665c0=1% 0x566600=1% 0x5cb680=1% 0x659500=1%
+[  191.452] status: game 20.8 fps, speed 100%, frame 47.2 ms, guest+tables 1449 MiB committed (15 MiB given back), 342 MiB direct free, jit cache flushes 3/1/1/0
+[  191.468] small allocations: ~81 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  191.478]    ~   19 MiB in ~    1920 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  191.490]    ~   11 MiB in ~    3072 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  191.502]    ~    8 MiB in ~      64 (avg 131072 B) from eboot+0x699c <- 0x21b389 <- 0x2712d9 <- 0x27150a <- 0x240e42
+[  191.514]    ~    5 MiB in ~    8320 (avg 672 B) from eboot+0x18a6dcf <- 0x5ceb94 <- 0x59921d <- 0x5994b0 <- 0x9844
+[  191.526]    ~    4 MiB in ~    1216 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a2e37 <- 0x597d92
+[  191.538]    ~    4 MiB in ~    2176 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  191.549]    ~    3 MiB in ~   89536 (avg 45 B) from eboot+0x67dc <- 0x56f5e6 <- 0x56dc80 <- 0x62b092 <- 0x539f0a
+[  191.561]    ~    2 MiB in ~     640 (avg 4808 B) from eboot+0x67dc <- 0x2b0d33 <- 0x2af5b5 <- 0x2a9030 <- 0x2712d9
+[  201.460] status: game 19.1 fps, speed 100%, frame 58.8 ms, guest+tables 1449 MiB committed (15 MiB given back), 342 MiB direct free, jit cache flushes 3/1/1/0
+[  201.476] small allocations: ~149 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  201.487]    ~   14 MiB in ~    1472 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  201.498]    ~   14 MiB in ~     768 (avg 20088 B) from eboot+0x19fe438 <- 0xffffffffffc00000 <- 0xffffffffffc00000 <- 0xffffffffffc00000 <- 0xffffffffffc00000
+[  201.514]    ~    6 MiB in ~    1664 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  201.528]    ~    5 MiB in ~     128 (avg 46798 B) from eboot+0x131c1c8 <- 0x1504e26 <- 0x15037dc <- 0x151b7c3 <- 0x193166c
+[  201.540]    ~    4 MiB in ~    2432 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  201.552]    ~    3 MiB in ~    1856 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[  201.563]    ~    3 MiB in ~      64 (avg 60936 B) from eboot+0x19fdfdd <- 0x144335b <- 0x184caa8 <- 0x191db24 <- 0x19243cc
+[  201.577]    ~    3 MiB in ~    5120 (avg 672 B) from eboot+0x18a6dcf <- 0x5ceb94 <- 0x59921d <- 0x5994b0 <- 0x9844
+[  201.590] heap census: 541 MiB live in allocations >= 1 MiB, 28 sites (untracked overflow 0 MiB)
+[  201.600]       96 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa6c
+[  201.608]       64 MiB in    4 from eboot+0x19fec8b <- 0x6a2d <- 0x988700
+[  201.616]       64 MiB in    4 from eboot+0x6a2d <- 0x988700 <- 0x4c28cc
+[  201.624]       40 MiB in    2 from eboot+0x67dc <- 0x9e760 <- 0x1815d4
+[  201.632]       34 MiB in    2 from eboot+0x67dc <- 0x25c091 <- 0x41f99d
+[  201.642]       32 MiB in    2 from eboot+0x67dc <- 0x6543d3 <- 0x654314
+[  201.650]       32 MiB in    2 from eboot+0x67dc <- 0x654633 <- 0x654574
+[  201.659]       24 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x531cf9
+[  201.667]       24 MiB in    1 from eboot+0x6a2d <- 0x531cf9 <- 0x61a7af
+[  201.674]       24 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa89
+[  201.683]       19 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x82dd9
+[  201.691]       19 MiB in    1 from eboot+0x6a2d <- 0x82dd9 <- 0xdd79
+[  211.468] status: game 17.8 fps, speed 100%, frame 53.8 ms, guest+tables 1449 MiB committed (15 MiB given back), 342 MiB direct free, jit cache flushes 3/1/1/0
+[  211.484] small allocations: ~105 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  211.494]    ~   20 MiB in ~    1984 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  211.506]    ~   10 MiB in ~    2752 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  211.518]    ~    8 MiB in ~      64 (avg 144256 B) from eboot+0x1309d7c <- 0x1312952 <- 0x149d952 <- 0x1931827 <- 0x19318d3
+[  211.531]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[  211.542]    ~    3 MiB in ~    5760 (avg 672 B) from eboot+0x18a6dcf <- 0x5ceb94 <- 0x59921d <- 0x5994b0 <- 0x9844
+[  211.554]    ~    3 MiB in ~    1664 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  211.566]    ~    3 MiB in ~   75328 (avg 43 B) from eboot+0x67dc <- 0x56f5e6 <- 0x56dc80 <- 0x62b092 <- 0x539f0a
+[  211.578]    ~    3 MiB in ~     128 (avg 25424 B) from eboot+0x19fe438 <- 0xffffffffffc00000 <- 0xffffffffffc00000 <- 0xffffffffffc00000 <- 0xffffffffffc00000
+[  212.403] profile [VulkanWorker]: 1023 samples, busy 15% (jit 0% of busy), waiting 84%
+[  212.412]    hot: 0x1a1a440=4% 0x1a1a4c0=2% 0x18a9500=1% 0x598e80=1% 0x1a1a500=1% 0x18a8940=1% 0x18a6e40=1% 0x18c4c00=1% 0x1a1a300=1% 0x68c840=1% 0x18d80c0=1% 0x1a1adc0=1%
+[  212.429] profile [CPUCore_0]: 1023 samples, busy 65% (jit 87% of busy), waiting 34%
+[  212.439]    hot: 0x74f1c0=0% 0x17bf00=0% 0x3b900=0% 0x74ef00=0% 0x4ab640=0% 0x4a9a00=0% 0x4c1340=0% 0x14ac00=0% 0x4a6640=0% 0x76c740=0% 0x4a6900=0% 0x197a040=0%
+[  212.457] profile [CPUCore_1]: 1022 samples, busy 65% (jit 86% of busy), waiting 34%
+[  212.465]    hot: 0x17bf00=0% 0x4ab580=0% 0x76c740=0% 0x4a68c0=0% 0x38a80=0% 0x9b6c00=0% 0x4c2940=0% 0x4a66c0=0% 0x17f300=0% 0x3ba40=0% 0x9b6c40=0% 0x17b6c0=0%
+[  212.482] profile [CPUCore_2]: 1023 samples, busy 64% (jit 84% of busy), waiting 35%
+[  212.492]    hot: 0x74f1c0=0% 0x4a6900=0% 0x17bf00=0% 0x76fb40=0% 0x9b6c00=0% 0x17b6c0=0% 0x76c740=0% 0x4a68c0=0% 0x4a9940=0% 0x38a80=0% 0x4c1740=0% 0x185140=0%
+[  212.513] profile [CPUCore_3]: 1023 samples, busy 0% (jit 0% of busy), waiting 99%
+[  212.522]    hot: 0x7010c0=50% 0x6ffb00=50%
+[  212.527] profile [GPU]: 1023 samples, busy 29% (jit 0% of busy), waiting 70%
+[  212.535]    hot: 0x1a1a4c0=4% 0x1a1a440=2% 0x566600=2% 0x1a1a480=2% 0x56c5c0=1% 0x566940=1% 0x63ec00=1% 0x6471c0=1% 0x1a1a300=1% 0x536240=1% 0x566580=1% 0x514540=1%
+[  221.472] status: game 18.4 fps, speed 100%, frame 54.8 ms, guest+tables 1449 MiB committed (15 MiB given back), 342 MiB direct free, jit cache flushes 3/1/1/0
+[  221.488] small allocations: ~153 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  221.499]    ~   25 MiB in ~    2496 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  221.511]    ~   17 MiB in ~      64 (avg 288736 B) from eboot+0x1309d7c <- 0x1312952 <- 0x149d952 <- 0x1913499 <- 0x191ebc8
+[  221.523]    ~   12 MiB in ~     128 (avg 99474 B) from eboot+0x699c <- 0x21b389 <- 0x2712d9 <- 0x27150a <- 0x240e42
+[  221.538]    ~   11 MiB in ~    3072 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  221.550]    ~    8 MiB in ~      64 (avg 144256 B) from eboot+0x1309d7c <- 0x1312952 <- 0x149d952 <- 0x1931619 <- 0x193187e
+[  221.563]    ~    4 MiB in ~    2176 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  221.576]    ~    4 MiB in ~    2112 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[  221.588]    ~    4 MiB in ~      64 (avg 65536 B) from eboot+0x15febf1 <- 0x19365ff <- 0x191ee56 <- 0x19243cc <- 0x192200c
+[  231.478] status: game 17.1 fps, speed 100%, frame 62.5 ms, guest+tables 1450 MiB committed (15 MiB given back), 342 MiB direct free, jit cache flushes 3/1/1/0
+[  231.494] small allocations: ~285 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  231.505]    ~   35 MiB in ~     192 (avg 192416 B) from eboot+0x1309d7c <- 0x1312952 <- 0x149d952 <- 0x1931619 <- 0x193187e
+[  231.518]    ~   17 MiB in ~     192 (avg 96320 B) from eboot+0x1309d7c <- 0x1312952 <- 0x149d952 <- 0x1931827 <- 0x19318d3
+[  231.531]    ~   16 MiB in ~    1664 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  231.543]    ~   13 MiB in ~     192 (avg 75264 B) from eboot+0x1309d7c <- 0x1312952 <- 0x149d952 <- 0x1931182 <- 0x1931d95
+[  231.555]    ~   10 MiB in ~      64 (avg 176208 B) from eboot+0x130b86e <- 0x17c96cb <- 0x17c987d <- 0x1932233 <- 0x191d116
+[  231.569]    ~    8 MiB in ~     128 (avg 72352 B) from eboot+0x1309d7c <- 0x1312952 <- 0x149d952 <- 0x1931182 <- 0x191de81
+[  231.582]    ~    6 MiB in ~    1728 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  231.596]    ~    5 MiB in ~    1408 (avg 4090 B) from eboot+0x19fe438 <- 0xffffffffffc00000 <- 0xffffffffffc00000 <- 0xffffffffffc00000 <- 0xffffffffffc00000
+[  231.613] heap census: 541 MiB live in allocations >= 1 MiB, 28 sites (untracked overflow 0 MiB)
+[  231.623]       96 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa6c
+[  231.631]       64 MiB in    4 from eboot+0x19fec8b <- 0x6a2d <- 0x988700
+[  231.639]       64 MiB in    4 from eboot+0x6a2d <- 0x988700 <- 0x4c28cc
+[  231.647]       40 MiB in    2 from eboot+0x67dc <- 0x9e760 <- 0x1815d4
+[  231.655]       34 MiB in    2 from eboot+0x67dc <- 0x25c091 <- 0x41f99d
+[  231.662]       32 MiB in    2 from eboot+0x67dc <- 0x6543d3 <- 0x654314
+[  231.671]       32 MiB in    2 from eboot+0x67dc <- 0x654633 <- 0x654574
+[  231.679]       24 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x531cf9
+[  231.688]       24 MiB in    1 from eboot+0x6a2d <- 0x531cf9 <- 0x61a7af
+[  231.695]       24 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa89
+[  231.703]       19 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x82dd9
+[  231.711]       19 MiB in    1 from eboot+0x6a2d <- 0x82dd9 <- 0xdd79
+[  241.486] status: game 16.7 fps, speed 100%, frame 57.4 ms, guest+tables 1450 MiB committed (15 MiB given back), 341 MiB direct free, jit cache flushes 3/1/1/0
+[  241.502] small allocations: ~94 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  241.512]    ~   14 MiB in ~    1408 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  241.524]    ~    7 MiB in ~    2048 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  241.536]    ~    5 MiB in ~      64 (avg 98144 B) from eboot+0x14dbe8e <- 0x191e16e <- 0x19243cc <- 0x192200c <- 0x5fabfc
+[  241.550]    ~    5 MiB in ~    2560 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[  241.562]    ~    4 MiB in ~  101504 (avg 43 B) from eboot+0x67dc <- 0x56f5e6 <- 0x56dc80 <- 0x62b092 <- 0x539f0a
+[  241.574]    ~    3 MiB in ~    1856 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  241.586]    ~    3 MiB in ~    5504 (avg 662 B) from eboot+0x18a6dcf <- 0x5ceb94 <- 0x59921d <- 0x5994b0 <- 0x9844
+[  241.598]    ~    2 MiB in ~     768 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a2e37 <- 0x597d92
+[  242.558] profile [VulkanWorker]: 1018 samples, busy 15% (jit 0% of busy), waiting 84%
+[  242.569]    hot: 0x1a1a440=4% 0x1a1a300=3% 0x18a9500=1% 0x19388c0=1% 0x1a1a4c0=1% 0x18dad40=1% 0x19feac0=1% 0x1218fc0=1% 0x18a7300=1% 0x18a9300=1% 0x1a1adc0=1% 0x12a4080=1%
+[  242.586] profile [CPUCore_0]: 1018 samples, busy 65% (jit 84% of busy), waiting 34%
+[  242.595]    hot: 0x17bf00=0% 0x74ef00=0% 0x74f1c0=0% 0x17e440=0% 0x9b6c00=0% 0x9b6c40=0% 0x17b6c0=0% 0x17b100=0% 0x18ee40=0% 0x76c740=0% 0x9b4840=0% 0x54a200=0%
+[  242.611] profile [CPUCore_1]: 1019 samples, busy 65% (jit 86% of busy), waiting 34%
+[  242.622]    hot: 0x17bf00=0% 0x76c740=0% 0x4a9940=0% 0x4c2bc0=0% 0x3ba40=0% 0x74e6c0=0% 0x18d180=0% 0x76c700=0% 0x4ab680=0% 0x17e440=0% 0x76d200=0% 0x17b900=0%
+[  242.638] profile [CPUCore_2]: 1019 samples, busy 63% (jit 83% of busy), waiting 36%
+[  242.646]    hot: 0x17bf00=0% 0x74e6c0=0% 0x74ef40=0% 0x76c740=0% 0x19ff80=0% 0x4a6900=0% 0x9b6c40=0% 0x74ef00=0% 0x4a9a00=0% 0x76c700=0% 0x74e700=0% 0x76fb40=0%
+[  242.662] profile [CPUCore_3]: 1019 samples, busy 0% (jit 0% of busy), waiting 99%
+[  242.672]    hot: 0x17bf00=28% 0x18d180=14% 0x17b700=14% 0x6ee280=14% 0x19fd9c0=14% 0x17e4c0=14%
+[  242.688] profile [GPU]: 1019 samples, busy 29% (jit 0% of busy), waiting 70%
+[  242.696]    hot: 0x1a1a300=3% 0x1a1a480=2% 0x566600=1% 0x566640=1% 0x536240=1% 0x1a1a4c0=1% 0x566940=1% 0x1a1adc0=1% 0x5eee40=1% 0x5668c0=1% 0x1a1a440=0% 0x63f400=0%
+[  251.489] status: game 17.7 fps, speed 100%, frame 55.6 ms, guest+tables 1450 MiB committed (15 MiB given back), 341 MiB direct free, jit cache flushes 3/1/1/0
+[  251.505] small allocations: ~70 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  251.516]    ~   16 MiB in ~    1664 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  251.528]    ~    9 MiB in ~    2368 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  251.540]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  251.552]    ~    4 MiB in ~  106240 (avg 43 B) from eboot+0x67dc <- 0x56f5e6 <- 0x56dc80 <- 0x62b092 <- 0x539f0a
+[  251.565]    ~    4 MiB in ~    2112 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[  251.577]    ~    3 MiB in ~    6080 (avg 668 B) from eboot+0x18a6dcf <- 0x5ceb94 <- 0x59921d <- 0x5994b0 <- 0x9844
+[  251.589]    ~    1 MiB in ~      64 (avg 32752 B) from eboot+0x130adf7 <- 0x130af4f <- 0x13c21a2 <- 0x17c6b4a <- 0x17f8c82
+[  251.603]    ~    1 MiB in ~      64 (avg 32656 B) from eboot+0x130adf7 <- 0x130af4f <- 0x13c1fe8 <- 0x17f3ce1 <- 0x17f8cb4
+[  261.496] status: game 18.6 fps, speed 100%, frame 52.2 ms, guest+tables 1450 MiB committed (15 MiB given back), 341 MiB direct free, jit cache flushes 3/1/1/0
+[  261.512] small allocations: ~59 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  261.524]    ~   16 MiB in ~    1600 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  261.536]    ~    5 MiB in ~    1472 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  261.549]    ~    5 MiB in ~  125248 (avg 42 B) from eboot+0x67dc <- 0x56f5e6 <- 0x56dc80 <- 0x62b092 <- 0x539f0a
+[  261.560]    ~    4 MiB in ~    6400 (avg 670 B) from eboot+0x18a6dcf <- 0x5ceb94 <- 0x59921d <- 0x5994b0 <- 0x9844
+[  261.572]    ~    3 MiB in ~    1920 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[  261.585]    ~    3 MiB in ~    1536 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  261.597]    ~    2 MiB in ~     192 (avg 12208 B) from eboot+0x67dc <- 0x2af623 <- 0x2b0d8e <- 0x2af5b5 <- 0x2a9030
+[  261.609]    ~    1 MiB in ~     512 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a2e37 <- 0x597d92
+[  261.621] heap census: 543 MiB live in allocations >= 1 MiB, 29 sites (untracked overflow 0 MiB)
+[  261.631]       96 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa6c
+[  261.645]       64 MiB in    4 from eboot+0x19fec8b <- 0x6a2d <- 0x988700
+[  261.653]       64 MiB in    4 from eboot+0x6a2d <- 0x988700 <- 0x4c28cc
+[  261.661]       40 MiB in    2 from eboot+0x67dc <- 0x9e760 <- 0x1815d4
+[  261.668]       34 MiB in    2 from eboot+0x67dc <- 0x25c091 <- 0x41f99d
+[  261.676]       32 MiB in    2 from eboot+0x67dc <- 0x6543d3 <- 0x654314
+[  261.684]       32 MiB in    2 from eboot+0x67dc <- 0x654633 <- 0x654574
+[  261.692]       24 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x531cf9
+[  261.700]       24 MiB in    1 from eboot+0x6a2d <- 0x531cf9 <- 0x61a7af
+[  261.708]       24 MiB in    1 from eboot+0x67dc <- 0x5e5827 <- 0x62aa89
+[  261.716]       19 MiB in    1 from eboot+0x19fec8b <- 0x6a2d <- 0x82dd9
+[  261.723]       19 MiB in    1 from eboot+0x6a2d <- 0x82dd9 <- 0xdd79
+[  271.497] status: game 19.5 fps, speed 100%, frame 50.4 ms, guest+tables 1450 MiB committed (15 MiB given back), 341 MiB direct free, jit cache flushes 3/1/1/0
+[  271.514] small allocations: ~68 MiB since the last report (sampled 1 in 64, 0 MiB of samples unplaced)
+[  271.526]    ~   23 MiB in ~    2304 (avg 10576 B) from eboot+0x699c <- 0x284045 <- 0x2712d9 <- 0x27150a <- 0x240afb
+[  271.539]    ~    7 MiB in ~    2048 (avg 4080 B) from eboot+0x67dc <- 0x639660 <- 0x639317 <- 0x5a82da <- 0x636df6
+[  271.551]    ~    4 MiB in ~  118912 (avg 42 B) from eboot+0x67dc <- 0x56f5e6 <- 0x56dc80 <- 0x62b092 <- 0x539f0a
+[  271.563]    ~    4 MiB in ~    2240 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x3cf3ee
+[  271.575]    ~    3 MiB in ~     448 (avg 8157 B) from eboot+0x67dc <- 0x2b0d33 <- 0x2af5b5 <- 0x2a9030 <- 0x2712d9
+[  271.587]    ~    3 MiB in ~    5376 (avg 672 B) from eboot+0x18a6dcf <- 0x5ceb94 <- 0x59921d <- 0x5994b0 <- 0x9844
+[  271.599]    ~    2 MiB in ~    1408 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x273a8e
+[  271.612]    ~    2 MiB in ~    1280 (avg 2120 B) from eboot+0x67dc <- 0x1abfc0 <- 0x26f0cc <- 0x26ed6a <- 0x2989aa

@@ -1,0 +1,21 @@
+[   0.000206] Frontend <Info> yuzu_ps4/main.cpp:1081:main: Eden4 1.0 starting
+[   0.001715] Frontend <Info> yuzu_ps4/main.cpp:1084:main: Host CPU: DG1501SML87LB                                  , AVX=true, AVX2=false, page size=16384
+[   0.002479] Frontend <Info> yuzu_ps4/main.cpp:1087:main: PS4 Pro mode: off, CPUs: 8, CPU clock: 2100 MHz, direct memory: 4608 MiB
+[   0.010576] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000010: 0x0
+[   0.013351] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000011: 0x0
+[   0.020757] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000022: 0x0
+[   0.022775] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000024: 0x0
+[   0.025107] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000001: 0x0
+[   0.026450] Frontend <Info> yuzu_ps4/platform.cpp:31:InitializeModules: PS4 UserService: 0x0
+[   0.027319] Input <Info> yuzu_ps4/platform.cpp:39:Controller: PS4 Pad initialization: 0x0
+[   0.028128] Input <Info> yuzu_ps4/platform.cpp:52:Open: PS4 controller for user 0x16a2555b in slot 1: handle 0x3420600
+[   0.045975] Frontend <Info> yuzu_ps4/platform.cpp:142:Display: PS4 launcher display: 1920x1080 ABGR garlic works
+[   0.049063] Frontend <Info> yuzu_ps4/main.cpp:160:ScanGames: PS4 HOME menu: 0 games from 1 sources
+[   0.050052] Frontend <Info> yuzu_ps4/ui_metadata.cpp:120:Run: PS4 HOME menu: 0 of 0 games have saved icons (the others get theirs when started)
+[   0.050053] Frontend <Info> yuzu_ps4/main.cpp:674:Begin: PS4 HOME menu: users
+[   0.051488] Frontend <Info> yuzu_ps4/main.cpp:676:Begin: PS4 HOME menu: sounds
+[   0.053243] Frontend <Info> yuzu_ps4/main.cpp:1024:Launcher: PS4 HOME menu: 0 games, 1 users
+[   0.053921] Frontend <Info> yuzu_ps4/main.cpp:1036:Launcher: PS4 HOME menu: first update
+[   0.054542] Frontend <Info> yuzu_ps4/main.cpp:1046:Launcher: PS4 HOME menu: first render
+[   0.059630] Frontend <Info> yuzu_ps4/main.cpp:1048:Launcher: PS4 HOME menu: first present
+[   0.063986] Frontend <Info> yuzu_ps4/main.cpp:1050:Launcher: PS4 HOME menu: first frame shown

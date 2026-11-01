@@ -1,0 +1,6 @@
+static init (text at 0x400000)
+[   0.000] [dolphin] heap: flexible memory available 384 MiB (0x0)
+[   0.006] [dolphin] heap: kernel pthread objects live around 0x880000080
+[   0.117] [dolphin] heap: dlmalloc on 512 MiB of system flexible memory at 0x1000004000
+[ 207.813] [dolphin] heap: overflow heap 1: 32 MiB of system flexible memory at 0x1028004000
+[ 219.322] [dolphin] heap: overflow heap 2: 32 MiB of system flexible memory at 0x102a004000

@@ -1,5 +1,9 @@
 # NX on Orbis
 
+> **Rama `mejoras-ps4-pro` (Valdivia737):** Wonder estable a 26–30 FPS, 3D World a 23–30 FPS, juegos en
+> español y arreglo de colores en prueba. Lee **[MEJORAS-PS4-PRO.md](MEJORAS-PS4-PRO.md)** (en español),
+> descarga los paquetes en [Releases](../../releases) y mira las sesiones reales en [`registros/`](registros/).
+
 An experimental port of the **Eden** Nintendo Switch emulator (a yuzu fork) to a jailbroken
 **PS4 Pro** (OpenOrbis toolchain, Mesa RADV Vulkan driver for the PS4 GPU).
 
