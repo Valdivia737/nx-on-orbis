@@ -14,14 +14,31 @@ Licencia GPL-3.0, igual que el proyecto original y Eden.
 
 ---
 
-## Resultados (PS4 Pro, fw 10.50, versión jitcache11)
+## Resultados (PS4 Pro, fw 10.50)
 
-| Juego | Formato | Resultado |
-|---|---|---|
-| Super Mario Bros. Wonder | XCI | **Funciona.** Niveles 26–30 FPS, mapa del mundo 44–56 FPS, 32 minutos seguidos sin fallos y guarda partida |
-| Super Mario 3D World + Bowser's Fury | XCI | **Funciona.** Niveles y cinemáticas 23–30 FPS, menús 54–60 FPS, 13 minutos sin fallos, memoria estable |
-| Paper Mario: La Puerta Milenaria | NSP | **Arranca y se juega en español**, pero lento: 8–14 FPS. Una cinemática bajó a 0,2–0,5 FPS |
-| Metroid Dread | NSP | **No carga**: al cargar pide una reserva de 1,8 GiB y falla. Pendiente |
+| Juego | Formato | Estado | FPS jugando | Versión | De dónde sale el dato |
+|---|---|---|---|---|---|
+| Super Mario Bros. Wonder | XCI | **Estable**: 32 min seguidos sin fallos y guarda partida | Niveles **26–30**, mapa del mundo **44–56** | jitcache10–11 | Medido en vivo con jitcache10 (ese registro no se guardó). Con jitcache8: [`jitcache8_20261031_mundo_ok`](registros/eden-propio/jitcache8_20261031_mundo_ok/) (guarda los primeros 12 min) |
+| Super Mario 3D World + Bowser's Fury | XCI | **Estable**: 15,8 min sin fallos, memoria quieta | Niveles **23–30** (mediana 27), menús 54–60 | jitcache11 | [`jitcache11_20261101_3dworld`](registros/eden-propio/jitcache11_20261101_3dworld/) |
+| Paper Mario: La Puerta Milenaria | NSP | **Jugable pero lento**, en español: 16,9 min sin fallos | **7–9** (mediana 8,9), menús hasta 26. Una cinemática bajó a 0,2–0,5 | jitcache11 | [`jitcache11_papermario_boot.log`](registros/eden-propio/jitcache11_papermario_boot.log) |
+| Metroid Dread | NSP | **No carga**: al cargar pide una reserva de 1,8 GiB y falla | — | — | Pendiente |
+
+### Registro de FPS por sesión (sacado automáticamente de `boot.log`)
+
+| Sesión (`registros/eden-propio/`) | Versión | Juego | Minutos | FPS mediana | Peor 10 % | Máx. | Qué pasó |
+|---|---|---|---|---|---|---|---|
+| `jitcache1_20261031_sesion1` | jitcache1 | Wonder | 6,0 | 4,3 | 1,0 | 44,5 | Bajones a 1 FPS: la caché del JIT se vació 25/28/10 veces |
+| `jitcache1_20261031_sesion2_garlic0` | jitcache1 | Wonder | 7,3 | 6,2 | 1,0 | 41,5 | Lo mismo: 31/34/13 vaciados |
+| `jitcache1_20261031_sesion3_garlic0_cache128` | jitcache1 | Wonder | 5,9 | 30,0 | 23,5 | 38,1 | Sin bajones (caché de 128 MiB), pero se quedó **sin memoria** a los 4 min |
+| `jitcache2_diag_boot.log` | jitcache2 | Wonder | 3,4 | 30,0 | 10,9 | 33,5 | Sin memoria (`bad_alloc`): así se descubrió el problema del heap |
+| `jitcache4_20261031_cache64` | jitcache4 | Wonder | 4,5 | 18,9 | 10,8 | 54,1 | Ningún fallo: heap arreglado |
+| `jitcache6_20261031_arena1792_vma` | jitcache6 | Wonder | 6,5 | 21,2 | 6,7 | 50,9 | Congelado a los 213 s con arena 1792 (configuración descartada) |
+| `jitcache8_20261031_mundo_ok` | jitcache8 | Wonder | 12,0 | 22,5 | 8,9 | 57,4 | Ningún fallo: el mapa del mundo carga |
+| `jitcache11_papermario_boot.log` | jitcache11 | Paper Mario | 16,9 | 8,9 | 7,0 | 26,5 | Ningún fallo; lo limita la CPU |
+| `jitcache11_20261101_3dworld` | jitcache11 | 3D World | 15,8 | 27,0 | 23,2 | 60,0 | Ningún fallo; un solo vaciado del JIT |
+
+- La mediana y el "peor 10 %" se calculan con todas las líneas `status:` de 1 FPS o más, así que incluyen cargas y menús.
+- El "sin imagen durante 15 s" que sale en todas las sesiones hacia los 16 s es la carga inicial, y es normal.
 
 **El límite hoy es la CPU, no la GPU.** En los tres juegos que funcionan, el núcleo que ejecuta el código
 principal del juego va al 93–97 % y la GPU espera el 0 % del tiempo. Bajar la resolución no ayuda; lo que
