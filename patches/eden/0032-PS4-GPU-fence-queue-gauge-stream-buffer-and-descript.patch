@@ -1,0 +1,166 @@
+From aef933007c33ad1e7d31de5c87f119a6144027f4 Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sat, 31 Oct 2026 22:44:06 -0300
+Subject: [PATCH] PS4: GPU fence queue gauge; stream buffer and descriptor
+ payload sizes from the environment
+
+- The heap ran out in Super Mario Bros. Wonder's menu while FenceManager's std::function deques grew
+  (jitcache7: operator new from deque::emplace_back in SignalFence <- QueryCache::CommitAsyncFlushes).
+  The fence count and its peak are now published for the frontend's status line.
+- NX_STREAM_BUFFER_MIB (32..256, default 256): the staging stream buffer sits in the driver's arena;
+  the FreeBSD build's 128 MiB was never used because the PS4 build undefines __FreeBSD__.
+- NX_DESC_PAYLOAD (entries per frame, 0x8000..0x80000, default 0x80000): the guest and compute
+  descriptor payloads are 96 + 24 MiB of C heap at the default.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ src/common/orbis_jit.h                        | 21 +++++++++++++++++++
+ src/video_core/fence_manager.h                | 12 +++++++++++
+ .../renderer_vulkan/vk_rasterizer.cpp         | 15 +++++++++++++
+ .../vk_staging_buffer_pool.cpp                | 11 ++++++++++
+ 4 files changed, 59 insertions(+)
+
+diff --git a/src/common/orbis_jit.h b/src/common/orbis_jit.h
+index a875266..722951b 100644
+--- a/src/common/orbis_jit.h
++++ b/src/common/orbis_jit.h
+@@ -26,6 +26,27 @@ inline void CountJitCacheFlush(std::size_t core) {
+     jit_cache_flushes[std::min<std::size_t>(core, 3)].fetch_add(1, std::memory_order_relaxed);
+ }
+ 
++/// The GPU fence queue (VideoCommon::FenceManager): fences waiting for the host GPU and the high
++/// mark since the frontend last read it. The heap ran out in Super Mario Bros. Wonder's menu while
++/// that queue's std::function deques grew without bound.
++inline std::atomic<std::uint32_t> gpu_fences_pending{0};
++inline std::atomic<std::uint32_t> gpu_fences_peak{0};
++
++inline void NoteGpuFences(std::size_t pending) {
++    const auto n = static_cast<std::uint32_t>(pending);
++    gpu_fences_pending.store(n, std::memory_order_relaxed);
++    std::uint32_t peak = gpu_fences_peak.load(std::memory_order_relaxed);
++    while (n > peak && !gpu_fences_peak.compare_exchange_weak(peak, n, std::memory_order_relaxed)) {
++    }
++}
++
++/// A size from the environment (settings.txt env=NAME=VALUE), clamped; `fallback` when unset.
++inline std::size_t EnvSize(const char* name, std::size_t fallback, std::size_t lo, std::size_t hi) {
++    const char* value = std::getenv(name);
++    const unsigned long long n = value != nullptr ? std::strtoull(value, nullptr, 0) : 0;
++    return n == 0 ? fallback : std::clamp<std::size_t>(static_cast<std::size_t>(n), lo, hi);
++}
++
+ /// Code cache size in MiB for `core`: 32 unless the environment says otherwise, clamped to 8..256.
+ inline std::uint32_t JitCacheMiB(std::size_t core) {
+     const char* value = std::getenv(core == 3 ? "NX_JIT_CACHE_MIB_CORE3" : "NX_JIT_CACHE_MIB");
+diff --git a/src/video_core/fence_manager.h b/src/video_core/fence_manager.h
+index 885c714..a0e8da5 100644
+--- a/src/video_core/fence_manager.h
++++ b/src/video_core/fence_manager.h
+@@ -23,6 +23,9 @@
+ #include "video_core/host1x/host1x.h"
+ #include "video_core/host1x/syncpoint_manager.h"
+ #include "video_core/rasterizer_interface.h"
++#ifdef __ORBIS__
++#include "common/orbis_jit.h"
++#endif
+ 
+ namespace VideoCommon {
+ 
+@@ -91,6 +94,9 @@ public:
+             func();
+         }
+         fences.push(std::move(new_fence));
++#ifdef __ORBIS__
++        ::Common::Orbis::NoteGpuFences(fences.size());
++#endif
+         if (should_flush) {
+             rasterizer.FlushCommands();
+         }
+@@ -189,6 +195,9 @@ private:
+                 delayed_destruction_ring.Push(std::move(current_fence));
+             }
+             fences.pop();
++#ifdef __ORBIS__
++            ::Common::Orbis::NoteGpuFences(fences.size());
++#endif
+         }
+     }
+ 
+@@ -210,6 +219,9 @@ private:
+                 current_operations = std::move(pending_operations.front());
+                 fences.pop();
+                 pending_operations.pop_front();
++#ifdef __ORBIS__
++                ::Common::Orbis::NoteGpuFences(fences.size());
++#endif
+             }
+             if (!current_fence->IsStubbed()) {
+                 WaitFence(current_fence);
+diff --git a/src/video_core/renderer_vulkan/vk_rasterizer.cpp b/src/video_core/renderer_vulkan/vk_rasterizer.cpp
+index df39f4c..e617ee6 100644
+--- a/src/video_core/renderer_vulkan/vk_rasterizer.cpp
++++ b/src/video_core/renderer_vulkan/vk_rasterizer.cpp
+@@ -15,6 +15,9 @@
+ 
+ #include "common/assert.h"
+ #include "common/logging.h"
++#ifdef __ORBIS__
++#include "common/orbis_jit.h"
++#endif
+ #include "common/scope_exit.h"
+ #include "common/settings.h"
+ #include "video_core/buffer_cache/buffer_cache.h"
+@@ -203,9 +206,21 @@ RasterizerVulkan::RasterizerVulkan(Core::Frontend::EmuWindow& emu_window_, Tegra
+     : gpu{gpu_}, device_memory{device_memory_}, device{device_},
+       memory_allocator{memory_allocator_}, state_tracker{state_tracker_}, scheduler{scheduler_},
+       staging_pool(device, memory_allocator, scheduler), descriptor_pool(device, scheduler),
++#ifdef __ORBIS__
++      // PS4: these payloads are 96 + 24 MiB of C heap (8 frames in flight); settings.txt
++      // env=NX_DESC_PAYLOAD=<entries per frame> shrinks both (compute keeps its 1/4 share).
++      guest_descriptor_queue(device,
++                             ::Common::Orbis::EnvSize("NX_DESC_PAYLOAD", UpdateDescriptorQueue::GUEST_FRAME_PAYLOAD_SIZE,
++                                                      0x8000, UpdateDescriptorQueue::GUEST_FRAME_PAYLOAD_SIZE),
++                             device.IsExtDescriptorBufferSupported()),
++      compute_pass_descriptor_queue(device,
++                                    ::Common::Orbis::EnvSize("NX_DESC_PAYLOAD", UpdateDescriptorQueue::GUEST_FRAME_PAYLOAD_SIZE,
++                                                             0x8000, UpdateDescriptorQueue::GUEST_FRAME_PAYLOAD_SIZE) / 4),
++#else
+       guest_descriptor_queue(device, UpdateDescriptorQueue::GUEST_FRAME_PAYLOAD_SIZE,
+                              device.IsExtDescriptorBufferSupported()),
+       compute_pass_descriptor_queue(device, UpdateDescriptorQueue::COMPUTE_FRAME_PAYLOAD_SIZE),
++#endif
+       descriptor_buffer_ring(device, memory_allocator),
+       blit_image(device, scheduler, state_tracker, descriptor_pool), render_pass_cache(device),
+       texture_cache_runtime{
+diff --git a/src/video_core/renderer_vulkan/vk_staging_buffer_pool.cpp b/src/video_core/renderer_vulkan/vk_staging_buffer_pool.cpp
+index 7b6571d..4270449 100644
+--- a/src/video_core/renderer_vulkan/vk_staging_buffer_pool.cpp
++++ b/src/video_core/renderer_vulkan/vk_staging_buffer_pool.cpp
+@@ -19,6 +19,9 @@
+ #include "video_core/renderer_vulkan/vk_staging_buffer_pool.h"
+ #include "video_core/vulkan_common/vulkan_device.h"
+ #include "video_core/vulkan_common/vulkan_wrapper.h"
++#ifdef __ORBIS__
++#include "common/orbis_jit.h"
++#endif
+ 
+ namespace Vulkan {
+ namespace {
+@@ -40,6 +43,14 @@ constexpr VkDeviceSize MAX_STREAM_BUFFER_SIZE = 256_MiB;
+ #endif
+ 
+ size_t GetStreamBufferSize(const Device& device) {
++#ifdef __ORBIS__
++    // PS4: the stream buffer lives in the driver's arena next to every image; the FreeBSD build's
++    // 128 MiB was not picked up because the PS4 build undefines __FreeBSD__. settings.txt
++    // env=NX_STREAM_BUFFER_MIB (32..256), 256 by default as before.
++    if (!device.HasDebuggingToolAttached()) {
++        return ::Common::Orbis::EnvSize("NX_STREAM_BUFFER_MIB", 256, 32, 256) * 1_MiB;
++    }
++#endif
+     if (!device.HasDebuggingToolAttached()) {
+         return MAX_STREAM_BUFFER_SIZE;
+     }
+-- 
+2.55.0.windows.3
+

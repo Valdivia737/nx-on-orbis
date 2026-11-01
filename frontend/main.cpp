@@ -569,6 +569,9 @@ int main() {
                      static_cast<unsigned long>(Ps4::FreeDirectMemory() >> 20),
                      flushes[0].load(), flushes[1].load(), flushes[2].load(), flushes[3].load());
             Ps4VramStatusLine(&Ps4::Log);
+            Ps4::Log("gpu fences pending %u (peak %u since the last line)",
+                     Common::Orbis::gpu_fences_pending.load(),
+                     Common::Orbis::gpu_fences_peak.exchange(0));
             Ps4HeapSmallReport();
             if (++status_count % 3 == 1) {
                 Ps4HeapCensus();
