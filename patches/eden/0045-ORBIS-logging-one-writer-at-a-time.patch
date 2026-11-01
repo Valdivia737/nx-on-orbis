@@ -1,0 +1,68 @@
+From 6fad43c8dcc27cb55ce9a351ed675d71ffb7a57f Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sun, 1 Nov 2026 13:53:13 -0300
+Subject: [PATCH] ORBIS logging: one writer at a time
+
+Every thread writes its log lines straight into the backends' FILEs, and
+the PS4 SDK's stdio does not lock a FILE for the threads the system
+creates. Shader workers logging while the pipeline cache loaded overran
+the log file's buffer and wrote log text over the heap: the crash at
+start seen since jitcache8 (several threads faulting at once with
+registers holding reateGra, Pipeline, _source=, aphicsPi).
+Serialize the backends' writes and flushes with a mutex on ORBIS.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ src/common/logging.cpp | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/src/common/logging.cpp b/src/common/logging.cpp
+index ed12d52..1eee060 100644
+--- a/src/common/logging.cpp
++++ b/src/common/logging.cpp
+@@ -8,6 +8,7 @@
+ #include <chrono>
+ #include <climits>
+ #include <cstdlib>
++#include <mutex>
+ #include <regex>
+ #include <thread>
+ 
+@@ -390,6 +391,14 @@ void Filter::ParseFilterString(std::string_view filter_view) {
+ // it's ran at global static ctor() time... so BE CAREFUL MFER!
+ static std::optional<Common::Log::Impl> logging_instance{};
+ 
++#ifdef __ORBIS__
++// PS4: every thread writes its log lines straight into the backends' FILEs, and this libc's
++// stdio does not lock a FILE for the threads the system creates. Shader workers logging while
++// the pipeline cache loads overran the log file's buffer and wrote log text over the heap (the
++// crash at start: registers holding "reateGra", "Pipeline", "_source="). One writer at a time.
++static std::mutex orbis_log_mutex;
++#endif
++
+ void Initialize() {
+     if (logging_instance) {
+         LOG_WARNING(Log, "Reinitializing logging backend");
+@@ -409,6 +418,9 @@ void Start() {
+ }
+ 
+ void Stop() {
++#ifdef __ORBIS__
++    std::lock_guard lock{orbis_log_mutex};
++#endif
+     if (logging_instance)
+         logging_instance->ForEachBackend([](Backend& backend) { backend.Flush(); });
+ }
+@@ -438,6 +450,9 @@ void FmtLogMessageImpl(Class log_class, Level log_level, const char* filename, u
+             .function = function,
+             .line_num = line_num,
+         };
++#ifdef __ORBIS__
++        std::lock_guard lock{orbis_log_mutex};
++#endif
+         if (result.size <= sizeof(buffer) - 1) {
+             buffer[(std::min)(result.size, sizeof(buffer) - 1)] = '\0';
+             e.message = buffer;
+-- 
+2.55.0.windows.3
+

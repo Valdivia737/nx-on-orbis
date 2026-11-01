@@ -556,7 +556,7 @@ void CheckMutexes() {
 int main() {
     Ps4::OpenBootLog();
     Ps4::Log("eden-ps4 starting (Eden %s %s)", Common::g_scm_branch, Common::g_scm_desc);
-    Ps4::Log("PS4 build: %s; test 36: per-game settings from the menu (Triangle; juegos/<game>.txt after settings.txt), Eden4's register allocation (regalloc=off turns it off), fastmem with partly mapped pages, fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
+    Ps4::Log("PS4 build: %s; test 37: Eden's log written by one thread at a time (the crash at start), per-game settings from the menu (Triangle; juegos/<game>.txt after settings.txt), Eden4's register allocation (regalloc=off turns it off), fastmem with partly mapped pages, fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
              EDEN_PS4_BUILD_ID);
     // Same line as Eden4: a base-mode app without Boost Mode runs the CPU at 1.6 GHz instead of 2.1.
     Ps4::Log("PS4 Pro mode: %s, CPU clock: %lu MHz, CPUs: %ld",
