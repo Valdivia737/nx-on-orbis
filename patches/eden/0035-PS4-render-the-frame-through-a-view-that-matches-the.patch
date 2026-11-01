@@ -1,0 +1,93 @@
+From a7ab5df959ef7e7a82a54cc00bcd9a999f1e9678 Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sun, 1 Nov 2026 01:36:05 -0300
+Subject: [PATCH] PS4: render the frame through a view that matches the
+ swapchain byte order
+
+The PS4 surface is RGBA (A8B8G8R8). The desktop path rendered the frame through a
+B8G8R8A8 view of it, so red and blue were swapped in the whole image. Pick the view
+from the swapchain format, as Android does; NX_PRESENT_ORDER=auto|swap|off to test.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../renderer_vulkan/vk_swapchain.cpp          | 43 ++++++++++++++++++-
+ 1 file changed, 41 insertions(+), 2 deletions(-)
+
+diff --git a/src/video_core/renderer_vulkan/vk_swapchain.cpp b/src/video_core/renderer_vulkan/vk_swapchain.cpp
+index fea5398..d46c056 100644
+--- a/src/video_core/renderer_vulkan/vk_swapchain.cpp
++++ b/src/video_core/renderer_vulkan/vk_swapchain.cpp
+@@ -12,6 +12,10 @@
+ #ifdef __ANDROID__
+ #include <android/api-level.h>
+ #endif
++#ifdef __ORBIS__
++#include <cstdlib>
++#include <string_view>
++#endif
+ 
+ #include "common/logging.h"
+ #include "common/settings.h"
+@@ -41,6 +45,39 @@ VkSurfaceFormatKHR ChooseSwapSurfaceFormat(vk::Span<VkSurfaceFormatKHR> formats)
+     return found != formats.end() ? *found : formats[0];
+ }
+ 
++#ifdef __ORBIS__
++/// True for swapchain formats that hold red in the first byte (R8G8B8A8 and A8B8G8R8 packed).
++bool IsRgbaByteOrder(VkFormat format) {
++    switch (format) {
++    case VK_FORMAT_R8G8B8A8_UNORM:
++    case VK_FORMAT_R8G8B8A8_SRGB:
++    case VK_FORMAT_A8B8G8R8_UNORM_PACK32:
++    case VK_FORMAT_A8B8G8R8_SRGB_PACK32:
++        return true;
++    default:
++        return false;
++    }
++}
++
++/// PS4: the frame is rendered through a view of the swapchain format. The PS4 surface is RGBA
++/// (A8B8G8R8), so the desktop BGRA view stored red and blue swapped in the whole image.
++/// NX_PRESENT_ORDER=auto (match the swapchain, default), swap (the opposite) or off (BGRA, as before).
++VkFormat Ps4ImageViewFormat(VkFormat swapchain_format) {
++    const char* env = std::getenv("NX_PRESENT_ORDER");
++    const std::string_view mode = env ? env : "auto";
++    const bool rgba = IsRgbaByteOrder(swapchain_format);
++    VkFormat view = rgba ? VK_FORMAT_R8G8B8A8_UNORM : VK_FORMAT_B8G8R8A8_UNORM;
++    if (mode == "swap") {
++        view = rgba ? VK_FORMAT_B8G8R8A8_UNORM : VK_FORMAT_R8G8B8A8_UNORM;
++    } else if (mode == "off") {
++        view = VK_FORMAT_B8G8R8A8_UNORM;
++    }
++    LOG_INFO(Render_Vulkan, "PS4 present: swapchain {} ({} byte order), frame view {} (NX_PRESENT_ORDER={})",
++             string_VkFormat(swapchain_format), rgba ? "RGBA" : "BGRA", string_VkFormat(view), mode);
++    return view;
++}
++#endif
++
+ static VkPresentModeKHR ChooseSwapPresentMode(bool has_imm, bool has_mailbox,
+                                               bool has_fifo_relaxed) {
+     // Mailbox doesn't lock the application like FIFO (vsync)
+@@ -316,8 +353,8 @@ void Swapchain::CreateSwapchain(const VkSurfaceCapabilitiesKHR& capabilities) {
+         swapchain_ci.imageFormat,  // Base format MUST be first
+         VK_FORMAT_B8G8R8A8_UNORM,
+         VK_FORMAT_B8G8R8A8_SRGB,
+-#ifdef __ANDROID__
+-        VK_FORMAT_R8G8B8A8_UNORM,  // Android may use RGBA
++#if defined(__ANDROID__) || defined(__ORBIS__)
++        VK_FORMAT_R8G8B8A8_UNORM,  // Android and the PS4 may use RGBA
+         VK_FORMAT_R8G8B8A8_SRGB,
+ #endif
+     };
+@@ -344,6 +381,8 @@ void Swapchain::CreateSwapchain(const VkSurfaceCapabilitiesKHR& capabilities) {
+ #ifdef __ANDROID__
+     // Android is already ordered the same as Switch.
+     image_view_format = VK_FORMAT_R8G8B8A8_UNORM;
++#elif defined(__ORBIS__)
++    image_view_format = Ps4ImageViewFormat(surface_format.format);
+ #else
+     image_view_format = VK_FORMAT_B8G8R8A8_UNORM;
+ #endif
+-- 
+2.55.0.windows.3
+
