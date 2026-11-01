@@ -1,0 +1,204 @@
+From 064c2b7500fc2041ed72983d9f22c07c8d96ad22 Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sat, 31 Oct 2026 21:10:35 -0300
+Subject: [PATCH] PS4: VMA statistics in the log and vram.txt, snapshot on a
+ failed allocation; NX_VMA_BLOCK_MIB
+
+The driver's device-VA window ran out ~90 s into a Super Mario Bros. Wonder level with the texture
+and buffer caches under their budgets, and the driver does not report what holds it. VMA is
+externally synchronized, so its statistics are taken on the allocating thread: every 10 s and when
+vmaCreateImage/Buffer fails (then vram_fail.json gets VMA's full JSON). Ps4VramStatusLine hands the
+last snapshot to the frontend. NX_VMA_BLOCK_MIB overrides VMA's preferred large heap block size.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../vulkan_common/vulkan_device.cpp           |  20 ++++
+ .../vulkan_common/vulkan_memory_allocator.cpp | 105 +++++++++++++++++-
+ 2 files changed, 121 insertions(+), 4 deletions(-)
+
+diff --git a/src/video_core/vulkan_common/vulkan_device.cpp b/src/video_core/vulkan_common/vulkan_device.cpp
+index e3088b6..a1c42c8 100644
+--- a/src/video_core/vulkan_common/vulkan_device.cpp
++++ b/src/video_core/vulkan_common/vulkan_device.cpp
+@@ -31,6 +31,11 @@
+ #include "video_core/vulkan_common/vulkan_wrapper.h"
+ #include "video_core/gpu_logging/gpu_logging.h"
+ 
++#ifdef __ORBIS__
++#include <cstdlib>
++#include "common/logging.h"
++#endif
++
+ #if defined(__ANDROID__) && defined(ARCHITECTURE_arm64)
+ #include <adrenotools/bcenabler.h>
+ #include <android/api-level.h>
+@@ -771,7 +776,22 @@ Device::Device(VkInstance instance_, vk::PhysicalDevice physical_, VkSurfaceKHR
+             .pTypeExternalMemoryHandleTypes = nullptr,
+     };
+ 
++#ifdef __ORBIS__
++    // PS4: VMA's block size against the driver's device-VA window (the arena), whose free space a
++    // 256 MiB block policy can strand. env=NX_VMA_BLOCK_MIB in settings.txt; default as above.
++    VmaAllocatorCreateInfo ps4_allocator_info = allocator_info;
++    if (const char* value = std::getenv("NX_VMA_BLOCK_MIB")) {
++        const long mib = std::strtol(value, nullptr, 10);
++        if (mib >= 8 && mib <= 512) {
++            ps4_allocator_info.preferredLargeHeapBlockSize = static_cast<VkDeviceSize>(mib) * 1024 * 1024;
++        }
++    }
++    LOG_INFO(Render_Vulkan, "PS4 VMA: integrated {}, preferred large heap block {} MiB", is_integrated,
++             ps4_allocator_info.preferredLargeHeapBlockSize >> 20);
++    vk::Check(vmaCreateAllocator(&ps4_allocator_info, &allocator));
++#else
+     vk::Check(vmaCreateAllocator(&allocator_info, &allocator));
++#endif
+ 
+     owns_static_pipeline_cache = surface != VkSurfaceKHR{};
+     LoadStaticPipelineCache();
+diff --git a/src/video_core/vulkan_common/vulkan_memory_allocator.cpp b/src/video_core/vulkan_common/vulkan_memory_allocator.cpp
+index f472154..fa584ae 100644
+--- a/src/video_core/vulkan_common/vulkan_memory_allocator.cpp
++++ b/src/video_core/vulkan_common/vulkan_memory_allocator.cpp
+@@ -24,6 +24,12 @@
+ #include "video_core/vulkan_common/vulkan_wrapper.h"
+ #include "video_core/gpu_logging/gpu_logging.h"
+ #include "common/settings.h"
++#ifdef __ORBIS__
++#include <chrono>
++#include <cstdio>
++#include <mutex>
++#include <string>
++#endif
+ 
+ namespace Vulkan {
+ namespace {
+@@ -205,6 +211,85 @@ MemoryAllocator::MemoryAllocator(const Device &device_)
+ 
+ MemoryAllocator::~MemoryAllocator() = default;
+ 
++#ifdef __ORBIS__
++namespace {
++// PS4: the driver's device-VA window (the arena) ran out ~90 s into a Super Mario Bros. Wonder level
++// with the texture and buffer caches well under their budgets, and the driver does not say what
++// holds it. VMA is created externally synchronized, so its statistics are only read here, on the
++// allocating thread: a snapshot every 10 s and one when an allocation fails, kept as text for
++// Ps4VramStatusLine (main thread, boot.log) and written to /data/edenps4/vram.txt (and the full
++// VMA JSON to vram_fail.json on a failure).
++std::mutex g_vram_mutex;
++std::string g_vram_line;
++std::chrono::steady_clock::time_point g_vram_last{};
++
++void Ps4VramSnapshot(VmaAllocator allocator, const char* why, bool failed) {
++    const auto now = std::chrono::steady_clock::now();
++    if (!failed && now - g_vram_last < std::chrono::seconds(10)) {
++        return;
++    }
++    g_vram_last = now;
++    VmaTotalStatistics stats{};
++    vmaCalculateStatistics(allocator, &stats);
++    VmaBudget budgets[VK_MAX_MEMORY_HEAPS]{};
++    vmaGetHeapBudgets(allocator, budgets);
++    const VkPhysicalDeviceMemoryProperties* props = nullptr;
++    vmaGetMemoryProperties(allocator, &props);
++    std::string text;
++    char buf[320];
++    for (u32 h = 0; h < props->memoryHeapCount; ++h) {
++        const VmaDetailedStatistics& s = stats.memoryHeap[h];
++        std::snprintf(buf, sizeof(buf),
++                      "heap %u (%llu MiB): %u blocks %llu MiB, %u allocations %llu MiB, largest free range %llu MiB, "
++                      "budget usage %llu of %llu MiB; ",
++                      h, static_cast<unsigned long long>(props->memoryHeaps[h].size >> 20), s.statistics.blockCount,
++                      static_cast<unsigned long long>(s.statistics.blockBytes >> 20), s.statistics.allocationCount,
++                      static_cast<unsigned long long>(s.statistics.allocationBytes >> 20),
++                      static_cast<unsigned long long>(s.unusedRangeSizeMax >> 20),
++                      static_cast<unsigned long long>(budgets[h].usage >> 20),
++                      static_cast<unsigned long long>(budgets[h].budget >> 20));
++        text += buf;
++    }
++    for (u32 t = 0; t < props->memoryTypeCount; ++t) {
++        const VmaDetailedStatistics& s = stats.memoryType[t];
++        if (s.statistics.blockCount == 0) {
++            continue;
++        }
++        std::snprintf(buf, sizeof(buf), "type %u (heap %u, flags 0x%x): %u blocks %llu MiB, %u allocations %llu MiB; ", t,
++                      props->memoryTypes[t].heapIndex, props->memoryTypes[t].propertyFlags, s.statistics.blockCount,
++                      static_cast<unsigned long long>(s.statistics.blockBytes >> 20), s.statistics.allocationCount,
++                      static_cast<unsigned long long>(s.statistics.allocationBytes >> 20));
++        text += buf;
++    }
++    {
++        std::scoped_lock lock{g_vram_mutex};
++        g_vram_line = std::string(failed ? "FAILED " : "") + why + ": " + text;
++    }
++    if (std::FILE* f = std::fopen("/data/edenps4/vram.txt", failed ? "a" : "w")) {
++        std::fprintf(f, "%s%s: %s\n", failed ? "FAILED " : "", why, text.c_str());
++        std::fclose(f);
++    }
++    if (failed) {
++        char* json = nullptr;
++        vmaBuildStatsString(allocator, &json, VK_TRUE);
++        if (std::FILE* f = std::fopen("/data/edenps4/vram_fail.json", "w")) {
++            std::fputs(json, f);
++            std::fclose(f);
++        }
++        vmaFreeStatsString(allocator, json);
++    }
++}
++} // Anonymous namespace
++
++/// The last VMA snapshot, for the frontend's status line (it never touches VMA itself).
++extern "C" void Ps4VramStatusLine(void (*log)(const char*, ...)) {
++    std::scoped_lock lock{g_vram_mutex};
++    if (!g_vram_line.empty()) {
++        log("vram (VMA): %s", g_vram_line.c_str());
++    }
++}
++#endif
++
+ vk::Image MemoryAllocator::CreateImage(const VkImageCreateInfo &ci) const
+ {
+     const VmaAllocationCreateInfo alloc_ci = {
+@@ -221,7 +306,11 @@ vk::Image MemoryAllocator::CreateImage(const VkImageCreateInfo &ci) const
+     VkImage handle{};
+     VmaAllocation allocation{};
+     VmaAllocationInfo alloc_info{};
+-    vk::Check(vmaCreateImage(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info));
++    const VkResult image_result = vmaCreateImage(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info);
++#ifdef __ORBIS__
++    Ps4VramSnapshot(allocator, "image", image_result != VK_SUCCESS);
++#endif
++    vk::Check(image_result);
+ 
+     // Log GPU memory allocation for images
+     if (GPU::Logging::IsActive() &&
+@@ -258,7 +347,11 @@ vk::Buffer MemoryAllocator::CreateBuffer(const VkBufferCreateInfo &ci, MemoryUsa
+     VmaAllocation allocation{};
+     VkMemoryPropertyFlags property_flags{};
+ 
+-    vk::Check(vmaCreateBuffer(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info));
++    const VkResult buffer_result = vmaCreateBuffer(allocator, &ci, &alloc_ci, &handle, &allocation, &alloc_info);
++#ifdef __ORBIS__
++    Ps4VramSnapshot(allocator, "buffer", buffer_result != VK_SUCCESS);
++#endif
++    vk::Check(buffer_result);
+     vmaGetAllocationMemoryProperties(allocator, allocation, &property_flags);
+ 
+     // Log GPU memory allocation for buffers
+@@ -314,8 +407,12 @@ vk::Buffer MemoryAllocator::CreateBuffer(const VkBufferCreateInfo &ci, MemoryUsa
+     VmaAllocation allocation{};
+     VkMemoryPropertyFlags property_flags{};
+ 
+-    vk::Check(vmaCreateBufferWithAlignment(allocator, &ci, &alloc_ci, min_alignment, &handle,
+-                                           &allocation, &alloc_info));
++    const VkResult buffer_result = vmaCreateBufferWithAlignment(allocator, &ci, &alloc_ci, min_alignment,
++                                                                &handle, &allocation, &alloc_info);
++#ifdef __ORBIS__
++    Ps4VramSnapshot(allocator, "aligned buffer", buffer_result != VK_SUCCESS);
++#endif
++    vk::Check(buffer_result);
+     vmaGetAllocationMemoryProperties(allocator, allocation, &property_flags);
+ 
+     u8 *data = reinterpret_cast<u8 *>(alloc_info.pMappedData);
+-- 
+2.55.0.windows.3
+

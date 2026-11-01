@@ -63,6 +63,7 @@ namespace fs = std::filesystem;
 
 extern "C" void Ps4HeapCensus(); // heap_census.cpp
 extern "C" void Ps4HeapSmallReport(); // heap_census.cpp
+extern "C" void Ps4VramStatusLine(void (*log)(const char*, ...)); // Eden's vulkan_memory_allocator.cpp
 
 namespace Vulkan {
 extern int ps4_bgra_mode;    // vk_texture_cache.cpp
@@ -560,6 +561,7 @@ int main() {
                      static_cast<unsigned long>(mem.decommitted_bytes >> 20),
                      static_cast<unsigned long>(Ps4::FreeDirectMemory() >> 20),
                      flushes[0].load(), flushes[1].load(), flushes[2].load(), flushes[3].load());
+            Ps4VramStatusLine(&Ps4::Log);
             Ps4HeapSmallReport();
             if (++status_count % 3 == 1) {
                 Ps4HeapCensus();
