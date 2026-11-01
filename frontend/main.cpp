@@ -244,6 +244,8 @@ void ApplyPs4Settings() {
 /// other line is logged as unknown and ignored.
 ///   astc=gpu|cpu|async          ASTC texture decoding (default cpu)
 ///   astc_recompress=off|bc1|bc3 store decoded ASTC as BC1/BC3 instead of RGBA8 (default off)
+///   language=es-419|es|en|en-gb|fr|de|it|ja|pt-br  the console's language (default en)
+///   region=usa|europe|japan     the console's region (default usa)
 ///   bgra=auto|on|off            B8G8R8A8 red/blue workaround (default auto: startup self-test)
 ///   a2b10=auto|off              A2B10G10R10 workaround from the startup self-test (default auto)
 ///   rg=auto|on|off              R8G8 red/green workaround (default auto: startup self-test)
@@ -278,6 +280,23 @@ void ApplySettingsFile() {
             v.accelerate_astc.SetValue(value == "gpu"   ? Settings::AstcDecodeMode::Gpu
                                        : value == "cpu" ? Settings::AstcDecodeMode::Cpu
                                                         : Settings::AstcDecodeMode::CpuAsynchronous);
+        } else if (key == "language" && (value == "es-419" || value == "es" || value == "en" || value == "en-gb" ||
+                                         value == "fr" || value == "de" || value == "it" || value == "ja" ||
+                                         value == "pt-br")) {
+            // The emulated console's language, which games follow when they have it (default en).
+            v.language_index.SetValue(value == "es-419"  ? Settings::Language::SpanishLatin
+                                      : value == "es"    ? Settings::Language::Spanish
+                                      : value == "en-gb" ? Settings::Language::EnglishBritish
+                                      : value == "fr"    ? Settings::Language::French
+                                      : value == "de"    ? Settings::Language::German
+                                      : value == "it"    ? Settings::Language::Italian
+                                      : value == "ja"    ? Settings::Language::Japanese
+                                      : value == "pt-br" ? Settings::Language::PortugueseBrazilian
+                                                         : Settings::Language::EnglishAmerican);
+        } else if (key == "region" && (value == "usa" || value == "europe" || value == "japan")) {
+            v.region_index.SetValue(value == "europe"  ? Settings::Region::Europe
+                                    : value == "japan" ? Settings::Region::Japan
+                                                       : Settings::Region::Usa);
         } else if (key == "astc_recompress" && (value == "off" || value == "bc1" || value == "bc3")) {
             // ASTC decoded on the CPU is RGBA8, 4 bytes a texel; BC3 is 1 and BC1 half of that. With
             // RGBA8, Super Mario Bros. Wonder's level filled the driver's device-VA window with images.
