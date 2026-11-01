@@ -1,0 +1,71 @@
+From 627b078def0128bc5749e7b4e4918fe38d700941 Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sun, 1 Nov 2026 13:29:49 -0300
+Subject: [PATCH] dynarmic x64: Eden4's register allocation tweaks (PS4)
+
+Adapted from Eden4 (github.com/xatyy/Eden4, GPL-3.0): MoveOutOfTheWay
+moves a value to a free callee-saved register (RBX, R12, or R13 when
+gpr_order allows it) instead of spilling it to the stack, and
+SelectARegister may pick R13 when it is in the desired set (only without
+fastmem). Both are switched off by clearing ps4_regalloc_free_moves and
+ps4_regalloc_r13 (settings.txt regalloc=off).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../src/dynarmic/backend/x64/reg_alloc.cpp    | 26 ++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/src/dynarmic/src/dynarmic/backend/x64/reg_alloc.cpp b/src/dynarmic/src/dynarmic/backend/x64/reg_alloc.cpp
+index 5a82883..8d30b5a 100644
+--- a/src/dynarmic/src/dynarmic/backend/x64/reg_alloc.cpp
++++ b/src/dynarmic/src/dynarmic/backend/x64/reg_alloc.cpp
+@@ -22,6 +22,13 @@
+ #include "dynarmic/backend/x64/stack_layout.h"
+ #include "dynarmic/backend/x64/verbose_debugging_output.h"
+ 
++// PS4: register allocation tweaks adapted from Eden4 (github.com/xatyy/Eden4, GPL-3.0). The frontend
++// clears both with settings.txt "regalloc=off"; they are read while compiling blocks.
++extern "C" {
++bool ps4_regalloc_free_moves = true;
++bool ps4_regalloc_r13 = true;
++}
++
+ namespace Dynarmic::Backend::X64 {
+ 
+ static inline bool CanExchange(const HostLoc a, const HostLoc b) noexcept {
+@@ -418,7 +425,10 @@ HostLoc RegAlloc::SelectARegister(std::bitset<32> desired_locations) const noexc
+             // at all costs, because theoretically skipping them is better than spilling
+             // all over the place - i also fixes bugs with high reg pressure
+             // %rbp must not be trashed, so skip it as well
+-            } else if (i == HostLoc::RBP || (i >= HostLoc::R13 && i <= HostLoc::R15)) {
++            // PS4 (Eden4): R13 is allocatable when it is in the desired set at all, which gpr_order only
++            // allows without fastmem (with fastmem it holds the view base).
++            } else if (i == HostLoc::RBP || i == HostLoc::R14 || i == HostLoc::R15 ||
++                       (i == HostLoc::R13 && !ps4_regalloc_r13)) {
+                 // skip, do not touch
+             // Intel recommends to reuse registers as soon as they're overwritable (DO NOT SPILL)
+             } else if (loc_info.IsEmpty()) {
+@@ -516,6 +526,20 @@ void RegAlloc::Exchange(BlockOfCode& code, HostLoc a, HostLoc b) noexcept {
+ void RegAlloc::MoveOutOfTheWay(BlockOfCode& code, HostLoc reg) noexcept {
+     ASSERT(!LocInfo(reg).IsLocked());
+     if (!LocInfo(reg).IsEmpty()) {
++        // PS4 (Eden4): a free callee-saved register before a stack slot. Only callee-saved ones:
++        // several emitters release their argument registers before the call that reads them, so a
++        // caller-saved register that merely looks free can still hold an argument. RBX, R12 and R13
++        // are never used that way (R13 only without fastmem, as gpr_order says).
++        if (HostLocIsGPR(reg) && ps4_regalloc_free_moves) {
++            static constexpr HostLoc order[] = {HostLoc::RBX, HostLoc::R12, HostLoc::R13};
++            for (const HostLoc to : order) {
++                if (to != reg && gpr_order.test(size_t(to)) && LocInfo(to).IsEmpty() &&
++                    (to != HostLoc::R13 || ps4_regalloc_r13)) {
++                    Move(code, to, reg);
++                    return;
++                }
++            }
++        }
+         SpillRegister(code, reg);
+     }
+ }
+-- 
+2.55.0.windows.3
+

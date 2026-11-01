@@ -49,6 +49,10 @@
 #include "core/frontend/emu_window.h"
 #include "core/frontend/graphics_context.h"
 #include "core/hle/kernel/k_process.h"
+
+// dynarmic/backend/x64/reg_alloc.cpp (Eden4's register allocation tweaks).
+extern "C" bool ps4_regalloc_free_moves;
+extern "C" bool ps4_regalloc_r13;
 #include "core/hle/service/am/applet_manager.h"
 #include "core/hle/service/filesystem/filesystem.h"
 #include "core/loader/loader.h"
@@ -272,6 +276,8 @@ void ApplyPs4Settings() {
 ///   cpu_accuracy=unsafe|auto|accurate (default unsafe)
 ///   fastmem=on|off              (default on; needs cpu_accuracy=unsafe)
 ///   fastmem_partial=on|off      map 16 KiB pages only partly mapped by the guest (default on)
+///   regalloc=on|off             JIT moves values to free RBX/R12/R13 instead of the stack, R13
+///                               allocatable without fastmem (from Eden4; default on)
 ///   async_shaders=on|off        (default on)
 ///   fps=auto|30|60              presentation pacing; 30 = an even 30 for games that can't hold 60
 ///   env=NAME=VALUE              environment for the PS4 driver (e.g. env=RADV_DEBUG=info,nohiz)
@@ -405,6 +411,9 @@ void ApplySettingsFile() {
             v.cpuopt_unsafe_host_mmu.SetValue(value == "on");
         } else if (key == "fastmem_partial" && (value == "on" || value == "off")) {
             Common::Orbis::SetViewPartialPages(value == "on");
+        } else if (key == "regalloc" && (value == "on" || value == "off")) {
+            // Eden4's register allocation tweaks in dynarmic (reg_alloc.cpp).
+            ps4_regalloc_free_moves = ps4_regalloc_r13 = value == "on";
         } else if (key == "profile" && (value == "on" || value == "off")) {
             Ps4::SetProfiling(value == "on");
         } else if (key == "reactive_flushing" && (value == "on" || value == "off")) {
@@ -541,7 +550,7 @@ void CheckMutexes() {
 int main() {
     Ps4::OpenBootLog();
     Ps4::Log("eden-ps4 starting (Eden %s %s)", Common::g_scm_branch, Common::g_scm_desc);
-    Ps4::Log("PS4 build: %s; test 34: fastmem maps partly mapped 16 KiB pages unless a piece maps backing it cannot alias (jitcache17 hung Wonder), fastmem_partial=off turns it off, fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
+    Ps4::Log("PS4 build: %s; test 35: Eden4's register allocation (free RBX/R12/R13 before the stack, R13 without fastmem; regalloc=off turns it off), fastmem with partly mapped pages, fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
              EDEN_PS4_BUILD_ID);
     Ps4::InstallCrashReporting();
     Ps4::StartWatchdog();
