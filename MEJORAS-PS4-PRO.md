@@ -36,6 +36,8 @@ Licencia GPL-3.0, igual que el proyecto original y Eden.
 | `jitcache8_20261031_mundo_ok` | jitcache8 | Wonder | 12,0 | 22,5 | 8,9 | 57,4 | Ningún fallo: el mapa del mundo carga |
 | `jitcache11_papermario_boot.log` | jitcache11 | Paper Mario | 16,9 | 8,9 | 7,0 | 26,5 | Ningún fallo; lo limita la CPU |
 | `jitcache11_20261101_3dworld` | jitcache11 | 3D World | 15,8 | 27,0 | 23,2 | 60,0 | Ningún fallo; un solo vaciado del JIT |
+| `jitcache12_20261101_wonder` | jitcache12 | Wonder | 7,4 | — | — | — | Colores correctos; un nivel nuevo a 11–19 FPS sin ningún núcleo al tope (pendiente de investigar); vaciados del JIT 6/5/3 con 64 MiB |
+| `jitcache13_20261101_3dworld_unsafe` | jitcache13 | 3D World | 6,0 | — | — | — | `cpu=unsafe` + JIT 96 MiB: 1-1 a 20–28 FPS, igual que jitcache11 |
 
 - La mediana y el "peor 10 %" se calculan con todas las líneas `status:` de 1 FPS o más, así que incluyen cargas y menús.
 - El "sin imagen durante 15 s" que sale en todas las sesiones hacia los 16 s es la carga inicial, y es normal.
@@ -60,6 +62,7 @@ Cada paso se encontró midiendo con el registro de la consola (`boot.log`), no a
 | 6 | Robustez ante falta de memoria de la GPU | Liberar memoria y reintentar cuando falla una reserva, **adaptado de [Eden4](https://github.com/xatyy/Eden4) de xatyy** (parches 0033 y 0034) | jitcache9–10 |
 | 7 | Los juegos salían en inglés | `language=` y `region=` en `settings.txt` | jitcache11 |
 | 8 | **Rojo y azul cambiados en toda la imagen** (problema que el autor original dejó abierto) | La imagen final se dibujaba en orden BGRA sobre una pantalla RGBA; ahora se usa el orden de la pantalla, como ya se hacía en Android (parche 0035) | jitcache12 (**confirmado en la consola el 2026-11-01: Mario sale rojo**) |
+| 9 | ¿Más FPS con un JIT menos exacto? | `cpu=unsafe` en settings.txt (NaN y coma flotante menos exactos). **Probado en 3D World 1-1: 25,1 FPS frente a 25,8 = sin mejora**: el núcleo no gasta el tiempo en la coma flotante sino en los accesos a memoria. Se deja `cpu=auto` | jitcache13 |
 
 Los cambios de Eden están en [`patches/eden/`](patches/eden/) (0028 a 0035) y los del frontend en
 [`frontend/`](frontend/). Todo va dentro de `#ifdef __ORBIS__`: no afecta a otras plataformas.
@@ -116,7 +119,6 @@ En la PS4 (por FTP): `/data/edenps4/boot.log`, `mesa.log` y `log/eden_log.txt`.
 ## Pendientes
 
 1. **Más FPS en la CPU**, de lo más barato a lo más caro:
-   - modo de CPU "Unsafe" (NaN y coma flotante menos exactos);
    - portar las optimizaciones del JIT de Eden4 (recorrido de la tabla de páginas en línea, reutilizar la búsqueda de página, R13 asignable);
    - fastmem.
    HIPÓTESIS: +10–30 % entre todas.
