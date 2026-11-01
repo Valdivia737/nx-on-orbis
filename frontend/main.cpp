@@ -529,7 +529,7 @@ void CheckMutexes() {
 int main() {
     Ps4::OpenBootLog();
     Ps4::Log("eden-ps4 starting (Eden %s %s)", Common::g_scm_branch, Common::g_scm_desc);
-    Ps4::Log("PS4 build: %s; test 30: fastmem from the experimental branch (tests 25-29) on top of mejoras-ps4-pro, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
+    Ps4::Log("PS4 build: %s; test 31: fastmem + addresses past the view walk the page table in far code (not the callbacks), unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
              EDEN_PS4_BUILD_ID);
     Ps4::InstallCrashReporting();
     Ps4::StartWatchdog();

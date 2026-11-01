@@ -1,0 +1,176 @@
+From 8d82f76ed588904ab38ca9edda100207bc2a46d9 Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sun, 1 Nov 2026 05:09:53 -0300
+Subject: [PATCH] PS4: fastmem accesses past the view walk the page table in
+ far code instead of calling back
+
+The fastmem view is 8 GiB on the console, and games keep their stack and heap above it. The
+range check sent those accesses straight to the byte-by-byte callbacks: 3D World ran at ~10 fps
+with fastmem against ~25 without. Far code now does the inline page-table walk first and only
+calls back when the page table misses.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../backend/x64/emit_x64_memory.cpp.inc       | 28 +++++-
+ .../dynarmic/backend/x64/emit_x64_memory.h    | 91 +++++++++++++++++++
+ 2 files changed, 117 insertions(+), 2 deletions(-)
+
+diff --git a/src/dynarmic/src/dynarmic/backend/x64/emit_x64_memory.cpp.inc b/src/dynarmic/src/dynarmic/backend/x64/emit_x64_memory.cpp.inc
+index 4fa14d5..4f2fe4f 100644
+--- a/src/dynarmic/src/dynarmic/backend/x64/emit_x64_memory.cpp.inc
++++ b/src/dynarmic/src/dynarmic/backend/x64/emit_x64_memory.cpp.inc
+@@ -91,11 +91,23 @@ void AxxEmitX64::EmitMemoryRead(AxxEmitContext& ctx, IR::Inst* inst) {
+     if (fastmem_marker) {
+         // Use fastmem
+         bool require_abort_handling = false;
+-        const auto src_ptr = EmitFastmemVAddr(code, ctx, *abort, vaddr, require_abort_handling);
++        // PS4: addresses past the fastmem view walk the page table in far code (emit_x64_memory.h).
++        const bool outside_uses_page_table = FastmemOutsideViewUsesPageTable(ctx);
++        const SharedLabel outside = outside_uses_page_table ? ctx.GenSharedLabel() : abort;
++        const Xbyak::Reg64 far_page = outside_uses_page_table ? ctx.reg_alloc.ScratchGpr(code) : vaddr;
++        const Xbyak::Reg64 far_tmp = outside_uses_page_table ? ctx.reg_alloc.ScratchGpr(code) : vaddr;
++        const auto src_ptr = EmitFastmemVAddr(code, ctx, *outside, vaddr, require_abort_handling,
++                                              outside_uses_page_table ? std::optional{far_page} : std::nullopt);
+ 
+         const auto location = EmitReadMemoryMov<bitsize>(code, value_idx, src_ptr, ordered);
+ 
+         ctx.deferred_emits.emplace_back([=, this, &ctx] {
++            if (outside_uses_page_table && require_abort_handling) {
++                code.L(*outside);
++                const auto far_ptr = EmitFarVAddrLookup(code, ctx, bitsize, *abort, vaddr, far_page, far_tmp);
++                EmitReadMemoryMov<bitsize>(code, value_idx, far_ptr, ordered);
++                code.jmp(*end, code.T_NEAR);
++            }
+             code.L(*abort);
+             code.call(wrapped_fn);
+ 
+@@ -178,11 +190,23 @@ void AxxEmitX64::EmitMemoryWrite(AxxEmitContext& ctx, IR::Inst* inst) {
+     if (fastmem_marker) {
+         // Use fastmem
+         bool require_abort_handling = false;
+-        const auto dest_ptr = EmitFastmemVAddr(code, ctx, *abort, vaddr, require_abort_handling);
++        // PS4: addresses past the fastmem view walk the page table in far code (emit_x64_memory.h).
++        const bool outside_uses_page_table = FastmemOutsideViewUsesPageTable(ctx);
++        const SharedLabel outside = outside_uses_page_table ? ctx.GenSharedLabel() : abort;
++        const Xbyak::Reg64 far_page = outside_uses_page_table ? ctx.reg_alloc.ScratchGpr(code) : vaddr;
++        const Xbyak::Reg64 far_tmp = outside_uses_page_table ? ctx.reg_alloc.ScratchGpr(code) : vaddr;
++        const auto dest_ptr = EmitFastmemVAddr(code, ctx, *outside, vaddr, require_abort_handling,
++                                               outside_uses_page_table ? std::optional{far_page} : std::nullopt);
+ 
+         const auto location = EmitWriteMemoryMov<bitsize>(code, dest_ptr, value_idx, ordered);
+ 
+         ctx.deferred_emits.emplace_back([=, this, &ctx] {
++            if (outside_uses_page_table && require_abort_handling) {
++                code.L(*outside);
++                const auto far_ptr = EmitFarVAddrLookup(code, ctx, bitsize, *abort, vaddr, far_page, far_tmp);
++                EmitWriteMemoryMov<bitsize>(code, far_ptr, value_idx, ordered);
++                code.jmp(*end, code.T_NEAR);
++            }
+             code.L(*abort);
+             code.call(wrapped_fn);
+ 
+diff --git a/src/dynarmic/src/dynarmic/backend/x64/emit_x64_memory.h b/src/dynarmic/src/dynarmic/backend/x64/emit_x64_memory.h
+index 9686e4f..b36f998 100644
+--- a/src/dynarmic/src/dynarmic/backend/x64/emit_x64_memory.h
++++ b/src/dynarmic/src/dynarmic/backend/x64/emit_x64_memory.h
+@@ -233,6 +233,97 @@ template<>
+     }
+ }
+ 
++/// PS4: the fastmem view cannot cover the whole guest address space (the console refuses the
++/// 512 GiB reservation; 8 GiB fits), and games keep their stack and heap above it. Those
++/// addresses used to jump from the range check straight to the byte-by-byte callbacks, which made
++/// fastmem much slower than no fastmem. With this, they walk the page table in far code instead.
++template<typename EmitContext>
++bool FastmemOutsideViewUsesPageTable(const EmitContext&) {
++    return false;
++}
++
++template<>
++[[maybe_unused]] bool FastmemOutsideViewUsesPageTable<A64EmitContext>(const A64EmitContext& ctx) {
++    const auto& conf = ctx.conf;
++    if (!conf.page_table || conf.silently_mirror_fastmem || conf.fastmem_address_space_bits >= 64) {
++        return false;
++    }
++    const size_t unused_top_bits = 64 - conf.page_table_address_space_bits;
++    const size_t valid_page_index_bits = conf.page_table_address_space_bits - page_table_const_bits;
++    return unused_top_bits == 0 || (!conf.silently_mirror_page_table && valid_page_index_bits < 32);
++}
++
++/// The page-table walk of EmitVAddrLookup for far code: no register allocation (page and tmp are
++/// scratch registers the caller allocated before the fastmem access) and no deferred emits.
++template<typename EmitContext>
++Xbyak::RegExp EmitFarVAddrLookup(BlockOfCode& code, EmitContext& ctx, size_t bitsize, Xbyak::Label& abort, Xbyak::Reg64 vaddr, Xbyak::Reg64 page, Xbyak::Reg64 tmp);
++
++template<>
++[[maybe_unused]] Xbyak::RegExp EmitFarVAddrLookup<A32EmitContext>(BlockOfCode&, A32EmitContext&, size_t, Xbyak::Label&, Xbyak::Reg64 vaddr, Xbyak::Reg64, Xbyak::Reg64) {
++    UNREACHABLE();
++    return r13 + vaddr;
++}
++
++template<>
++[[maybe_unused]] Xbyak::RegExp EmitFarVAddrLookup<A64EmitContext>(BlockOfCode& code, A64EmitContext& ctx, size_t bitsize, Xbyak::Label& abort, Xbyak::Reg64 vaddr, Xbyak::Reg64 page, Xbyak::Reg64 tmp) {
++    const auto& conf = ctx.conf;
++    const size_t valid_page_index_bits = conf.page_table_address_space_bits - page_table_const_bits;
++    const size_t unused_top_bits = 64 - conf.page_table_address_space_bits;
++
++    if (bitsize != 8 && (conf.detect_misaligned_access_via_page_table & bitsize) != 0) {
++        const u32 align_mask = u32(bitsize / 8 - 1);
++        if (conf.only_detect_misalignment_via_page_table_on_page_boundary) {
++            // As EmitDetectMisalignedVAddr: only a misaligned access that crosses a page aborts.
++            const u32 page_align_mask = static_cast<u32>(page_table_const_size - 1) & ~align_mask;
++            Xbyak::Label aligned;
++            code.test(vaddr, align_mask);
++            code.jz(aligned);
++            code.mov(tmp, vaddr);
++            code.and_(tmp, page_align_mask);
++            code.cmp(tmp, page_align_mask);
++            code.je(abort, code.T_NEAR);
++            code.L(aligned);
++        } else {
++            code.test(vaddr, align_mask);
++            code.jnz(abort, code.T_NEAR);
++        }
++    }
++
++    code.mov(tmp, vaddr);
++    code.shr(tmp, int(page_table_const_bits));
++    if (unused_top_bits != 0) {
++        code.test(tmp, u32(-(1 << valid_page_index_bits)));
++        code.jnz(abort, code.T_NEAR);
++    }
++    code.shl(tmp, int(conf.page_table_log2_stride));
++    code.mov(page, qword[r14 + tmp]);
++
++    if (conf.page_table_marked_bit) {
++        code.bt(page, *conf.page_table_marked_bit);
++        code.jc(abort, code.T_NEAR);
++    }
++    if (conf.page_table_pointer_mask == 0) {
++        code.test(page, page);
++    } else if (std::in_range<s32>(conf.page_table_pointer_mask)) {
++        code.and_(page, conf.page_table_pointer_mask);
++    } else {
++        code.mov(tmp, conf.page_table_pointer_mask);
++        code.and_(page, tmp);
++    }
++    if (conf.page_table_sign_extension) {
++        code.shl(page, *conf.page_table_sign_extension);
++        code.sar(page, *conf.page_table_sign_extension);
++    }
++
++    code.jz(abort, code.T_NEAR);
++    if (conf.absolute_offset_page_table) {
++        return page + vaddr;
++    }
++    code.mov(tmp, vaddr);
++    code.and_(tmp, static_cast<u32>(page_table_const_mask));
++    return page + tmp;
++}
++
+ template<std::size_t bitsize>
+ const void* EmitReadMemoryMov(BlockOfCode& code, int value_idx, const Xbyak::RegExp& addr, bool ordered) {
+     if (ordered) {
+-- 
+2.55.0.windows.3
+
