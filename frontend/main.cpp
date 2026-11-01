@@ -48,6 +48,7 @@
 #include "core/file_sys/vfs/vfs_real.h"
 #include "core/frontend/emu_window.h"
 #include "core/frontend/graphics_context.h"
+#include "core/hle/kernel/k_process.h"
 #include "core/hle/service/am/applet_manager.h"
 #include "core/hle/service/filesystem/filesystem.h"
 #include "core/loader/loader.h"
@@ -529,7 +530,7 @@ void CheckMutexes() {
 int main() {
     Ps4::OpenBootLog();
     Ps4::Log("eden-ps4 starting (Eden %s %s)", Common::g_scm_branch, Common::g_scm_desc);
-    Ps4::Log("PS4 build: %s; test 31: fastmem + addresses past the view walk the page table in far code (not the callbacks), unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
+    Ps4::Log("PS4 build: %s; test 32: fastmem with stack + heap placed inside the view and a 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
              EDEN_PS4_BUILD_ID);
     Ps4::InstallCrashReporting();
     Ps4::StartWatchdog();
@@ -639,6 +640,21 @@ int main() {
         Ps4::SetPadLight(255, 0, 0);
         std::this_thread::sleep_for(std::chrono::seconds(5));
         return 2;
+    }
+    if (const auto* process = system.ApplicationProcess(); process != nullptr) {
+        // Where the guest regions landed: fastmem only covers addresses below the view.
+        const auto& pt = process->GetPageTable();
+        Ps4::Log("guest layout: code 0x%lx (entry 0x%lx), stack 0x%lx, heap 0x%lx, alias 0x%lx, "
+                 "kernel map 0x%lx; fastmem covers below 0x%lx",
+                 static_cast<unsigned long>(GetInteger(pt.GetCodeRegionStart())),
+                 static_cast<unsigned long>(GetInteger(process->GetEntryPoint())),
+                 static_cast<unsigned long>(GetInteger(pt.GetStackRegionStart())),
+                 static_cast<unsigned long>(GetInteger(pt.GetHeapRegionStart())),
+                 static_cast<unsigned long>(GetInteger(pt.GetAliasRegionStart())),
+                 static_cast<unsigned long>(GetInteger(pt.GetKernelMapRegionStart())),
+                 Common::Orbis::ViewAddressBits() != 0
+                     ? static_cast<unsigned long>(std::size_t{1} << Common::Orbis::ViewAddressBits())
+                     : 0UL);
     }
 
     Ps4::SetPhase("starting GPU");

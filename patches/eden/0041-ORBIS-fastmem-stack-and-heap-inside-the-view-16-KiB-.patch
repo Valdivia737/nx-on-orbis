@@ -1,0 +1,70 @@
+From 6f86cf9a2be3f2b12d8880c778f3f15c0a1be469 Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sun, 1 Nov 2026 12:05:41 -0300
+Subject: [PATCH] ORBIS fastmem: stack and heap inside the view, 16 KiB-aligned
+ code base
+
+The PS4 fastmem view only covers the low 8 GiB of the guest address space,
+and random region placement put the heap (and thread stacks) above it, so
+almost every access walked the page table after a failed fastmem attempt.
+With a view present, place the stack region and then the heap right after
+the code. Also align the code base to 16 KiB, the host page size, so the
+code image can be aliased into the view.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ src/core/hle/kernel/k_page_table_base.cpp       | 14 ++++++++++++++
+ src/core/loader/deconstructed_rom_directory.cpp |  5 +++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/src/core/hle/kernel/k_page_table_base.cpp b/src/core/hle/kernel/k_page_table_base.cpp
+index 2a0a7d4..620b08a 100644
+--- a/src/core/hle/kernel/k_page_table_base.cpp
++++ b/src/core/hle/kernel/k_page_table_base.cpp
+@@ -6,6 +6,9 @@
+ 
+ #include "common/scope_exit.h"
+ #include "common/settings.h"
++#ifdef __ORBIS__
++#include "common/orbis_lazy_memory.h"
++#endif
+ #include "core/core.h"
+ #include "core/hle/kernel/k_address_space_info.h"
+ #include "core/hle/kernel/k_page_table_base.h"
+@@ -318,6 +321,17 @@ Result KPageTableBase::InitializeForProcess(Svc::CreateProcessFlag as_type, bool
+         stack_rnd = KSystemControl::GenerateRandomRange(0, remaining_size / RegionAlignment) * RegionAlignment;
+         kmap_rnd = KSystemControl::GenerateRandomRange(0, remaining_size / RegionAlignment) * RegionAlignment;
+     }
++#ifdef __ORBIS__
++    // PS4: the fastmem view covers only the low guest addresses (8 GiB), and anything above it
++    // walks the page table. Put the stack region, then the heap, right after the code so the
++    // memory games touch most lands in the view; alias and kernel-map regions go after them.
++    if (Common::Orbis::ViewAddressBits() != 0 && remaining_size >= RegionAlignment) {
++        stack_rnd = 0;
++        heap_rnd = 0;
++        alias_rnd = std::max<size_t>(alias_rnd, RegionAlignment);
++        kmap_rnd = std::max<size_t>(kmap_rnd, RegionAlignment);
++    }
++#endif
+ 
+     // Setup heap and alias regions.
+     m_alias_region_start = alloc_start + alias_rnd;
+diff --git a/src/core/loader/deconstructed_rom_directory.cpp b/src/core/loader/deconstructed_rom_directory.cpp
+index 5e2ec7e..d1dd743 100644
+--- a/src/core/loader/deconstructed_rom_directory.cpp
++++ b/src/core/loader/deconstructed_rom_directory.cpp
+@@ -233,6 +233,11 @@ AppLoader_DeconstructedRomDirectory::LoadResult AppLoader_DeconstructedRomDirect
+     // TODO: this is bad form of ASLR, it sucks
+     std::uintptr_t aslr_offset = ((::Settings::values.rng_seed_enabled.GetValue()
+         ? ::Settings::values.rng_seed.GetValue() : Common::Random::Random64(0)) << 12) & 0xfff000;
++#ifdef __ORBIS__
++    // PS4 host pages are 16 KiB: a code base that is not 16 KiB-aligned can never be aliased into
++    // the fastmem view (the guest's 4 KiB pages land at the wrong offset in each host page).
++    aslr_offset &= ~std::uintptr_t{0x3fff};
++#endif
+ 
+     // Setup the process code layout
+     if (process.LoadFromMetadata(system.Kernel(), metadata, code_size, fastmem_base, aslr_offset).IsError()) {
+-- 
+2.55.0.windows.3
+
