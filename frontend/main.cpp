@@ -246,6 +246,7 @@ void ApplyPs4Settings() {
 ///   astc_recompress=off|bc1|bc3 store decoded ASTC as BC1/BC3 instead of RGBA8 (default off)
 ///   language=es-419|es|en|en-gb|fr|de|it|ja|pt-br  the console's language (default en)
 ///   region=usa|europe|japan     the console's region (default usa)
+///   cpu=auto|unsafe             JIT accuracy; unsafe adds inaccurate NaN and reduced FP error (default auto)
 ///   bgra=auto|on|off            B8G8R8A8 red/blue workaround (default auto: startup self-test)
 ///   a2b10=auto|off              A2B10G10R10 workaround from the startup self-test (default auto)
 ///   rg=auto|on|off              R8G8 red/green workaround (default auto: startup self-test)
@@ -297,6 +298,18 @@ void ApplySettingsFile() {
             v.region_index.SetValue(value == "europe"  ? Settings::Region::Europe
                                     : value == "japan" ? Settings::Region::Japan
                                                        : Settings::Region::Usa);
+        } else if (key == "cpu" && (value == "auto" || value == "unsafe")) {
+            // Auto already unfuses FMA and ignores the global monitor. Unsafe also skips NaN handling
+            // and uses the host's reciprocal estimates: fewer x86 instructions per guest float op.
+            v.cpu_accuracy.SetValue(value == "unsafe" ? Settings::CpuAccuracy::Unsafe
+                                                      : Settings::CpuAccuracy::Auto);
+            if (value == "unsafe") {
+                v.cpuopt_unsafe_unfuse_fma.SetValue(true);
+                v.cpuopt_unsafe_reduce_fp_error.SetValue(true);
+                v.cpuopt_unsafe_inaccurate_nan.SetValue(true);
+                v.cpuopt_unsafe_fastmem_check.SetValue(true);
+                v.cpuopt_unsafe_ignore_global_monitor.SetValue(true);
+            }
         } else if (key == "astc_recompress" && (value == "off" || value == "bc1" || value == "bc3")) {
             // ASTC decoded on the CPU is RGBA8, 4 bytes a texel; BC3 is 1 and BC1 half of that. With
             // RGBA8, Super Mario Bros. Wonder's level filled the driver's device-VA window with images.
