@@ -1,0 +1,54 @@
+From 3b994560593671cffdc77ff7cde900ee6b58ad6f Mon Sep 17 00:00:00 2001
+From: Valdivia737 <104042867+Valdivia737@users.noreply.github.com>
+Date: Sat, 31 Oct 2026 23:52:51 -0300
+Subject: [PATCH] PS4: GPU memory reclaim only on a failed allocation unless
+ NX_RECLAIM_LOW_MIB is set
+
+jitcache9 ran the low-memory reclaim ~4 times a second (385 'low memory' reclaims in 100 s, Super
+Mario Bros. Wonder dropped from 15-21 to 8-16 fps): this driver's VK_EXT_memory_budget reports 0 MiB
+of room while allocations keep succeeding, so the 48 MiB headroom check always fired and every
+reclaim waited for the GPU. The check is now off by default; a failed allocation and the staging
+cap still reclaim and retry.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .../vulkan_common/vulkan_memory_allocator.cpp         | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/src/video_core/vulkan_common/vulkan_memory_allocator.cpp b/src/video_core/vulkan_common/vulkan_memory_allocator.cpp
+index 0765861..2ea5f15 100644
+--- a/src/video_core/vulkan_common/vulkan_memory_allocator.cpp
++++ b/src/video_core/vulkan_common/vulkan_memory_allocator.cpp
+@@ -25,6 +25,7 @@
+ #include "video_core/gpu_logging/gpu_logging.h"
+ #include "common/settings.h"
+ #ifdef __ORBIS__
++#include "common/orbis_jit.h"
+ #include <atomic>
+ #include <chrono>
+ #include <cstdio>
+@@ -317,13 +318,19 @@ void ClaimPs4ReclaimThread() {
+ }
+ 
+ bool Ps4Reclaim(VmaAllocator allocator, size_t need, bool force) {
+-    constexpr VkDeviceSize Headroom = 48ull << 20;
+     if (!g_ps4_reclaim || t_ps4_reclaiming ||
+         g_ps4_reclaim_thread.load(std::memory_order_relaxed) != std::this_thread::get_id()) {
+         return false;
+     }
++    // The low-memory check is off unless settings.txt sets env=NX_RECLAIM_LOW_MIB=<MiB>: this
++    // driver's budget reports 0 MiB of room while allocations still succeed, so with the check on
++    // (Eden4's 48 MiB headroom) the reclaim ran ~4 times a second, each a full GPU wait.
++    const VkDeviceSize low_mib = ::Common::Orbis::EnvSize("NX_RECLAIM_LOW_MIB", 0, 8, 512);
++    if (!force && low_mib == 0) {
++        return false;
++    }
+     const VkDeviceSize room_before = Ps4DeviceLocalRoom(allocator);
+-    if (!force && room_before >= need + Headroom) {
++    if (!force && room_before >= need + (low_mib << 20)) {
+         return false;
+     }
+     // Low memory that a reclaim cannot fix would otherwise stall every allocation on the GPU.
+-- 
+2.55.0.windows.3
+
