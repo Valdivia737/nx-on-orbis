@@ -272,6 +272,7 @@ void ApplyPs4Settings() {
 ///   cpu_accuracy=unsafe|auto|accurate (default unsafe)
 ///   fastmem=on|off              (default on; needs cpu_accuracy=unsafe)
 ///   async_shaders=on|off        (default on)
+///   fps=auto|30|60              presentation pacing; 30 = an even 30 for games that can't hold 60
 ///   env=NAME=VALUE              environment for the PS4 driver (e.g. env=RADV_DEBUG=info,nohiz)
 // The environment, moved out of the heap once every setenv is done (test 29). Test 28 crashed in
 // getenv inside the GPU driver (it reads the environment on every buffer it creates): the heap
@@ -420,6 +421,13 @@ void ApplySettingsFile() {
                                                    : Settings::GpuAccuracy::High);
         } else if (key == "async_shaders" && (value == "on" || value == "off")) {
             v.use_asynchronous_shaders.SetValue(value == "on");
+        } else if (key == "fps" && (value == "auto" || value == "30" || value == "60")) {
+            // Presentation pacing: 30 holds every frame for two refreshes, so a game that runs at
+            // 30-35 shows an even 30 instead of a mix of 16 and 33 ms frames.
+            v.frame_pacing_mode.SetValue(value == "30"   ? Settings::FramePacingMode::Target_30
+                                         : value == "60" ? Settings::FramePacingMode::Target_60
+                                                         : Settings::FramePacingMode::Target_Auto);
+            v.use_speed_limit.SetValue(true);
         } else if (key == "env" && value.find('=') != std::string::npos && value.find('=') > 0) {
             // A driver switch, e.g. env=ORBIS_GS_RING_SCALE=4 (read when Vulkan starts).
             const auto split = value.find('=');
@@ -530,7 +538,7 @@ void CheckMutexes() {
 int main() {
     Ps4::OpenBootLog();
     Ps4::Log("eden-ps4 starting (Eden %s %s)", Common::g_scm_branch, Common::g_scm_desc);
-    Ps4::Log("PS4 build: %s; test 33: fastmem maps 16 KiB pages whose 4 KiB pieces are only partly mapped (stack edges); stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
+    Ps4::Log("PS4 build: %s; test 33: fastmem maps 16 KiB pages whose 4 KiB pieces are only partly mapped (stack edges), settings fps=30 paces presentation; stack + heap inside the view, 16 KiB-aligned code base; addresses past the view walk the page table in far code, unsafe CPU by default, fastmem redirects by cause; defaults CPU ASTC, swizzle test off",
              EDEN_PS4_BUILD_ID);
     Ps4::InstallCrashReporting();
     Ps4::StartWatchdog();
