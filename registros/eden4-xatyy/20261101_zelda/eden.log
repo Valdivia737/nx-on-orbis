@@ -1,0 +1,266 @@
+[   0.000230] Frontend <Info> yuzu_ps4/main.cpp:1081:main: Eden4 1.0 starting
+[   0.002305] Frontend <Info> yuzu_ps4/main.cpp:1084:main: Host CPU: DG1501SML87LB                                  , AVX=true, AVX2=false, page size=16384
+[   0.003149] Frontend <Info> yuzu_ps4/main.cpp:1087:main: PS4 Pro mode: off, CPUs: 8, CPU clock: 2100 MHz, direct memory: 4608 MiB
+[   0.010982] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000010: 0x0
+[   0.013536] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000011: 0x0
+[   0.019591] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000022: 0x0
+[   0.021667] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000024: 0x0
+[   0.024006] Frontend <Info> yuzu_ps4/platform.cpp:27:InitializeModules: PS4 module 0x80000001: 0x0
+[   0.036028] Frontend <Info> yuzu_ps4/platform.cpp:31:InitializeModules: PS4 UserService: 0x0
+[   0.041915] Input <Info> yuzu_ps4/platform.cpp:39:Controller: PS4 Pad initialization: 0x0
+[   0.047619] Input <Info> yuzu_ps4/platform.cpp:52:Open: PS4 controller for user 0x16a2555b in slot 1: handle 0x32c0600
+[   0.088163] Frontend <Info> yuzu_ps4/platform.cpp:142:Display: PS4 launcher display: 1920x1080 ABGR garlic works
+[   0.091638] Frontend <Info> yuzu_ps4/main.cpp:160:ScanGames: PS4 HOME menu: 5 games from 1 sources
+[   0.092601] Frontend <Info> yuzu_ps4/main.cpp:674:Begin: PS4 HOME menu: users
+[   0.094462] Frontend <Info> yuzu_ps4/main.cpp:676:Begin: PS4 HOME menu: sounds
+[   0.096015] Frontend <Info> yuzu_ps4/main.cpp:1024:Launcher: PS4 HOME menu: 5 games, 1 users
+[   0.096703] Frontend <Info> yuzu_ps4/main.cpp:1036:Launcher: PS4 HOME menu: first update
+[   0.097303] Frontend <Info> yuzu_ps4/main.cpp:1046:Launcher: PS4 HOME menu: first render
+[   0.104931] Frontend <Info> yuzu_ps4/main.cpp:1048:Launcher: PS4 HOME menu: first present
+[   0.120153] Frontend <Info> yuzu_ps4/main.cpp:1050:Launcher: PS4 HOME menu: first frame shown
+[   0.170915] Frontend <Info> yuzu_ps4/ui_metadata.cpp:120:Run: PS4 HOME menu: 3 of 5 games have saved icons (the others get theirs when started)
+[  76.370703] Frontend <Info> yuzu_ps4/main.cpp:501:RunGame: Launching /data/edenps4/roms/The Legend of Zelda Breath of the Wild v0.nsp
+[  76.371576] Frontend <Info> yuzu_ps4/main.cpp:502:RunGame: PS4 options: docked=1 output=720 player1_type=pro player2_type=pro player3_type=pro player4_type=pro ui_theme=black ui_sounds=on profile=off renderer=vulkan inline_memory=1 direct_table=1 page_reuse=1 regalloc=on 
+[  76.372207] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 before guest RAM: direct memory query=0x0, largest free block=4718592 KiB
+[  76.372868] Input <Info> input_common/drivers/udp_client.cpp:144:UDPClient: Udp Initialization started
+[  76.376945] HW.Memory <Info> common/host_memory.cpp:435:Impl: PS4 guest RAM: 4096 MiB at 0x200010000, software page tables
+[  76.728826] Loader <Info> core/loader/nca.cpp:102:Load: Read heap size 0x6e6f69 bytes from main.npdm
+[  76.730001] Loader <Info> core/file_sys/patch_manager.cpp:199:PatchExeFS: Patching ExeFS for title_id=01007EF00011E000
+[  76.731185] Loader <Info> core/file_sys/patch_manager.cpp:358:PatchExeFS:     ExeFS: LayeredExeFS patches applied successfully
+[  76.900252] Core <Info> dynarmic/backend/x64/block_of_code.cpp:89:alloc: PS4 JIT: 65552 KiB in regular flexible memory at 0x300010000
+[  76.977442] Core <Info> dynarmic/backend/x64/block_of_code.cpp:89:alloc: PS4 JIT: 65552 KiB in regular flexible memory at 0x304014000
+[  77.053071] Core <Info> dynarmic/backend/x64/block_of_code.cpp:89:alloc: PS4 JIT: 65552 KiB in regular flexible memory at 0x308018000
+[  77.128534] Core <Info> dynarmic/backend/x64/block_of_code.cpp:89:alloc: PS4 JIT: 65552 KiB in regular flexible memory at 0x30c01c000
+[  77.191422] Loader <Info> core/file_sys/patch_manager.cpp:475:HasNSOPatch: Querying NSO patch existence for build_id=DB4B66DBF275A8261E2D51375F20C47D9A729537, name=rtld
+[  77.303630] Loader <Info> core/file_sys/patch_manager.cpp:475:HasNSOPatch: Querying NSO patch existence for build_id=2094F152836683A3632C6153FD84AB8, name=main
+[  77.324146] Loader <Info> core/file_sys/patch_manager.cpp:475:HasNSOPatch: Querying NSO patch existence for build_id=9F7E69A5C5E8AA0E61199AC33DD0D2D13717C19, name=subsdk0
+[  77.326469] Loader <Info> core/file_sys/patch_manager.cpp:475:HasNSOPatch: Querying NSO patch existence for build_id=FC3D9AAE8B6769E2D69961C005E239F536805F19, name=subsdk1
+[  77.329463] Loader <Info> core/file_sys/patch_manager.cpp:475:HasNSOPatch: Querying NSO patch existence for build_id=2BA5FCC00BA28CDDA26C792E934949CBB5CBC513, name=subsdk2
+[  77.352428] Loader <Info> core/file_sys/patch_manager.cpp:475:HasNSOPatch: Querying NSO patch existence for build_id=AA72F973A902C24747AF4522EE67EA9A7994C3FB, name=subsdk3
+[  77.373154] Loader <Info> core/file_sys/patch_manager.cpp:475:HasNSOPatch: Querying NSO patch existence for build_id=99D55FB2A2CE9E14BD5D56428EC0397BE46E48EB, name=sdk
+[  77.376881] Loader <Info> core/loader/nca.cpp:121:Load: Set pointer buffer size to 0x8000 bytes for ProgramID 0x01007ef00011e000 (Heap size: 0x6e6f69)
+[  77.377648] Loader <Warning> core/loader/nca.cpp:130:Load: No control data found for program 01007EF00011E000
+[  77.378374] Core <Info> core/core.cpp:351:Load: Loading The Legend of Zelda: Breath of the Wild (01007EF00011E000) ...
+[  77.441360] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_EXT_conditional_rendering
+[  77.442151] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_EXT_conservative_rasterization
+[  77.442793] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_EXT_external_memory_host
+[  77.443429] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_EXT_robustness2
+[  77.444078] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_NV_geometry_shader_passthrough
+[  77.444676] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_NV_viewport_array2
+[  77.445302] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1089:GetSuitability: Device doesn't support extension VK_NV_viewport_swizzle
+[  77.445916] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1178:GetSuitability: Device doesn't support feature indexTypeUint8
+[  77.446534] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1178:GetSuitability: Device doesn't support feature shaderFloat16
+[  77.447188] Render.Vulkan <Info> video_core/vulkan_common/vulkan_device.cpp:1677:CollectPhysicalMemoryInfo: PS4 GPU memory budget: 511 MiB of free direct memory
+[  77.447866] Render.Vulkan <Warning> video_core/vulkan_common/vulkan_device.cpp:637:Device: AMD GCN4 and earlier have broken VK_EXT_sampler_filter_minmax
+[  77.778322] Render.Vulkan <Info> video_core/renderer_vulkan/vk_swapchain_ps4.cpp:170:Create: PS4 display: loading screen shown until the first game frame
+[  77.780610] Render.Vulkan <Info> video_core/renderer_vulkan/vk_swapchain_ps4.cpp:174:Create: PS4 RADV display ready: 1280x720, 3 buffers, pitch 1280
+[  79.596343] HW.GPU <Info> ./video_core/texture_cache/texture_cache.h:81:TextureCache: PS4 texture cache GC: minimum 153 MiB, expected 255 MiB, critical 358 MiB
+[  79.644629] Render.Vulkan <Info> video_core/renderer_vulkan/vk_pipeline_cache.cpp:506:PipelineCache: DynamicState setting value: 2
+[  79.645952] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:293:Report: Driver: radv 26.0.8
+[  79.646626] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:294:Report: Device: AMD Liverpool (PS4) (RADV BONAIRE)
+[  79.647223] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:295:Report: Vulkan: 1.3.335
+[  79.647838] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:296:Report: Available VRAM: 0.50 GiB
+[  79.652878] Service <Error> core/hle/service/sockets/bsd.cpp:1143:BSD_USA: Network isn't initialized
+[  79.654074] Service <Error> core/hle/service/sockets/bsd.cpp:1143:BSD_USA: Network isn't initialized
+[  79.654935] Service <Error> core/hle/service/sockets/bsd.cpp:1143:BSD_USA: Network isn't initialized
+[  79.668390] Core <Info> core/game_settings.cpp:137:LoadOverrides: Applied game settings for title ID 01007EF00011E000 on OS 7, GPU vendor 1 (RADV)
+[  79.671034] Frontend <Info> yuzu_ps4/main.cpp:545:RunGame: PS4 HOME menu: saved "The Legend of Zelda: Breath of the Wild" (01007EF00011E000, icon 94473 bytes)
+[  79.672342] Frontend <Info> yuzu_ps4/main.cpp:552:RunGame: Emulation running; L3 + R3 + Options requests shutdown
+[  79.673104] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 after renderer startup: direct memory query=0x0, largest free block=485360 KiB
+[  79.726283] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:520:GetExternalSteadyClockSourceId: called, clock_source_id=0f666e6a-40df-f9ac-fe55-47556cfdf811
+[  79.727008] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:536:GetUserSystemClockContext: called
+[  79.727700] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:923:GetNetworkSystemClockContext: called
+[  79.728343] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:941:IsUserSystemClockAutomaticCorrectionEnabled: called, out_automatic_correction_enabled=true
+[  79.728962] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1371:GetUserSystemClockAutomaticCorrectionUpdatedTime: called
+[  79.729586] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:897:GetDeviceTimeZoneLocationName: called
+[  79.730234] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1354:GetDeviceTimeZoneLocationUpdatedTime: called
+[  79.731940] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:544:SetUserSystemClockContext: called
+[  79.732924] Input <Error> ./common/input.h:513:CreateDevice: Unknown engine name: joycon
+[  79.737275] Input <Error> ./common/input.h:513:CreateDevice: Unknown engine name: joycon
+[  79.737434] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:931:SetNetworkSystemClockContext: called
+[  79.738283] Input <Warning> hid_core/frontend/emulated_console.cpp:49:SetTouchParams: touch_from_button_maps is unset by frontend config
+[  79.743151] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:951:SetUserSystemClockAutomaticCorrectionEnabled: called, out_automatic_correction_enabled=true
+[  79.747310] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1379:SetUserSystemClockAutomaticCorrectionUpdatedTime: called
+[  79.960916] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:665:GetVibrationMasterVolume: called, vibration_master_volume=1
+[  80.936231] Service.VI <Warning> core/hle/service/vi/application_display_service.cpp:81:GetManagerDisplayService: (STUBBED) called
+[  80.943229] Service.AM <Info> core/hle/service/am/service/window_controller.cpp:38:GetAppletResourceUserId: called
+[  80.964388] Service.AM <Info> core/hle/service/am/service/window_controller.cpp:57:AcquireForegroundRights: called
+[  80.967255] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:189:SetFocusHandlingMode: called, notify=false background=false suspend=true
+[  82.208041] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 5000 blocks, translate 691 ms, optimize 71 ms, emit 546 ms (mprotect 52 ms), 1 cache clears, 5307 ms since cache start
+[  82.997957] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:200:SetRestartMessageEnabled: called, enabled=true
+[  83.002930] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:171:SetOperationModeChangedNotification: called, enabled=true
+[  83.005622] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:180:SetPerformanceModeChangedNotification: called, enabled=true
+[  83.036932] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 10000 blocks, translate 767 ms, optimize 157 ms, emit 1126 ms (mprotect 104 ms), 1 cache clears, 6135 ms since cache start
+[  83.071831] Loader <Info> core/file_sys/patch_manager.cpp:610:PatchRomFS: Patching RomFS for title_id=01007EF00011E000, type=01
+[  83.085534] Service.FS <Warning> core/hle/service/filesystem/fsp/fsp_srv.cpp:547:OpenPatchDataStorageByCurrentProcess: (STUBBED) called with storage_id=53, title_id=0000000000000000
+[  83.100009] Service.FS <Warning> core/hle/service/filesystem/fsp/fsp_srv.cpp:547:OpenPatchDataStorageByCurrentProcess: (STUBBED) called with storage_id=03, title_id=0000000000000000
+[  83.150392] Service.NVDRV <Warning> core/hle/service/nvdrv/nvdrv_interface.cpp:158:Initialize: (STUBBED) called
+[  83.185892] Service.NVDRV <Warning> core/hle/service/nvdrv/nvdrv_interface.cpp:215:SetAruid: (STUBBED) called, pid=0x51
+[  83.214507] Service.VI <Warning> core/hle/service/vi/application_display_service.cpp:81:GetManagerDisplayService: (STUBBED) called
+[  83.218431] Service.VI <Warning> core/hle/service/vi/application_display_service.cpp:74:GetSystemDisplayService: (STUBBED) called
+[  83.222297] Service.VI <Warning> core/hle/service/vi/application_display_service.cpp:68:GetRelayService: (STUBBED) called
+[  83.242617] Service.AM <Info> core/hle/service/am/service/self_controller.cpp:263:CreateManagedDisplayLayer: called
+[  83.511181] Service.NVDRV <Warning> core/hle/service/nvdrv/devices/nvhost_gpu.cpp:165:SetErrorNotifier: (STUBBED) called, offset=0, size=1000, mem=10
+[  83.514087] Service.NVDRV <Info> core/hle/service/nvdrv/devices/nvhost_gpu.cpp:171:SetChannelPriority: called, priority=64
+[  83.520543] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 15000 blocks, translate 803 ms, optimize 198 ms, emit 1404 ms (mprotect 154 ms), 1 cache clears, 6619 ms since cache start
+[  83.720060] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1428:GetTouchScreenMode: called, touch_screen_mode=1
+[  83.740718] Service.HID <Info> hid_core/frontend/emulated_controller.cpp:1330:SetPollingMode: Set polling mode 0, device_index=3
+[  83.877303] Service.NS <Info> core/hle/service/ns/read_only_application_control_data_interface.cpp:192:GetApplicationDesiredLanguage: called with supported_languages=00000000
+[  83.890244] Service.NS <Info> core/hle/service/ns/read_only_application_control_data_interface.cpp:192:GetApplicationDesiredLanguage: called with supported_languages=00000000
+[  83.928577] Service.ACC <Warning> core/hle/service/acc/acc.cpp:982:InitializeApplicationInfoBase: ApplicationInfo init required
+[  83.932130] Service.AM <Info> core/hle/service/am/service/application_functions.cpp:136:PopLaunchParameter: called, kind=2
+[  84.008670] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 20000 blocks, translate 840 ms, optimize 241 ms, emit 1705 ms (mprotect 206 ms), 1 cache clears, 7107 ms since cache start
+[  86.315542] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 25000 blocks, translate 879 ms, optimize 284 ms, emit 2197 ms (mprotect 786 ms), 1 cache clears, 9414 ms since cache start
+[  87.573220] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 30000 blocks, translate 920 ms, optimize 331 ms, emit 2496 ms (mprotect 837 ms), 1 cache clears, 10672 ms since cache start
+[  89.682636] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=0, flips=0, audio buffers=0, pad=true, stage=waiting for guest display, overflow heap=140 MiB, memory callbacks=130264
+[  89.685157] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=485360 KiB
+[  89.685812] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 0.0 fps, emulation speed 100%, frame time -nan ms
+[  92.401438] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 35000 blocks, translate 960 ms, optimize 376 ms, emit 2801 ms (mprotect 888 ms), 1 cache clears, 15500 ms since cache start
+[  93.337441] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 40000 blocks, translate 1008 ms, optimize 432 ms, emit 3174 ms (mprotect 939 ms), 1 cache clears, 16436 ms since cache start
+[  94.386893] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 45000 blocks, translate 1052 ms, optimize 482 ms, emit 3514 ms (mprotect 990 ms), 1 cache clears, 17485 ms since cache start
+[  95.585050] Audio.Sink <Info> audio_core/sink/ps4_sink.cpp:32:PS4SinkStream: PS4 AudioOut opened: port=536870919, 48000 Hz stereo, 2 guest channels
+[  95.587941] Audio.Sink <Info> audio_core/sink/ps4_sink.cpp:32:PS4SinkStream: PS4 AudioOut opened: port=536870918, 48000 Hz stereo, 2 guest channels
+[  95.635665] Audio.Sink <Info> audio_core/sink/ps4_sink.cpp:82:Output: PS4 first audio buffer submitted
+[  96.330497] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 50000 blocks, translate 1093 ms, optimize 528 ms, emit 3842 ms (mprotect 1047 ms), 1 cache clears, 19429 ms since cache start
+[  98.404311] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 55000 blocks, translate 1137 ms, optimize 578 ms, emit 4184 ms (mprotect 1101 ms), 1 cache clears, 21503 ms since cache start
+[  99.044624] Service.FS <Info> core/hle/service/filesystem/fsp/fsp_srv.cpp:273:OpenSaveDataFileSystem: called.
+[  99.065410] Service.NFC <Info> core/hle/service/nfc/nfc_interface.cpp:35:Initialize: called
+[  99.066346] Service.HID <Info> hid_core/frontend/emulated_controller.cpp:1330:SetPollingMode: Set polling mode 2, device_index=1
+[  99.143909] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 5000 blocks, translate 35 ms, optimize 41 ms, emit 341 ms (mprotect 58 ms), 1 cache clears, 22165 ms since cache start
+[  99.177463] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1063:GetNfcEnableFlag: called, nfc_enable_flag=true
+[  99.180817] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1063:GetNfcEnableFlag: called, nfc_enable_flag=true
+[  99.185218] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1063:GetNfcEnableFlag: called, nfc_enable_flag=true
+[  99.188981] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1063:GetNfcEnableFlag: called, nfc_enable_flag=true
+[  99.351099] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 60000 blocks, translate 1181 ms, optimize 627 ms, emit 4535 ms (mprotect 1156 ms), 1 cache clears, 22450 ms since cache start
+[  99.689736] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=0, flips=0, audio buffers=191, pad=true, stage=waiting for guest display, overflow heap=140 MiB, memory callbacks=296970
+[  99.692240] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=485360 KiB
+[  99.692969] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 0.0 fps, emulation speed 100%, frame time -nan ms
+[ 101.359103] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 65000 blocks, translate 1220 ms, optimize 672 ms, emit 4848 ms (mprotect 1209 ms), 1 cache clears, 24458 ms since cache start
+[ 101.945938] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 70000 blocks, translate 1264 ms, optimize 727 ms, emit 5240 ms (mprotect 1261 ms), 1 cache clears, 25044 ms since cache start
+[ 103.020402] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 75000 blocks, translate 1310 ms, optimize 779 ms, emit 5594 ms (mprotect 1313 ms), 1 cache clears, 26119 ms since cache start
+[ 103.597647] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 80000 blocks, translate 1350 ms, optimize 826 ms, emit 5919 ms (mprotect 1366 ms), 1 cache clears, 26696 ms since cache start
+[ 103.988677] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 85000 blocks, translate 1380 ms, optimize 863 ms, emit 6163 ms (mprotect 1417 ms), 1 cache clears, 27087 ms since cache start
+[ 104.607536] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 90000 blocks, translate 1423 ms, optimize 912 ms, emit 6509 ms (mprotect 1471 ms), 1 cache clears, 27706 ms since cache start
+[ 105.670873] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 95000 blocks, translate 1459 ms, optimize 952 ms, emit 6823 ms (mprotect 1534 ms), 2 cache clears, 28769 ms since cache start
+[ 106.088951] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 100000 blocks, translate 1494 ms, optimize 992 ms, emit 7098 ms (mprotect 1587 ms), 2 cache clears, 29187 ms since cache start
+[ 106.307807] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 10000 blocks, translate 71 ms, optimize 83 ms, emit 637 ms (mprotect 117 ms), 1 cache clears, 29329 ms since cache start
+[ 107.037195] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 105000 blocks, translate 1538 ms, optimize 1046 ms, emit 7500 ms (mprotect 1654 ms), 2 cache clears, 30136 ms since cache start
+[ 107.038259] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:212:Composite: PS4 composite 1: 1 guest layers
+[ 107.040413] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:215:Composite: PS4 guest layer: 1920x1080, stride=1920, format=1
+[ 107.107356] Render.Vulkan <Info> video_core/renderer_vulkan/vk_swapchain_ps4.cpp:233:Present: PS4 VideoOut flip 1 submitted: buffer=1, argument=2, queued on the GPU
+[ 107.108287] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 display flip: direct memory query=0x0, largest free block=434944 KiB
+[ 107.109035] Render.Vulkan <Info> video_core/renderer_vulkan/vk_staging_buffer_pool.cpp:182:TickFrame: PS4 GPU memory: staging buffers 0 MiB, largest free direct block 424 MiB
+[ 107.302648] Service.AM <Warning> core/hle/service/am/service/application_functions.cpp:343:NotifyRunning: (STUBBED) called
+[ 107.571277] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:212:Composite: PS4 composite 2: 1 guest layers
+[ 107.572195] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:215:Composite: PS4 guest layer: 1920x1080, stride=1920, format=1
+[ 107.606976] Render.Vulkan <Info> video_core/renderer_vulkan/vk_swapchain_ps4.cpp:233:Present: PS4 VideoOut flip 2 submitted: buffer=2, argument=3, queued on the GPU
+[ 107.607854] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 display flip: direct memory query=0x0, largest free block=418416 KiB
+[ 107.695806] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 110000 blocks, translate 1579 ms, optimize 1092 ms, emit 7845 ms (mprotect 1718 ms), 2 cache clears, 30794 ms since cache start
+[ 107.704328] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:212:Composite: PS4 composite 3: 1 guest layers
+[ 107.705247] Render.Vulkan <Info> video_core/renderer_vulkan/renderer_vulkan.cpp:215:Composite: PS4 guest layer: 1920x1080, stride=1920, format=1
+[ 107.748854] Render.Vulkan <Info> video_core/renderer_vulkan/vk_swapchain_ps4.cpp:233:Present: PS4 VideoOut flip 3 submitted: buffer=0, argument=4, queued on the GPU
+[ 107.749706] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 display flip: direct memory query=0x0, largest free block=418336 KiB
+[ 108.280741] Service.NFC <Info> core/hle/service/nfc/nfc_interface.cpp:51:Finalize: called
+[ 108.281701] Service.HID <Info> hid_core/frontend/emulated_controller.cpp:1330:SetPollingMode: Set polling mode 0, device_index=1
+[ 108.318450] Service.NFC <Info> core/hle/service/nfc/nfc_interface.cpp:35:Initialize: called
+[ 108.319598] Service.HID <Info> hid_core/frontend/emulated_controller.cpp:1330:SetPollingMode: Set polling mode 2, device_index=1
+[ 108.430653] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1063:GetNfcEnableFlag: called, nfc_enable_flag=true
+[ 108.434075] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1063:GetNfcEnableFlag: called, nfc_enable_flag=true
+[ 108.438808] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1063:GetNfcEnableFlag: called, nfc_enable_flag=true
+[ 108.443339] Service.SET <Info> core/hle/service/set/system_settings_server.cpp:1063:GetNfcEnableFlag: called, nfc_enable_flag=true
+[ 109.066201] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 5000 blocks, translate 41 ms, optimize 53 ms, emit 452 ms (mprotect 71 ms), 1 cache clears, 32012 ms since cache start
+[ 109.078799] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 15000 blocks, translate 115 ms, optimize 141 ms, emit 1077 ms (mprotect 195 ms), 1 cache clears, 32100 ms since cache start
+[ 109.697797] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=51, flips=51, audio buffers=660, pad=true, stage=waiting for next guest display, overflow heap=140 MiB, memory callbacks=558317
+[ 109.700512] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=418336 KiB
+[ 109.701383] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 2.5 fps, emulation speed 100%, frame time 588.3 ms
+[ 109.722522] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 115000 blocks, translate 1622 ms, optimize 1146 ms, emit 8250 ms (mprotect 1794 ms), 2 cache clears, 32821 ms since cache start
+[ 110.070621] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 10000 blocks, translate 87 ms, optimize 110 ms, emit 872 ms (mprotect 156 ms), 1 cache clears, 33016 ms since cache start
+[ 110.613321] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 120000 blocks, translate 1673 ms, optimize 1208 ms, emit 8714 ms (mprotect 1878 ms), 2 cache clears, 33712 ms since cache start
+[ 110.965926] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 15000 blocks, translate 136 ms, optimize 170 ms, emit 1307 ms (mprotect 241 ms), 1 cache clears, 33912 ms since cache start
+[ 111.491640] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 125000 blocks, translate 1721 ms, optimize 1270 ms, emit 9163 ms (mprotect 1965 ms), 2 cache clears, 34590 ms since cache start
+[ 111.937334] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 20000 blocks, translate 161 ms, optimize 203 ms, emit 1534 ms (mprotect 279 ms), 1 cache clears, 34959 ms since cache start
+[ 112.110654] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 20000 blocks, translate 180 ms, optimize 227 ms, emit 1723 ms (mprotect 327 ms), 1 cache clears, 35056 ms since cache start
+[ 113.098666] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 25000 blocks, translate 211 ms, optimize 257 ms, emit 2082 ms (mprotect 340 ms), 1 cache clears, 36120 ms since cache start
+[ 115.083706] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 30000 blocks, translate 255 ms, optimize 309 ms, emit 2453 ms (mprotect 405 ms), 1 cache clears, 38105 ms since cache start
+[ 115.896406] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 35000 blocks, translate 298 ms, optimize 357 ms, emit 2797 ms (mprotect 462 ms), 1 cache clears, 38918 ms since cache start
+[ 116.646608] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 40000 blocks, translate 342 ms, optimize 406 ms, emit 3156 ms (mprotect 518 ms), 1 cache clears, 39668 ms since cache start
+[ 116.989229] Render.Vulkan <Info> video_core/renderer_vulkan/vk_staging_buffer_pool.cpp:182:TickFrame: PS4 GPU memory: staging buffers 0 MiB, largest free direct block 408 MiB
+[ 117.245502] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 25000 blocks, translate 226 ms, optimize 282 ms, emit 2135 ms (mprotect 406 ms), 1 cache clears, 40191 ms since cache start
+[ 117.647867] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 45000 blocks, translate 384 ms, optimize 454 ms, emit 3609 ms (mprotect 582 ms), 1 cache clears, 40669 ms since cache start
+[ 118.084410] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 130000 blocks, translate 1763 ms, optimize 1324 ms, emit 9575 ms (mprotect 2048 ms), 2 cache clears, 41183 ms since cache start
+[ 119.158957] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 30000 blocks, translate 273 ms, optimize 337 ms, emit 2554 ms (mprotect 489 ms), 1 cache clears, 42105 ms since cache start
+[ 119.649939] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 135000 blocks, translate 1810 ms, optimize 1380 ms, emit 10002 ms (mprotect 2132 ms), 2 cache clears, 42748 ms since cache start
+[ 119.702733] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=346, flips=346, audio buffers=1129, pad=true, stage=waiting for next guest display, overflow heap=204 MiB, memory callbacks=1500644
+[ 119.703682] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=418336 KiB
+[ 119.704437] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 17.3 fps, emulation speed 100%, frame time 33.9 ms
+[ 120.369622] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 50000 blocks, translate 426 ms, optimize 505 ms, emit 3998 ms (mprotect 658 ms), 1 cache clears, 43391 ms since cache start
+[ 125.629110] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 140000 blocks, translate 1856 ms, optimize 1430 ms, emit 10348 ms (mprotect 2194 ms), 2 cache clears, 48728 ms since cache start
+[ 126.581659] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 145000 blocks, translate 1901 ms, optimize 1480 ms, emit 10688 ms (mprotect 2254 ms), 2 cache clears, 49680 ms since cache start
+[ 127.005300] Render.Vulkan <Info> video_core/renderer_vulkan/vk_staging_buffer_pool.cpp:182:TickFrame: PS4 GPU memory: staging buffers 0 MiB, largest free direct block 408 MiB
+[ 127.556358] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 150000 blocks, translate 1946 ms, optimize 1541 ms, emit 11161 ms (mprotect 2340 ms), 2 cache clears, 50655 ms since cache start
+[ 127.678663] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 55000 blocks, translate 469 ms, optimize 565 ms, emit 4457 ms (mprotect 739 ms), 1 cache clears, 50700 ms since cache start
+[ 127.763107] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 35000 blocks, translate 319 ms, optimize 402 ms, emit 3052 ms (mprotect 580 ms), 1 cache clears, 50709 ms since cache start
+[ 129.705774] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=640, flips=640, audio buffers=1598, pad=true, stage=waiting for next guest display, overflow heap=204 MiB, memory callbacks=2319983
+[ 129.708223] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=418336 KiB
+[ 129.708964] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 29.4 fps, emulation speed 100%, frame time 34.1 ms
+[ 134.964000] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 155000 blocks, translate 1988 ms, optimize 1588 ms, emit 11497 ms (mprotect 2407 ms), 2 cache clears, 58062 ms since cache start
+[ 137.005244] Render.Vulkan <Info> video_core/renderer_vulkan/vk_staging_buffer_pool.cpp:182:TickFrame: PS4 GPU memory: staging buffers 0 MiB, largest free direct block 408 MiB
+[ 139.717678] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=940, flips=940, audio buffers=2067, pad=true, stage=waiting for next guest display, overflow heap=204 MiB, memory callbacks=3367021
+[ 139.719939] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=418240 KiB
+[ 139.720571] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 29.7 fps, emulation speed 100%, frame time 33.3 ms
+[ 145.920239] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 60000 blocks, translate 514 ms, optimize 622 ms, emit 4894 ms (mprotect 813 ms), 1 cache clears, 68942 ms since cache start
+[ 146.809410] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 160000 blocks, translate 2030 ms, optimize 1640 ms, emit 11903 ms (mprotect 2486 ms), 2 cache clears, 69908 ms since cache start
+[ 147.723028] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 40000 blocks, translate 364 ms, optimize 467 ms, emit 3567 ms (mprotect 673 ms), 1 cache clears, 70669 ms since cache start
+[ 147.814814] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 165000 blocks, translate 2078 ms, optimize 1696 ms, emit 12315 ms (mprotect 2549 ms), 2 cache clears, 70913 ms since cache start
+[ 148.583195] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 170000 blocks, translate 2125 ms, optimize 1751 ms, emit 12743 ms (mprotect 2677 ms), 2 cache clears, 71682 ms since cache start
+[ 148.670020] Render.Vulkan <Warning> video_core/vulkan_common/vulkan_memory_allocator.cpp:269:PS4Reclaim: PS4 memory reclaim (allocation failed): largest free direct block 180544 -> 180352 KiB
+[ 148.676226] Render.Vulkan <Warning> video_core/vulkan_common/vulkan_memory_allocator.cpp:269:PS4Reclaim: PS4 memory reclaim (allocation failed): largest free direct block 180352 -> 180352 KiB
+[ 148.871977] Render.Vulkan <Warning> video_core/vulkan_common/vulkan_memory_allocator.cpp:269:PS4Reclaim: PS4 memory reclaim (allocation failed): largest free direct block 130176 -> 130176 KiB
+[ 149.127425] Render.Vulkan <Warning> video_core/vulkan_common/vulkan_memory_allocator.cpp:269:PS4Reclaim: PS4 memory reclaim (allocation failed): largest free direct block 97216 -> 97120 KiB
+[ 149.224200] Render.Vulkan <Info> video_core/renderer_vulkan/vk_staging_buffer_pool.cpp:182:TickFrame: PS4 GPU memory: staging buffers 16 MiB, largest free direct block 78 MiB
+[ 149.601695] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 65000 blocks, translate 561 ms, optimize 687 ms, emit 5424 ms (mprotect 939 ms), 1 cache clears, 72623 ms since cache start
+[ 149.725727] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=1141, flips=1141, audio buffers=2536, pad=true, stage=waiting for next guest display, overflow heap=236 MiB, memory callbacks=4225218
+[ 149.726647] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=130592 KiB
+[ 149.727346] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 25.0 fps, emulation speed 100%, frame time 48.7 ms
+[ 150.067388] Render.Vulkan <Warning> video_core/vulkan_common/vulkan_memory_allocator.cpp:269:PS4Reclaim: PS4 memory reclaim (low memory): largest free direct block 64064 -> 64064 KiB
+[ 150.186336] Render.Vulkan <Warning> video_core/vulkan_common/vulkan_memory_allocator.cpp:269:PS4Reclaim: PS4 memory reclaim (allocation failed): largest free direct block 47552 -> 47552 KiB
+[ 150.393313] Render.Vulkan <Warning> video_core/vulkan_common/vulkan_memory_allocator.cpp:269:PS4Reclaim: PS4 memory reclaim (low memory): largest free direct block 31040 -> 65664 KiB
+[ 155.031844] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 175000 blocks, translate 2182 ms, optimize 1816 ms, emit 13252 ms (mprotect 2755 ms), 2 cache clears, 78130 ms since cache start
+[ 155.636769] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 180000 blocks, translate 2224 ms, optimize 1864 ms, emit 13605 ms (mprotect 2813 ms), 2 cache clears, 78735 ms since cache start
+[ 156.487577] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 185000 blocks, translate 2263 ms, optimize 1906 ms, emit 13922 ms (mprotect 2869 ms), 2 cache clears, 79586 ms since cache start
+[ 157.487734] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 45000 blocks, translate 418 ms, optimize 534 ms, emit 4236 ms (mprotect 836 ms), 1 cache clears, 80433 ms since cache start
+[ 157.912552] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 190000 blocks, translate 2303 ms, optimize 1953 ms, emit 14265 ms (mprotect 2928 ms), 2 cache clears, 81011 ms since cache start
+[ 158.005664] Render.Vulkan <Warning> video_core/vulkan_common/vulkan_memory_allocator.cpp:269:PS4Reclaim: PS4 memory reclaim (low memory): largest free direct block 58688 -> 58688 KiB
+[ 159.005269] Render.Vulkan <Info> video_core/renderer_vulkan/vk_staging_buffer_pool.cpp:182:TickFrame: PS4 GPU memory: staging buffers 0 MiB, largest free direct block 86 MiB
+[ 159.733796] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=1316, flips=1316, audio buffers=3005, pad=true, stage=waiting for next guest display, overflow heap=268 MiB, memory callbacks=5468276
+[ 159.734587] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=88640 KiB
+[ 159.735261] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 18.8 fps, emulation speed 100%, frame time 58.4 ms
+[ 159.810985] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 195000 blocks, translate 2353 ms, optimize 2012 ms, emit 14698 ms (mprotect 2997 ms), 2 cache clears, 82909 ms since cache start
+[ 159.903863] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 70000 blocks, translate 608 ms, optimize 742 ms, emit 5851 ms (mprotect 1010 ms), 1 cache clears, 82925 ms since cache start
+[ 164.249217] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 200000 blocks, translate 2400 ms, optimize 2067 ms, emit 15102 ms (mprotect 3064 ms), 2 cache clears, 87348 ms since cache start
+[ 165.246779] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 50000 blocks, translate 461 ms, optimize 582 ms, emit 4607 ms (mprotect 915 ms), 1 cache clears, 88192 ms since cache start
+[ 168.988484] Render.Vulkan <Info> video_core/renderer_vulkan/vk_staging_buffer_pool.cpp:182:TickFrame: PS4 GPU memory: staging buffers 0 MiB, largest free direct block 96 MiB
+[ 169.737681] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=1602, flips=1602, audio buffers=3474, pad=true, stage=waiting for next guest display, overflow heap=268 MiB, memory callbacks=7120658
+[ 169.738459] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=98720 KiB
+[ 169.739115] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 23.0 fps, emulation speed 100%, frame time 35.0 ms
+[ 171.145578] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 75000 blocks, translate 657 ms, optimize 796 ms, emit 6267 ms (mprotect 1089 ms), 1 cache clears, 94167 ms since cache start
+[ 171.367981] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 55000 blocks, translate 515 ms, optimize 639 ms, emit 5025 ms (mprotect 992 ms), 1 cache clears, 94314 ms since cache start
+[ 172.497085] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 205000 blocks, translate 2448 ms, optimize 2120 ms, emit 15499 ms (mprotect 3143 ms), 3 cache clears, 95596 ms since cache start
+[ 173.099748] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 210000 blocks, translate 2495 ms, optimize 2172 ms, emit 15919 ms (mprotect 3217 ms), 3 cache clears, 96198 ms since cache start
+[ 173.804936] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 215000 blocks, translate 2547 ms, optimize 2236 ms, emit 16402 ms (mprotect 3293 ms), 3 cache clears, 96903 ms since cache start
+[ 174.254913] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 60000 blocks, translate 568 ms, optimize 716 ms, emit 5600 ms (mprotect 1081 ms), 1 cache clears, 97201 ms since cache start
+[ 174.480972] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 220000 blocks, translate 2594 ms, optimize 2288 ms, emit 16797 ms (mprotect 3368 ms), 3 cache clears, 97579 ms since cache start
+[ 175.816758] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 225000 blocks, translate 2643 ms, optimize 2343 ms, emit 17204 ms (mprotect 3447 ms), 3 cache clears, 98915 ms since cache start
+[ 176.814654] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 80000 blocks, translate 705 ms, optimize 859 ms, emit 6751 ms (mprotect 1178 ms), 1 cache clears, 99836 ms since cache start
+[ 177.685891] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 230000 blocks, translate 2687 ms, optimize 2391 ms, emit 17549 ms (mprotect 3521 ms), 3 cache clears, 100784 ms since cache start
+[ 178.988262] Render.Vulkan <Info> video_core/renderer_vulkan/vk_staging_buffer_pool.cpp:182:TickFrame: PS4 GPU memory: staging buffers 0 MiB, largest free direct block 96 MiB
+[ 179.251646] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 235000 blocks, translate 2737 ms, optimize 2445 ms, emit 17944 ms (mprotect 3596 ms), 3 cache clears, 102350 ms since cache start
+[ 179.745673] Frontend <Info> yuzu_ps4/main.cpp:606:RunGame: PS4 progress: composites=1833, flips=1833, audio buffers=3943, pad=true, stage=waiting for next guest display, overflow heap=268 MiB, memory callbacks=8593340
+[ 179.746557] HW.Memory <Info> ./common/ps4_diagnostics.h:64:LogDirectMemory: PS4 heartbeat: direct memory query=0x0, largest free block=98720 KiB
+[ 179.747254] Frontend <Info> yuzu_ps4/main.cpp:610:RunGame: PS4 performance: game 25.8 fps, emulation speed 100%, frame time 43.3 ms
+[ 180.851101] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x30801c000: 65000 blocks, translate 614 ms, optimize 774 ms, emit 6052 ms (mprotect 1168 ms), 1 cache clears, 103797 ms since cache start
+[ 181.447864] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 240000 blocks, translate 2784 ms, optimize 2500 ms, emit 18358 ms (mprotect 3677 ms), 3 cache clears, 104546 ms since cache start
+[ 182.435613] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x304018000: 85000 blocks, translate 753 ms, optimize 918 ms, emit 7194 ms (mprotect 1263 ms), 1 cache clears, 105457 ms since cache start
+[ 183.032626] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 245000 blocks, translate 2832 ms, optimize 2555 ms, emit 18762 ms (mprotect 3755 ms), 3 cache clears, 106131 ms since cache start
+[ 185.859993] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 250000 blocks, translate 2879 ms, optimize 2611 ms, emit 19185 ms (mprotect 3836 ms), 3 cache clears, 108958 ms since cache start
+[ 187.382529] Core <Info> dynarmic/backend/x64/block_of_code.cpp:372:PS4LogStats: PS4 JIT 0x300014000: 255000 blocks, translate 2925 ms, optimize 2663 ms, emit 19585 ms (mprotect 3905 ms), 3 cache clears, 110481 ms since cache start

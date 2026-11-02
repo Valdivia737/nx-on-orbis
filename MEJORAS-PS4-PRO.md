@@ -5,6 +5,8 @@ de Switch **Eden** a PS4 Pro) mantenido por **Valdivia737**. Esta rama recoge el
 de pruebas en una **PS4 Pro con firmware 10.50 y GoldHEN**: de un Eden que con Super Mario Bros. Wonder
 bajaba a 1 FPS y se congelaba a los 2–3 minutos, a uno que **juega Wonder 30 minutos seguidos a 26–30 FPS**
 y, con **fastmem** (jitcache16–18), **Super Mario 3D World a 30 FPS fijos** en el mundo 1-1.
+jitcache20–21 añaden **ajustes por juego desde el menú** (Triángulo, como en Crema) y arreglan el **cierre
+al arrancar**. Zelda: Breath of the Wild arranca, pero se queda sin memoria (ver Resultados).
 
 > Escrito por Claude (asistente de IA de Anthropic) a partir de las sesiones de trabajo con Valdivia737.
 > Todo lo que aparece como resultado está **medido** en la consola con los registros que hay en
@@ -21,7 +23,8 @@ Licencia GPL-3.0, igual que el proyecto original y Eden.
 |---|---|---|---|---|---|
 | Super Mario Bros. Wonder | XCI | **Estable** sin fastmem: 32 min seguidos sin fallos y guarda partida. **Con fastmem (jitcache14–18) se queda sin memoria a los ~1,5 min** | Niveles **26–30**, mapa del mundo **44–56** | jitcache10–12 | Medido en vivo con jitcache10 (ese registro no se guardó). Con jitcache8: [`jitcache8_20261031_mundo_ok`](registros/eden-propio/jitcache8_20261031_mundo_ok/). El fallo con fastmem: [`jitcache18_20261101_wonder_sinmemoria`](registros/eden-propio/jitcache18_20261101_wonder_sinmemoria/) |
 | Super Mario 3D World + Bowser's Fury | XCI | **Estable**: 7 min sin fallos con fastmem; 15,8 min sin él | Mundo 1-1 **30 fijos** con `fps=30` (baja a 26–28 en la zona más pesada); sin fastmem, niveles 23–30 (mediana 27) | **jitcache18** (antes jitcache11) | [`jitcache18_20261101_3dworld_fps30`](registros/eden-propio/jitcache18_20261101_3dworld_fps30/), [`jitcache11_20261101_3dworld`](registros/eden-propio/jitcache11_20261101_3dworld/) |
-| Paper Mario: La Puerta Milenaria | NSP | **Jugable pero lento**, en español: 16,9 min sin fallos | **7–9** (mediana 8,9), menús hasta 26. Una cinemática bajó a 0,2–0,5 | jitcache11 | [`jitcache11_papermario_boot.log`](registros/eden-propio/jitcache11_papermario_boot.log) |
+| Paper Mario: La Puerta Milenaria | NSP | **Jugable pero lento**, en español: 16,9 min sin fallos. Con fastmem no mejora (mediana 7,6). Con jitcache20 se congeló al empezar partida, a los ~3 min (pendiente) | **7–9** (mediana 8,9), menús hasta 26. Una cinemática bajó a 0,2–0,5 | jitcache11 | [`jitcache11_papermario_boot.log`](registros/eden-propio/jitcache11_papermario_boot.log), [`jitcache18_20261101_papermario_fastmem`](registros/eden-propio/jitcache18_20261101_papermario_fastmem/), [`jitcache20_20261101_papermario_congelado`](registros/eden-propio/jitcache20_20261101_papermario_congelado/) |
+| Zelda: Breath of the Wild | NSP (v0) | **Arranca, pero se queda sin memoria**: con los ajustes de abajo se cierra a los **15 min** (memoria directa a 1 MiB). Con `ORBIS_ARENA_MIB=1152` se cierra antes, a los 6,5 min, por memoria de la GPU (`VK_ERROR_OUT_OF_DEVICE_MEMORY`). Eden4 1.0 se cierra a los ~3 min | **28–30** en la intro; **8–12** en el juego, cuando la GPU se llena de texturas | jitcache21 | [`jitcache21_20261101_zelda_15min`](registros/eden-propio/jitcache21_20261101_zelda_15min/), [`jitcache21_20261101_zelda_arena1152`](registros/eden-propio/jitcache21_20261101_zelda_arena1152/), Eden4: [`20261101_zelda`](registros/eden4-xatyy/20261101_zelda/) |
 | Metroid Dread | NSP | **No carga**: al cargar pide una reserva de 1,8 GiB y falla | — | — | Pendiente |
 
 ### Registro de FPS por sesión (sacado automáticamente de `boot.log`)
@@ -46,6 +49,10 @@ Licencia GPL-3.0, igual que el proyecto original y Eden.
 | `jitcache18_20261101_wonder_sinmemoria` | jitcache18 | Wonder | 3,7 | 20,6 | 1,3 | 29,0 | Ya no se cuelga, pero **se queda sin memoria a los 93 s**: ~240.000 fallos de fastmem y el heap crece 640 MiB de golpe |
 | `jitcache18_20261101_3dworld_cierre_arranque` | jitcache18 | 3D World | 0,2 | — | — | — | Cierre intermitente al arrancar (ver Pendientes); al reabrir, bien |
 | `jitcache18_20261101_3dworld_fps30` | jitcache18 | 3D World | 7,0 | 29,7 | 26,2 | 30,0 | **Con `fps=30`: 1-1 a 30,0 fijos casi todo el rato**, 26–28 en la zona más pesada |
+| `jitcache18_20261101_papermario_fastmem` | jitcache18 | Paper Mario | 5,2 | 7,6 | 3,5 | 25,8 | Con fastmem no mejora: para Paper Mario, `fastmem=off` |
+| `jitcache20_20261101_papermario_congelado` | jitcache20 | Paper Mario | 34,3 | 14,2 | 1,7 | 25,1 | Se congela al empezar partida (~3 min); el registro siguió escribiendo sin imagen nueva. HIPÓTESIS: el reparto de registros de Eden4 (jitcache19); falta probar con `regalloc=off` |
+| `jitcache21_20261101_zelda_15min` | jitcache21 | Zelda BotW | 14,9 | 9,6 | 6,9 | 29,6 | 28–30 en la intro, 8–12 jugando; **se cierra a los 15 min sin memoria** (1 MiB libre) |
+| `jitcache21_20261101_zelda_arena1152` | jitcache21 | Zelda BotW | 7,9 | 9,3 | 4,1 | 30,0 | Con `ORBIS_ARENA_MIB=1152` (para ahorrar memoria): 22–30 más tiempo, pero **se cierra a los 6,5 min sin memoria de GPU** |
 
 - La mediana y el "peor 10 %" se calculan con todas las líneas `status:` de 1 FPS o más, así que incluyen cargas y menús.
 - El "sin imagen durante 15 s" que sale en todas las sesiones hacia los 16 s es la carga inicial, y es normal.
@@ -53,6 +60,8 @@ Licencia GPL-3.0, igual que el proyecto original y Eden.
 **El límite hoy es la CPU, no la GPU.** En los tres juegos que funcionan, el núcleo que ejecuta el código
 principal del juego va al 93–97 % y la GPU espera el 0 % del tiempo. Bajar la resolución no ayuda; lo que
 ayuda es abaratar el código que genera el JIT: eso es lo que hace **fastmem** (jitcache14–18, ver abajo).
+**Zelda: Breath of the Wild es otra historia: lo limita la memoria.** El juego usa casi 2 GiB propios y la
+app tiene unos 4,5 GiB en total; los FPS caen a 8–12 cuando la GPU se llena de texturas.
 
 ---
 
@@ -76,8 +85,11 @@ Cada paso se encontró midiendo con el registro de la consola (`boot.log`), no a
 | 12 | El heap y las pilas del juego caían por encima de los 8 GiB (colocación al azar en 512 GiB), y la base del código en pasos de 4 KiB no cuadraba con las páginas de 16 KiB de la PS4 | En ORBIS, pila y heap justo después del código y base del código alineada a 16 KiB (parche 0041). **1-1 a 27–35 FPS (casi siempre 29–32)** frente a ~25 sin fastmem | jitcache16 |
 | 13 | Páginas de 16 KiB con algún trozo de 4 KiB sin mapear (bordes de las pilas) quedaban fuera de la vista. El primer intento (jitcache17) **colgaba Wonder**: también enseñaba trozos que el juego tiene mapeados a otra memoria | Se mapean solo si los trozos que faltan no están mapeados en absoluto (parches 0042 y 0043); `fastmem_partial=off` vuelve a la regla de jitcache16 | jitcache17–18 |
 | 14 | Entre 30 y 35 FPS la imagen alterna fotogramas de 16 y 33 ms (tirones) | `fps=30` en settings.txt: limitador de Eden que muestra un fotograma cada 33,3 ms. En una tele de 60 Hz solo 60, 30 y 20 se ven parejos | jitcache17–18 |
+| 15 | Eden4 va más rápido en 3D World (35–57 FPS) | Su reparto de registros en dynarmic: apartar un valor a RBX/R12/R13 libres en vez de guardarlo en memoria, y R13 asignable sin fastmem, **adaptado de [Eden4](https://github.com/xatyy/Eden4)** (parche 0044); `regalloc=on|off`. Además, el registro dice al arrancar el modo Pro y el reloj de la CPU (2100 MHz, igual que Eden4: el reloj no explica la diferencia) | jitcache19 |
+| 16 | `fastmem` y el resto de ajustes eran globales: Wonder y Paper Mario lo necesitan apagado, 3D World encendido | **Ajustes por juego** en el menú (Triángulo sobre el juego): fastmem, FPS, reparto de registros e idioma. Se guardan en `/data/edenps4/juegos/<juego>.txt` y se aplican después de `settings.txt`; las líneas que el menú no conoce (p. ej. `env=…`) se conservan. El juego sale marcado `[ajustes propios]` | jitcache20 |
+| 17 | **Cierre al arrancar** (1 de cada 2–3 veces; Wonder 3 de 3 con jitcache20), con trozos de texto del registro en el heap | El registro de Eden escribía en el mismo archivo desde varios hilos a la vez, y el `stdio` de la PS4 no lo protege para los hilos del sistema: un `fwrite` pisaba el heap. Ahora escribe un hilo cada vez (parche 0045). Desde entonces, ningún cierre al arrancar en las aperturas probadas | jitcache21 |
 
-Los cambios de Eden están en [`patches/eden/`](patches/eden/) (0028 a 0043) y los del frontend en
+Los cambios de Eden están en [`patches/eden/`](patches/eden/) (0028 a 0045) y los del frontend en
 [`frontend/`](frontend/). Todo va dentro de `#ifdef __ORBIS__`: no afecta a otras plataformas.
 
 ---
@@ -102,9 +114,10 @@ cpu=unsafe
 fastmem=on
 fastmem_partial=on
 fps=30
+regalloc=on
 ```
 
-- **Wonder con fastmem se queda sin memoria**: para Wonder, `fastmem=off` (el ajuste es global, hay que cambiarlo según el juego hasta que haya ajustes por juego).
+- **Ajustes por juego (jitcache20+)**: en el menú, Triángulo sobre el juego. Los que usamos: Wonder `fastmem=off`; Paper Mario `fastmem=off`, `fps=30`; Zelda BotW `env=NX_JIT_CACHE_MIB=64` y `astc_recompress=bc1` (sin probar todavía; `ORBIS_ARENA_MIB=1152` empeoró).
 - `fps=30` es para juegos que no llegan a 60 (3D World); `fps=auto` lo quita.
 - `fastmem_partial=off` si algún juego se cuelga con jitcache18 (vuelve a la regla de jitcache16).
 - `language=es-419` es español latino; para español de España: `language=es` y `region=europe`.
@@ -115,7 +128,7 @@ fps=30
 
 ## Instalar
 
-1. Descarga el `.pkg` de la versión que quieras en [Releases](../../releases). Recomendado: **jitcache18** (fastmem; 3D World a 30 FPS). Si solo juegas Wonder o algo falla con fastmem: **jitcache12** (colores arreglados, sin fastmem).
+1. Descarga el `.pkg` de la versión que quieras en [Releases](../../releases). Recomendado: **jitcache21** (ajustes por juego y sin el cierre al arrancar). Antes: **jitcache18** (fastmem; 3D World a 30 FPS) o **jitcache12** (colores arreglados, sin fastmem).
 2. Instálalo con tu instalador de PKG habitual. Se instala como `EDPS00001` y reemplaza al Eden anterior.
 3. Pon en la PS4 tus claves (`/data/edenps4/keys`), tu firmware (`/data/edenps4/firmware`, archivos `.nca`) y tus juegos (`/data/edenps4/roms`), igual que con el original.
 4. Copia el `settings.txt` de arriba.
@@ -133,23 +146,24 @@ En la PS4 (por FTP): `/data/edenps4/boot.log`, `mesa.log` y `log/eden_log.txt`.
 
 [`registros/`](registros/) guarda las sesiones reales de cada versión:
 - `eden-propio/`: nuestro Eden (Wonder, Paper Mario y 3D World).
-- `eden4-xatyy/`: la prueba de Eden4 1.0. Arranca en fw 10.50, pero Wonder se aborta dentro del juego (`nn::oe::EnableGamePlayRecording`).
+- `eden4-xatyy/`: la prueba de Eden4 1.0. Arranca en fw 10.50, pero Wonder se aborta dentro del juego (`nn::oe::EnableGamePlayRecording`). Zelda BotW se cierra a los ~3 min sin memoria (`20261101_zelda`).
 
 ---
 
 ## Pendientes
 
-1. **Wonder con fastmem**: los fallos de fastmem no dejan de subir (~240.000 en 90 s; en 3D World se quedan en ~91.000) y cada uno recompila un bloque; a los 93 s el heap del emulador crece 640 MiB de golpe (la mayor petición, 107 MiB, es una tabla hash enorme). HIPÓTESIS: estructuras de dynarmic que crecen con cada recompilación. Mientras tanto, `fastmem=off` para Wonder.
-2. **Ajustes por juego** (un settings por juego), para no tener que cambiar `fastmem` a mano.
-3. **Cierre intermitente al arrancar** (1 de cada 2–3 arranques, a los 7–13 s, durante la carga de shaders): varios hilos caen a la vez con trozos de texto del registro en los registros de la CPU ("reateGra", "Pipeline", "_source="): memoria del heap pisada. Ya pasaba sin fastmem (jitcache8). Reabrir la app lo soluciona.
-4. **Más FPS en la CPU** para la zona pesada del 1-1 (26–28): portar las optimizaciones del JIT de Eden4 (reutilizar la búsqueda de página, R13 asignable).
+1. **Wonder con fastmem**: los fallos de fastmem no dejan de subir (~240.000 en 90 s; en 3D World se quedan en ~91.000) y cada uno recompila un bloque; a los 93 s el heap del emulador crece 640 MiB de golpe (la mayor petición, 107 MiB, es una tabla hash enorme). HIPÓTESIS: estructuras de dynarmic que crecen con cada recompilación. Mientras tanto, `fastmem=off` para Wonder (ajuste por juego).
+2. **Zelda BotW sin memoria**: probar `astc_recompress=bc1`; modo portátil o resolución menor por juego (menos memoria de GPU); la marca de modo Pro en `param.sfo` (hoy `ATTRIBUTE=0`; HIPÓTESIS: daría la GPU completa y quizá más memoria, pero el autor de Eden4 dice que en modo Pro se le colgaba la consola).
+3. **Paper Mario se congela al empezar partida con jitcache20+**: probar `regalloc=off` (Triángulo → Registros de Eden4: No) para saber si es el parche 0044.
+4. **Más FPS en la CPU**: portar lo que falta del JIT de Eden4 (tabla de páginas directa de dos niveles y reutilizar la búsqueda de página dentro de un bloque; solo sirve sin fastmem).
 5. Paper Mario: cinemática a 0,2–0,5 FPS con un núcleo en espera activa.
 6. Metroid Dread: averiguar quién pide 1,8 GiB al cargar (sigue igual con jitcache18).
+7. Menú dentro del juego con L3+R3 (como Crema) para cambiar ajustes sin salir.
 
 ## Créditos
 
 - **alechurri**: NX on Orbis, el port original y todas sus herramientas, incluida la base de fastmem (parches 0036–0039).
 - **Eden Emulator Project** / yuzu: el emulador.
-- **xatyy**: [Eden4](https://github.com/xatyy/Eden4), del que se adaptó el reintento de memoria de la GPU.
+- **xatyy**: [Eden4](https://github.com/xatyy/Eden4), del que se adaptaron el reintento de memoria de la GPU y el reparto de registros de dynarmic.
 - **Valdivia737**: pruebas en la consola, decisiones y este fork.
 - **Claude** (Anthropic): análisis de registros, parches y esta documentación.
